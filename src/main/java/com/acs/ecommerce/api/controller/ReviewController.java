@@ -21,7 +21,7 @@ public class ReviewController {
         _IReviewService = IReviewService;
     }*/
 
-    @GetMapping("/review{productId}")
+    @GetMapping("/review/{productId}")
     public ResponseEntity<Response<ReviewModel>> search(String productId) {
 
         var responseEntity = new Response<ReviewModel>();
