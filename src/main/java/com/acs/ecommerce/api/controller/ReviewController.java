@@ -6,10 +6,8 @@ import com.acs.ecommerce.api.model.ReviewModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,9 +21,31 @@ public class ReviewController {
         _IReviewService = IReviewService;
     }*/
 
+    @GetMapping("/review{productId}")
+    public ResponseEntity<Response<ReviewModel>> search(String productId) {
+
+        var responseEntity = new Response<ReviewModel>();
+        responseEntity.setMessage("created success");
+        responseEntity.setStatus(true);
+        responseEntity.setData(reviewList.stream().findFirst());
+
+        return new ResponseEntity<>(responseEntity, null, HttpStatus.OK);
+    }
+
+    @GetMapping("/review-all")
+    public ResponseEntity<Response<List<ReviewModel>>> searchAll() {
+
+        var responseEntity = new Response<List<ReviewModel>>();
+        responseEntity.setMessage("created success");
+        responseEntity.setStatus(true);
+        responseEntity.setData(reviewList);
+
+        return new ResponseEntity<>(responseEntity, null, HttpStatus.OK);
+    }
+
     @PostMapping("/review")
     public ResponseEntity<Response<ReviewModel>> save(@RequestBody ReviewModel review) {
-
+        reviewList.add(review);
         var responseEntity = new Response<ReviewModel>();
         responseEntity.setMessage("created success");
         responseEntity.setStatus(true);
