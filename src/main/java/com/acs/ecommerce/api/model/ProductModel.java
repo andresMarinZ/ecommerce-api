@@ -24,6 +24,7 @@ public class ProductModel {
         this.urlProductImage = urlProductImage;
         this.dateAddProduct = dateAddProduct;
         this.documentNumber = documentNumber;
+
     }
 
     private int documentNumber;

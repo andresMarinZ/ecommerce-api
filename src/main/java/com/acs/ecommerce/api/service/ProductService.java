@@ -13,19 +13,18 @@ public class ProductService implements IProductService {
     private static final List<ProductModel> productsModel = new ArrayList<>();
 
 
-
     @Override
     public List<ProductModel> get() {
         return null;
     }
 
     @Override
-    public ProductModel getByid(String idProduct) {
+    public List<ProductModel> getByid(String idProduct) {
         Optional<ProductModel> optionalProduct = productsModel.stream()
-                .filter(productsModel -> productsModel.getIdProduct().equals(idProduct))
+                .filter(quote -> quote.getIdProduct().equals(idProduct))
                 .findFirst();
 
-        return optionalProduct.orElse(null);
+        return (List<ProductModel>) optionalProduct.orElse(null);
     }
 
     @Override
