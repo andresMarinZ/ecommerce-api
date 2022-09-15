@@ -1,10 +1,11 @@
 package com.acs.ecommerce.api.model;
 
 public class ShoppingCart {
-    private String id ;
+    private String id;
     private int idBuyer;
     private String idProduct;
     private int productQuantity;
+
 
     public String getId() {
         return id;

@@ -1,15 +1,28 @@
 package com.acs.ecommerce.api.controller;
 
+import com.acs.ecommerce.api.Service.ShoppingCartService;
 import com.acs.ecommerce.api.model.ShoppingCart;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.awt.*;
 import java.util.ArrayList;
-import java.util.List;
+import java.util.Objects;
 
+
+@RestController
 public class ShoppingCartController {
 
-    /*Quemamos Datos Para Hacer La Consulta*/
-    @GetMapping("/ShoppingCart")
+   /* @GetMapping("shoppingcart/{idShoppingCart}")
+    public ResponseEntity<ShoppingCart> getById(@PathVariable String idShoppingCart) {
+        ShoppingCart quote = ShoppingCartService.getById(idShoppingCart);
+
+        return Objects.isNull(quote) ? ResponseEntity.notFound().build() : ResponseEntity.ok(quote);
+    }*/
+
+
+    /*Consult some static data*/
+    @GetMapping("/shoppingcart")
     public List<ShoppingCart> getShoppingCart() {
 
         ArrayList<ShoppingCart> list = new ArrayList<ShoppingCart>();
@@ -22,10 +35,16 @@ public class ShoppingCartController {
         list.add(shoppingList);
         return list;
     }
-    /*Hacemos la consulta del producto*/
 
-    /*Agregamos compras al carrito*/
-    @PostMapping("/ShoppingCart")
+
+    /*We consult a specific data*/
+    @GetMapping("/shoppingcart/{id}")
+    public String ConsultId(@PathVariable("id") String id) {
+        return "Id of the consulted Shopping Cart";
+    }
+
+    /*post any posible buy in the shopping cart*/
+    @PostMapping("/shoppingcart")
     public String addProduct(@RequestBody ShoppingCart Product) {
         return String.format("Shopping cart id: %s" +
                         "\nBuyer id: %s" +
@@ -37,8 +56,8 @@ public class ShoppingCartController {
                 Product.getProductQuantity());
     }
 
-    /*Borramos La compra por su id*/
-    @DeleteMapping("/ShoppingCart/{id}")
+    /*Deleting the buy for they id*/
+    @DeleteMapping("/shoppingcart/{id}")
     public String DeleteShoppingCart(@PathVariable("id") String id) {
         return "Deleted by buying id number";
     }
