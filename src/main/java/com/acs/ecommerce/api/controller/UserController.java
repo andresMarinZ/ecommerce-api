@@ -1,19 +1,26 @@
 package com.acs.ecommerce.api.controller;
 
-import com.acs.ecommerce.api.model.security;
+import com.acs.ecommerce.api.model.User;
+import com.acs.ecommerce.api.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
-public class securityController {
-    private final static List<security> list = new ArrayList<>();
+@RestController
+public class UserController {
+
+    @Autowired
+    UserService userService;
 
     @GetMapping("/security")
-    public List<security> getsecurity() {
+    public List<User> getsecurity() {
 
-        ArrayList<security> list = new ArrayList<security>();
-        security first = new security();
+        ArrayList<User> list = new ArrayList<User>();
+        User first = new User();
         first.setId(1);
         first.setUserType("vendedor");
         first.setFirstName("peranito");
@@ -26,8 +33,10 @@ public class securityController {
         return list;
     }
 
+    //pendiente
+
     @PostMapping("/security")
-    public String create( @RequestBody security request) {
+    public String create( @RequestBody User request) {
         return String.format("POST Recibido: \nAId: %s," +
                         " \nusertype: %s," +
                         " \nfirstname: %s," +
@@ -45,8 +54,8 @@ public class securityController {
     }
 
     @PutMapping("/updatesecurity")
-    public security update(@RequestBody security request){
-        security response = request;
+    public User update(@RequestBody User request){
+        User response = request;
 
         return response;
     }

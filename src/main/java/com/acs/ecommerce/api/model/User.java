@@ -1,6 +1,6 @@
 package com.acs.ecommerce.api.model;
 
-public class security {
+public class User {
     private int id;
     private String userType;
     private String firstName;
@@ -9,7 +9,7 @@ public class security {
     private int documentNumber;
     private String StoreName;
 
-    public security() {
+    public User() {
 
     }
 
@@ -69,7 +69,7 @@ public class security {
         StoreName = storeName;
     }
 
-    public security(int id, String userType, String firstName, String lastName, String documentType, int documentNumber, String storeName) {
+    public User(int id, String userType, String firstName, String lastName, String documentType, int documentNumber, String storeName) {
         this.id = id;
         this.userType = userType;
         this.firstName = firstName;
