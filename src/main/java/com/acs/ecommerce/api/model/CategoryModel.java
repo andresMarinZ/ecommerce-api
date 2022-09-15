@@ -4,6 +4,7 @@ import java.util.Date;
 
 public class CategoryModel {
 
+        public String getIdProduct;
         private Long id;
         private String name;
         private Date creationDate;

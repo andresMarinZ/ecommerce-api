@@ -8,7 +8,6 @@ import java.util.List;
 
 @Service
 public interface ICategory {
-    List<CategoryModel> get();
     CategoryModel getByProduct(String idProduct);
     CategoryModel create(CategoryModel categoryModel);
     CategoryModel update(String idProduct, CategoryModel categoryModel);
