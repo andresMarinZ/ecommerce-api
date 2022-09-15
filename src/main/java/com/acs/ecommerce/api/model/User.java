@@ -1,7 +1,19 @@
 package com.acs.ecommerce.api.model;
 
 public class User {
-    private int id;
+    public User(String id) {
+        this.id = id;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    private String id;
     private String userType;
     private String firstName;
     private String lastName;
@@ -11,14 +23,6 @@ public class User {
 
     public User() {
 
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     public String getUserType() {
@@ -69,7 +73,7 @@ public class User {
         StoreName = storeName;
     }
 
-    public User(int id, String userType, String firstName, String lastName, String documentType, int documentNumber, String storeName) {
+    public User(String id, String userType, String firstName, String lastName, String documentType, int documentNumber, String storeName) {
         this.id = id;
         this.userType = userType;
         this.firstName = firstName;

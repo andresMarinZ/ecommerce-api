@@ -6,14 +6,12 @@ import java.util.List;
 
 public interface UserService {
 
-    List<User> get();
-
-    User readByUserType(String userType);
+    User getByUserType(String userType);
 
     User getByDocumentNumber(int DocumentNumber);
 
 
-    User create(int id);
+    User create(User user);
 
     User update(String firstName, String LastName, String documentType, int documentNumber);
 
