@@ -13,13 +13,11 @@ import java.util.List;
 
 @RestController
 public class ReviewController {
-    private final List<ReviewModel> reviewList = new ArrayList<>();
 
-    /*private IReviewService _IReviewService;
     @Autowired
-    public ReviewController(IReviewService IReviewService){
-        _IReviewService = IReviewService;
-    }*/
+    IReviewService _reviewService;
+
+    private final List<ReviewModel> reviewList = new ArrayList<>();
 
     @GetMapping("/review/{productId}")
     public ResponseEntity<Response<ReviewModel>> search(String productId) {
@@ -33,23 +31,27 @@ public class ReviewController {
     }
 
     @GetMapping("/review-all")
-    public ResponseEntity<Response<List<ReviewModel>>> searchAll() {
+    public ResponseEntity<Response<List<ReviewModel>>> getAll() {
+
+        List<ReviewModel> listReviews = _reviewService.getAll();
 
         var responseEntity = new Response<List<ReviewModel>>();
         responseEntity.setMessage("created success");
         responseEntity.setStatus(true);
-        responseEntity.setData(reviewList);
+        responseEntity.setData(listReviews);
 
         return new ResponseEntity<>(responseEntity, null, HttpStatus.OK);
     }
 
     @PostMapping("/review")
     public ResponseEntity<Response<ReviewModel>> save(@RequestBody ReviewModel review) {
-        reviewList.add(review);
+
+        var insert = _reviewService.save(review);
+
         var responseEntity = new Response<ReviewModel>();
         responseEntity.setMessage("created success");
         responseEntity.setStatus(true);
-        responseEntity.setData(review);
+        responseEntity.setData(insert);
         return new ResponseEntity<>(responseEntity, null, HttpStatus.CREATED);
     }
 

@@ -12,6 +12,8 @@ public class ReviewModel {
 
     private String buyerId;
 
+    private Boolean viewed;
+
     private String productId;
     public String getId() {
         return id;
@@ -59,5 +61,13 @@ public class ReviewModel {
 
     public void setProductId(String productId) {
         this.productId = productId;
+    }
+
+    public Boolean getViewed() {
+        return viewed;
+    }
+
+    public void setViewed(Boolean viewed) {
+        this.viewed = viewed;
     }
 }
