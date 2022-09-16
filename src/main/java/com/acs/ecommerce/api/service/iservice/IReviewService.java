@@ -11,4 +11,6 @@ public interface IReviewService {
 
     ReviewModel update(String reviewId, ReviewModel reviewModel);
 
+    Boolean delete(String reviewId);
+
 }

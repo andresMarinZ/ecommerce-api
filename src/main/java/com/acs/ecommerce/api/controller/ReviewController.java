@@ -20,13 +20,35 @@ public class ReviewController {
 
     private final List<ReviewModel> reviewList = new ArrayList<>();
 
+    @DeleteMapping("/delete/{reviewId}")
+    public ResponseEntity<Response<ReviewModel>> deleteReview(@PathVariable String reviewId) {
+
+        boolean isDelete = _reviewService.delete(reviewId);
+
+        if (isDelete) {
+
+            var responseEntity = new Response<ReviewModel>();
+            responseEntity.setMessage("Delete success");
+            responseEntity.setStatus(true);
+            responseEntity.setData(null);
+
+            return new ResponseEntity<>(responseEntity, null, HttpStatus.OK);
+        }
+
+
+        var responseEntity = new Response<ReviewModel>();
+        responseEntity.setMessage("Delete fail");
+        responseEntity.setStatus(false);
+        return new ResponseEntity<>(responseEntity, null, HttpStatus.BAD_REQUEST);
+    }
+
     @GetMapping("/review/{productId}")
     public ResponseEntity<Response<ReviewModel>> search(String productId) {
 
         var responseEntity = new Response<ReviewModel>();
         responseEntity.setMessage("created success");
         responseEntity.setStatus(true);
-        responseEntity.setData(reviewList.stream().findFirst());
+        responseEntity.setData(reviewList);
 
         return new ResponseEntity<>(responseEntity, null, HttpStatus.OK);
     }
@@ -57,7 +79,7 @@ public class ReviewController {
     }
 
     @PutMapping("/review/{reviewId}")
-    public ResponseEntity<Response<ReviewModel>> update(String reviewId, @RequestBody ReviewModel review) {
+    public ResponseEntity<Response<ReviewModel>> update(@PathVariable String reviewId, @RequestBody ReviewModel review) {
 
         ReviewModel updateReview = _reviewService.update(reviewId, review);
 

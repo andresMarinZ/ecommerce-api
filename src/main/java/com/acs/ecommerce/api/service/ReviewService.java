@@ -23,6 +23,8 @@ public class ReviewService implements IReviewService {
     }
 
     public ReviewModel save(ReviewModel reviewModel) {
+
+        reviews.add(reviewModel);
         return reviewModel;
     }
 
@@ -38,8 +40,25 @@ public class ReviewService implements IReviewService {
 
         review.setDescription(reviewModel.getDescription());
         review.setUpdatedAt(new Date(System.currentTimeMillis()));
+        review.setViewed(reviewModel.getViewed());
 
         return review;
+    }
+
+    public Boolean delete(String reviewId) {
+
+        ReviewModel review = this.getById(reviewId);
+
+        if (Objects.isNull(review)) {
+            return false;
+        }
+        if (review.getViewed()) {
+            return false;
+        }
+
+        reviews.remove(review);
+
+        return true;
     }
 
 
