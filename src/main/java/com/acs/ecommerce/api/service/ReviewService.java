@@ -1,7 +1,10 @@
 package com.acs.ecommerce.api.service;
 
+import com.acs.ecommerce.api.model.ProductModel;
 import com.acs.ecommerce.api.model.ReviewModel;
+import com.acs.ecommerce.api.service.iservice.IProductService;
 import com.acs.ecommerce.api.service.iservice.IReviewService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -12,6 +15,9 @@ import java.util.stream.Collectors;
 public class ReviewService implements IReviewService {
     private static List<ReviewModel> reviews = new ArrayList<>();
     private static final List<String> listWordProfanity = new ArrayList<>();
+
+    @Autowired
+    IProductService _iProductService;
 
     public ReviewService(List<ReviewModel> reviewInjection){
         reviews = reviewInjection;
@@ -93,18 +99,25 @@ public class ReviewService implements IReviewService {
         return true;
     }
 
+    /*
+     * Validate if product exist or not.
+     * return boolean
+     */
     private boolean ValidateReviewByProduct(String productId){
-        return true;
+        var product = _iProductService.getByid(productId);
+        return  Objects.nonNull(product.stream().findFirst());
     }
 
     /*
     * Validate if description is greater than 1000 characters.
+    * return boolean
     */
     private boolean ValidateReviewByCountDescription(String description){
         return description.length() <= 1000;
     }
     /*
      * Validate Word Profanity in preload list words
+     * return boolean
      */
     private boolean ValidateReviewByWordProfanity(String description){
         AtomicInteger countWorlds = new AtomicInteger();
