@@ -9,11 +9,11 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 @Service
 public class ReviewService implements IReviewService {
-    private static final List<ReviewModel> reviews = new ArrayList<>();
+    private static List<ReviewModel> reviews = new ArrayList<>();
+    private static final List<String> listWordProfanity = new ArrayList<>();
 
-    private static  final List<String> listWordProfanity = new ArrayList<>();
-
-    public ReviewService(){
+    public ReviewService(List<ReviewModel> reviewInjection){
+        reviews = reviewInjection;
         this.LoadWordProfanity();
     }
 
