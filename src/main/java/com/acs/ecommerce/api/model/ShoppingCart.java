@@ -1,38 +1,37 @@
 package com.acs.ecommerce.api.model;
 
 public class ShoppingCart {
-    private String id;
-    private int idBuyer;
+    private String idShoppingCart;
+    private int idShopping;
     private String idProduct;
-    private int productQuantity;
+    private int amountToSell;
 
-
-    public String getId() {
-        return id;
+    public String getIdShoppingCart() {
+        return idShoppingCart;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setIdShoppingCart(String idShoppingCart) {
+        this.idShoppingCart = idShoppingCart;
     }
 
-    public int getIdBuyer() {
-        return idBuyer;
+    public int getIdShopping() {
+        return idShopping;
     }
 
-    public void setIdBuyer(int idBuyer) {
-        this.idBuyer = idBuyer;
-    }
-
-    public int getProductQuantity() {
-        return productQuantity;
-    }
-
-    public void setProductQuantity(int productQuantity) {
-        this.productQuantity = productQuantity;
+    public void setIdShopping(int idShopping) {
+        this.idShopping = idShopping;
     }
 
     public String getIdProduct() {
         return idProduct;
+    }
+
+    public int getAmountToSell() {
+        return amountToSell;
+    }
+
+    public void setAmountToSell(int amountToSell) {
+        this.amountToSell = amountToSell;
     }
 
     public void setIdProduct(String idProduct) {
