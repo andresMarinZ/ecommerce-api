@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public interface IShoppingService {
-    public static List<Shopping> shopping =new ArrayList<>();
+    public List<Shopping> getShopping();
     public Shopping buyProduct();
     public String cancelShopping();
     public Shopping getShoppingId();
