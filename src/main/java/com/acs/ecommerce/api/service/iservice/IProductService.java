@@ -7,7 +7,6 @@ import java.util.List;
 
 public interface IProductService {
    List<ProductModel> get();
-
     List<ProductModel> getByid(String idProduct);
     //ProductModel getByid(String idProduct);
     ProductModel create(ProductModel productModel);
