@@ -22,6 +22,7 @@ public class UserServiceImp implements UserService{
 
         return optionalUser.orElse(null);
     }
+
     //Para obtener el número de documento
     public User getByDocumentNumber(int DocumentNumber) {
         Optional<User> optionalUser = users.stream()
@@ -30,6 +31,7 @@ public class UserServiceImp implements UserService{
 
         return optionalUser.orElse(null);
     }
+
     //CREAR USUARIO A PARTIR DE UN ID
     public User create(User user) {
         user.setId(UUID.randomUUID().toString());
@@ -39,12 +41,14 @@ public class UserServiceImp implements UserService{
     }
 
     //PENDIENTE
-    public User update(String firstName, String LastName, String documentType, int documentNumber) {
+    public User update(String firstName, String LastName, String documentType, int documentNumber)
+    {
         return null;
     }
 
     //PENDIENTE
     public boolean delete(int idUser) {
+
         return false;
     }
 }

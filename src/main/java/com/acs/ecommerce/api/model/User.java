@@ -21,8 +21,20 @@ public class User {
     private int documentNumber;
     private String StoreName;
 
+    private String idShoppingCart;
+
+
+
     public User() {
 
+    }
+
+    public String getIdShoppingCart() {
+        return idShoppingCart;
+    }
+
+    public void setIdShoppingCart(String idShoppingCart) {
+        this.idShoppingCart = idShoppingCart;
     }
 
     public String getUserType() {

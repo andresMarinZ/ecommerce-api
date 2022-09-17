@@ -46,21 +46,14 @@ public class UserController {
     }
 
     //- Solo se eliminará un usuario sí y solo sí este no tiene ventas o productos en un carrito activo.
-    /*@DeleteMapping("users/{idQuote}")
-    public ResponseEntity delete(@PathVariable String idQuote) {
-        boolean deleted = userService.delete(idQuote);
-
+    //idShoppingCart ->>>> variable de carrito (variable identificador)
+    @DeleteMapping("users/{idUser}")
+    public ResponseEntity delete(@PathVariable String id) {
+        if (idShoppingCart=' '){
+        boolean deleted = userService.delete(idUser);
         return deleted ? ResponseEntity.ok().build() : ResponseEntity.notFound().build();
-    }*/
-
-    //PENDIENTE, SE DEPENDE DE OTRO EQUIPO.
-
-
-
-
-
-
-
+        }
+    }
 
 }
 
