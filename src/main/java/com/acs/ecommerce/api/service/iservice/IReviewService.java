@@ -9,4 +9,8 @@ public interface IReviewService {
     List<ReviewModel> getAll();
     ReviewModel save(ReviewModel reviewModel);
 
+    ReviewModel update(String reviewId, ReviewModel reviewModel);
+
+    Boolean delete(String reviewId);
+
 }
