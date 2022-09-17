@@ -21,7 +21,7 @@ public class ProductService implements IProductService {
     @Override
     public List<ProductModel> getByid(String idProduct) {
         Optional<ProductModel> optionalProduct = productsModel.stream()
-                .filter(quote -> quote.getIdProduct().equals(idProduct))
+                .filter(product -> product.getIdProduct().equals(idProduct))
                 .findFirst();
 
         return (List<ProductModel>) optionalProduct.orElse(null);
@@ -29,7 +29,12 @@ public class ProductService implements IProductService {
 
     @Override
     public ProductModel create(ProductModel productModel) {
-        return null;
+
+
+
+        productsModel.add(productModel);
+
+        return productModel;
     }
 
     @Override

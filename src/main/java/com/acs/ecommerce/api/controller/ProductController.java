@@ -35,7 +35,17 @@ public class ProductController {
 
     @PostMapping("/product")
     public ResponseEntity<ProductModel> create(@RequestBody ProductModel productModel) {
-        return ResponseEntity.ok(iProductService.create(productModel));
+
+        ProductModel newProductModel = iProductService.create(productModel);
+
+        return ResponseEntity.ok(newProductModel);
+    }
+    @PutMapping("/product/{idProduct}")
+    public ResponseEntity<ProductModel> update(@PathVariable String idProduct, @RequestBody ProductModel productModel) {
+
+        ProductModel updateProductModel = iProductService.update(idProduct,productModel);
+
+        return ResponseEntity.ok(updateProductModel);
     }
 
 }
