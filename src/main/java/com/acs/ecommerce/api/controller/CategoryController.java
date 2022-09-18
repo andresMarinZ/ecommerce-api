@@ -14,21 +14,37 @@ public class CategoryController {
     @Autowired
     private CategoryServiceImpl categoryService;
 
+    //- La api deberá permitir consultar todas las categorías asociadas a un producto.
+    @GetMapping("/category/{idProduct}")
+    public ResponseEntity<CategoryModel> getByProduct(@PathVariable String idProduct) {
+        CategoryModel categoryModel = categoryService.getByProduct(idProduct);
+        return ResponseEntity.ok(categoryModel);
+    }
 
-    @PostMapping("/create")
+    //- La api deberá permitir crear una categoría solamente a usuarios de tipo administrador.
+    //- El nombre de la categoría no deberá superar los 100 caracteres.
+    //- No se debe permitir la duplicidad de una categoría.
+    @PostMapping("/category")
     public ResponseEntity<CategoryModel> create(@RequestBody CategoryModel categoryModel) {
-        return ResponseEntity.ok(categoryService.create(categoryModel));
+        CategoryModel categoryModelCreated = categoryService.create(categoryModel);
+        return ResponseEntity.ok(categoryModelCreated);
     }
 
-    @DeleteMapping("/delete/{idProduct}")
-    public ResponseEntity<Boolean> delete(@PathVariable String idProduct) {
-        return ResponseEntity.ok(categoryService.delete(idProduct));
-    }
-
-    @PutMapping("/update/{idProduct}")
+    //- La api deberá permitir editar una categoría sí y solo sí no se ha asociado a un producto.
+    //- Solo se podrá editar el texto de la categoría.
+    @PutMapping("/category/{idProduct}")
     public ResponseEntity<CategoryModel> update(@PathVariable String idProduct, @RequestBody CategoryModel categoryModel) {
-        return ResponseEntity.ok(categoryService.update(idProduct, categoryModel));
+        CategoryModel categoryModelUpdated = categoryService.update(idProduct, categoryModel);
+        return ResponseEntity.ok(categoryModelUpdated);
     }
+
+    //- La api deberá permitir eliminar una categoría sí y solo sí no se ha asociado a un producto.
+    @DeleteMapping("/category/{idProduct}")
+    public ResponseEntity<Boolean> delete(@PathVariable String idProduct) {
+        boolean deleted = categoryService.delete(idProduct);
+        return ResponseEntity.ok(deleted);
+    }
+
 
 
 }
