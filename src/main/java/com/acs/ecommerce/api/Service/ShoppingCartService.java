@@ -7,6 +7,6 @@ import java.util.List;
 public interface ShoppingCartService {
     List<ShoppingCart> get();
     ShoppingCart getById(String idShoppingCart);
-    ShoppingCart create(ShoppingCart shoppingcart);
+    ShoppingCart create(ShoppingCart idShoppingCart);
     boolean delete(String idShoppingCart);
 }

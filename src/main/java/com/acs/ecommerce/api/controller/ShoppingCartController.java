@@ -14,7 +14,7 @@ public class ShoppingCartController {
     @Autowired
     ShoppingCartService shoppingcartService;
 
-    /* Consult of the shoppingcart for id*/
+    /* Visualization of the shoppingcart*/
     @GetMapping("shoppingcarts")
     public ResponseEntity<List<ShoppingCart>> get() {
         List<ShoppingCart> shoppingcarts = shoppingcartService.get();
@@ -22,6 +22,7 @@ public class ShoppingCartController {
         return shoppingcarts.isEmpty() ? ResponseEntity.badRequest().body(shoppingcarts) : ResponseEntity.ok(shoppingcarts);
     }
 
+    /* Consult of the shoppingcart for id*/
     @GetMapping("shoppingcarts/{idShoppingCart}")
     public ResponseEntity<ShoppingCart> getById(@PathVariable String idShoppingCart) {
         ShoppingCart shoppingcart = shoppingcartService.getById(idShoppingCart);

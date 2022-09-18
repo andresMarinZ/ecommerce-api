@@ -16,6 +16,7 @@ public class ShoppingCartImp implements ShoppingCartService{
         return shoppingcarts;
     }
 
+    /*Consult Service*/
     public ShoppingCart getById(String idShoppingCart) {
         Optional<ShoppingCart> optionalShoppingCart = shoppingcarts.stream()
                 .filter(shoppingcart -> shoppingcart.getIdShoppingCart().equals(idShoppingCart))
@@ -23,14 +24,16 @@ public class ShoppingCartImp implements ShoppingCartService{
 
         return optionalShoppingCart.orElse(null);
     }
+    /*Create Service*/
+    public ShoppingCart create(ShoppingCart idShoppingCart) {
+        idShoppingCart.setIdShoppingCart(UUID.randomUUID().toString());
 
-    public ShoppingCart create(ShoppingCart shoppingcart) {
-        shoppingcart.setIdShoppingCart(UUID.randomUUID().toString());
-        shoppingcarts.add(shoppingcart);
+        shoppingcarts.add(idShoppingCart);
 
-        return shoppingcart;
+        return idShoppingCart;
     }
 
+    /*Delete Service*/
     public boolean delete(String idShoppingCart) {
         ShoppingCart shoppingcart = getById(idShoppingCart);
 
