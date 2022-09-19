@@ -47,7 +47,7 @@ class UserServiceImpTest {
     }
 
     @Test
-    public void updateQuoteSuccessfullyTest() {
+    public void updateUserSuccessfullyTest() {
         User userCreated = userService.create(getNewUser());
         User userToUpdate = getNewUser();
         userToUpdate.setFirstName("editFirsname");
