@@ -7,8 +7,10 @@ import java.util.List;
 
 public interface IShoppingService {
     public List<Shopping> getShopping();
-    public Shopping buyProduct();
-    public String cancelShopping();
+
+    Shopping buyProduct(Shopping buy);
+
+    public String cancelShopping(int id);
     public Shopping getShoppingId();
     public Shopping getShoppingUser();
     public List getCancelShopping();

@@ -1,5 +1,8 @@
 package com.acs.ecommerce.api.model;
-package com.acs.ecommerce.api.service;
+
+import java.time.LocalTime;
+
+/* package com.acs.ecommerce.api.service; */ /* lo comento por que saca error y no se porque*/
 public class Shopping{
     private int idShopping;
     private int idShopper;
@@ -7,6 +10,7 @@ public class Shopping{
     private int amountProduct;
     private String addressSend;
 
+/*Otra opcion es crear el objeto localtime desde aqui*/
     private int increment=0;
     public Shopping(int idShopper, int idProduct, int amountProduct, String addressSend, String addressFact, String paymentGateway, String dateBuy) {
         this.idShopping=increment;
