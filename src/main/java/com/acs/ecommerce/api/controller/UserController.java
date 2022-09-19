@@ -40,20 +40,20 @@ public class UserController {
     //- Se podrá editar los nombres, apellidos, tipo de documento y número de documento.
     @PutMapping("users/{firstName},{LastName},{documentType}, {documentNumber}")
     public ResponseEntity<User> update(@PathVariable String firstName, String LastName, String documentType, int documentNumber, @RequestBody User user) {
-        User userUpdated = userService.update(firstName, LastName, documentType, documentNumber);
+        User userUpdated = userService.update(firstName, LastName, documentType, documentNumber, user);
 
         return Objects.isNull(userUpdated) ? ResponseEntity.notFound().build() : ResponseEntity.ok(userUpdated);
     }
 
     //- Solo se eliminará un usuario sí y solo sí este no tiene ventas o productos en un carrito activo.
     //idShoppingCart ->>>> variable de carrito (variable identificador)
-    @DeleteMapping("users/{idUser}")
+    /*@DeleteMapping("users/{idUser}")
     public ResponseEntity delete(@PathVariable String id) {
         if (idShoppingCart=' '){
         boolean deleted = userService.delete(idUser);
         return deleted ? ResponseEntity.ok().build() : ResponseEntity.notFound().build();
         }
-    }
+    }*/
 
 }
 

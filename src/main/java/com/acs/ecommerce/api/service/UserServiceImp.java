@@ -8,6 +8,10 @@ import java.util.*;
 @Service
 public class UserServiceImp implements UserService{
 
+    public List<User> get() {
+        return users;
+    }
+
     private static List<User> users = new ArrayList<>();
     //Inyección?
     public UserServiceImp(List<User> usersInjected) {
@@ -41,9 +45,20 @@ public class UserServiceImp implements UserService{
     }
 
     //PENDIENTE
-    public User update(String firstName, String LastName, String documentType, int documentNumber)
-    {
-        return null;
+    public User update(String firstName, String LastName, String documentType, int documentNumber, User user) {
+        User oldUser = getByDocumentNumber(documentNumber);
+
+        if(Objects.isNull(oldUser)){
+            return null;
+        }
+
+        oldUser.setFirstName(user.getFirstName());
+        oldUser.setLastName(user.getLastName());
+        oldUser.setDocumentType(user.getDocumentType());
+        oldUser.setDocumentNumber(user.getDocumentNumber());
+
+        return  oldUser;
+
     }
 
     //PENDIENTE
