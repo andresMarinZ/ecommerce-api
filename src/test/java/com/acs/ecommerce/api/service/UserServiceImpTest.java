@@ -80,4 +80,10 @@ class UserServiceImpTest {
 
         return user;
     }
+
+    @Test
+    public void deleteTest(){
+
+    }
+
 }

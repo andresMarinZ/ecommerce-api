@@ -11,11 +11,12 @@ public interface UserService {
 
     User getByDocumentNumber(int DocumentNumber);
 
+    User getByIdUser(String idUser);
 
     User create(User user);
 
     User update(String firstName, String LastName, String documentType, int documentNumber, User user);
 
-    boolean delete(int idUser);
+    boolean delete(String idUser);
 
 }

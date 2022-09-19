@@ -17,7 +17,7 @@ public class UserController {
     @Autowired
     UserService userService;
 
-    //Se podrá consultar un usuario por su tipo y número de documento.
+    //When we need an userTyper and DocumentNumber
     @GetMapping("users/{userType},{documentNumber}" )
     public ResponseEntity<User> getUser(@PathVariable String userType, int documentNumber, @RequestBody User user) {
         //Consulto por tipo de usuario, PENDIENTE por tipo de documento
@@ -47,13 +47,14 @@ public class UserController {
 
     //- Solo se eliminará un usuario sí y solo sí este no tiene ventas o productos en un carrito activo.
     //idShoppingCart ->>>> variable de carrito (variable identificador)
-    /*@DeleteMapping("users/{idUser}")
-    public ResponseEntity delete(@PathVariable String id) {
+    @DeleteMapping("users/{idUser}")
+    public ResponseEntity delete(@PathVariable String idUser) {
+        boolean deleted = false;
         if (idShoppingCart=' '){
-        boolean deleted = userService.delete(idUser);
-        return deleted ? ResponseEntity.ok().build() : ResponseEntity.notFound().build();
+            deleted = userService.delete(idUser);
         }
-    }*/
+        return deleted ? ResponseEntity.ok().build() : ResponseEntity.notFound().build();
+    }
 
 }
 

@@ -13,12 +13,12 @@ public class UserServiceImp implements UserService{
     }
 
     private static List<User> users = new ArrayList<>();
-    //Inyección?
+    //
     public UserServiceImp(List<User> usersInjected) {
         users = usersInjected;
     }
 
-    //Para obtener el tipo de usuario
+    //For get an user type
     public User getByUserType(String userType) {
         Optional<User> optionalUser = users.stream()
                 .filter(users -> users.getUserType().equals(userType))
@@ -27,7 +27,15 @@ public class UserServiceImp implements UserService{
         return optionalUser.orElse(null);
     }
 
-    //Para obtener el número de documento
+    public User getByIdUser(String idUser){
+        Optional<User> optionalUser = users.stream()
+                .filter(users -> users.getId().equals(idUser))
+                .findFirst();
+
+        return optionalUser.orElse(null);
+    }
+
+    //When we need to get a document number
     public User getByDocumentNumber(int DocumentNumber) {
         Optional<User> optionalUser = users.stream()
                 .filter(users -> users.getDocumentNumber() == DocumentNumber)
@@ -36,7 +44,7 @@ public class UserServiceImp implements UserService{
         return optionalUser.orElse(null);
     }
 
-    //CREAR USUARIO A PARTIR DE UN ID
+    //Create an user
     public User create(User user) {
         user.setId(UUID.randomUUID().toString());
         users.add(user);
@@ -44,7 +52,6 @@ public class UserServiceImp implements UserService{
         return user;
     }
 
-    //PENDIENTE
     public User update(String firstName, String LastName, String documentType, int documentNumber, User user) {
         User oldUser = getByDocumentNumber(documentNumber);
 
@@ -61,9 +68,14 @@ public class UserServiceImp implements UserService{
 
     }
 
-    //PENDIENTE
-    public boolean delete(int idUser) {
+    public boolean delete(String idUser) {
+        User user = getByIdUser(idUser);
 
-        return false;
+        if (Objects.isNull(user)) {
+            return false;
+        }
+
+        return users.removeIf(users -> users.getId().equals(idUser));
     }
+
 }
