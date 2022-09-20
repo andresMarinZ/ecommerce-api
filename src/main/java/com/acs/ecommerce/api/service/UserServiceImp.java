@@ -68,6 +68,11 @@ public class UserServiceImp implements UserService{
 
     }
 
+    public boolean delete(String idUser, String idShoppingCart) {
+        boolean deleted = false;
+        return idShoppingCart.equals(' ');
+    }
+
     public boolean delete(String idUser) {
         User user = getByIdUser(idUser);
 

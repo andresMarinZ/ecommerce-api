@@ -17,6 +17,6 @@ public interface UserService {
 
     User update(String firstName, String LastName, String documentType, int documentNumber, User user);
 
-    boolean delete(String idUser);
+    boolean delete(String idUser, String idShoppingCart);
 
 }

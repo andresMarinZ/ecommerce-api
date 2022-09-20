@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.util.ArrayList;
@@ -36,14 +37,17 @@ class UserServiceImpTest {
     @Test
     public void createUserTest() {
         User userCreated = userService.create(getNewUser());
+        if (userCreated.getUserType().equals("ADMIN")){
 
         Assertions.assertAll(
-                () -> Assertions.assertEquals("firsname", userCreated.getFirstName()),
+                () -> Assertions.assertEquals("firstname", userCreated.getFirstName()),
                 () -> Assertions.assertEquals("lastname", userCreated.getLastName()),
-                () -> Assertions.assertEquals("buyer", userCreated.getUserType()),
-                () -> Assertions.assertEquals("seller", userCreated.getUserType()),
+                () -> Assertions.assertEquals("ADMIN", userCreated.getUserType()),
+                () -> Assertions.assertEquals("CC", userCreated.getDocumentType()),
+                () -> Assertions.assertEquals("STORE", userCreated.getStoreName()),
+                () -> Assertions.assertEquals(4525522, userCreated.getDocumentNumber()),
                 () -> Assertions.assertTrue(Objects.nonNull(userCreated.getId()))
-        );
+        );}
     }
 
     @Test
@@ -83,6 +87,8 @@ class UserServiceImpTest {
 
     @Test
     public void deleteTest(){
+
+        // DEPENDEMOS DEL COMPAÑERO DE CARRITO
 
     }
 
