@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 @RestController
 public class ProductController {
@@ -21,21 +22,15 @@ public class ProductController {
 
    // private final List<ProductModel> productModels = new ArrayList<>();
 
-
-
     @GetMapping("/product/{idProduct}")
     public ResponseEntity<ProductModel> getById(@PathVariable String idProduct) {
-        ProductModel productModel = (ProductModel) iProductService.getByid(idProduct);
+        ProductModel productModel = iProductService.getByid(idProduct);
 
         return Objects.isNull(productModel) ? ResponseEntity.notFound().build() : ResponseEntity.ok(productModel);
     }
 
-
-
-
     @PostMapping("/product")
     public ResponseEntity<ProductModel> create(@RequestBody ProductModel productModel) {
-
         ProductModel newProductModel = iProductService.create(productModel);
 
         return ResponseEntity.ok(newProductModel);
