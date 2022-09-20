@@ -8,10 +8,10 @@ import java.util.List;
 public interface IShoppingService {
     public List<Shopping> getShopping();
 
-    Shopping buyProduct(Shopping buy);
+    String buyProduct(Shopping buy);
 
     public String cancelShopping(int id);
-    public Shopping getShoppingId();
+    public String getShoppingId(int id);
     public Shopping getShoppingUser();
     public List getCancelShopping();
 }

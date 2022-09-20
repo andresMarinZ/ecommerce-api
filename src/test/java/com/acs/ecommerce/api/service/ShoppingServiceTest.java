@@ -1,7 +1,5 @@
 package com.acs.ecommerce.api.service;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import com.acs.ecommerce.api.model.Shopping;
@@ -23,18 +21,20 @@ class ShoppingServiceTest {
     }
 
     @Test /*Validando lo que entrea a la lista*/
-    void buyProduct() {
-        Shopping shopCreated = shoppingService.create(getNewshop());
+    void testbuyProduct() {
+        String shopCreated = shoppingService.buyProduct(getNewshop().get(0));
+        String shopCreated2 = shoppingService.buyProduct(getNewshop().get(1));
 
-        return Assertions.assertAll(
-                () -> Assertions.assertEquals(2, shopCreated.getIdShopping()),
-                () -> Assertions.assertEquals(2, shopCreated.getIdProduct()),
-                () -> Assertions.assertEquals(30, shopCreated.getAmountProduct()),
-                () -> Assertions.assertEquals("san javier", shopCreated.getAddressSend()),
-                () -> Assertions.assertEquals("55421", shopCreated.getAddressFact()),
-                () -> Assertions.assertEquals("bancolombia", shopCreated.getPaymentGateway()),
-                () -> Assertions.assertEquals("11:05", shopCreated.getDateBuy()))
-        );
+        String barrio = shoppingService.getShoppingId(0);
+        String barrio2 = shoppingService.getShoppingId(1);
+
+        assertAll(
+                () -> Assertions.assertEquals("Created", shopCreated),
+                () -> Assertions.assertEquals("san javier", barrio),
+                () -> Assertions.assertEquals("Created", shopCreated2),
+                () -> Assertions.assertEquals("san carlos", barrio2)
+
+                );
      }
 
     @Test
@@ -42,9 +42,15 @@ class ShoppingServiceTest {
 
     }
 
-    private Shopping getNewshop() {
-        Shopping shop = new Shopping(2,2,30,"san javier","55421","bancolombia","11:05");
+    private List<Shopping> getNewshop() {
+        //Shopping shopPrueba=new Shopping();
+        List<Shopping> shops=new ArrayList<>();
+        Shopping shop = new Shopping(2,2,30,"san javier","55421","bancolombia");
+        Shopping shop2 = new Shopping(1,14,20,"san carlos","34556","PSE");
 
-        return shop;
-    }
+        shops.add(shop);
+        shops.add(shop2);
+
+        return shops;
+     }
 }

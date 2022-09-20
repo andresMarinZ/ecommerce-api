@@ -12,7 +12,7 @@ import java.util.List;
 @Service
 public class ShoppingService implements IShoppingService{
 
-    public static List<Shopping> shopping =new ArrayList<>();
+    public static List<Shopping> shopping = new ArrayList<>();
     public ShoppingService(List<Shopping> shoppingInjected){
         shopping=shoppingInjected;
     }
@@ -30,18 +30,21 @@ public class ShoppingService implements IShoppingService{
         return cancelTime;
     }
     @Override
-    public Shopping buyProduct(Shopping buy) {
+    public String buyProduct(Shopping buy) {
+        buy.setStateBuy("Created");
         shopping.add(buy);
-        return null;
+        return buy.getStateBuy().toString();
     }
 
     /*Elimina compra segun el Id propio de compras*/
     @Override
-    public String cancelShopping(int id) {
+    public String cancelShopping(int id ) {
+        List<Shopping> shopping = getShopping();
         LocalTime cancelT = cancel_time();
-        int minutes = (int) ChronoUnit.MINUTES.between(Shopping.getDateBuy(), cancelT); /*Comparar fecha del atributo getdate con la creada al momento de invocar a cancelShopping*/
+         /*Comparar fecha del atributo getdate con la creada al momento de invocar a cancelShopping*/
         for(Shopping shop : shopping){
-            if(Shopping.getIdShopping().equals(id) && minutes > 5){
+            int minutes = (int) ChronoUnit.MINUTES.between(shop.getDateBuy(), cancelT);
+            if(shop.getIdShopping() == id && minutes > 5){
                 shopping.remove(shop);
                 return "compra eliminada";
             }
@@ -50,9 +53,15 @@ public class ShoppingService implements IShoppingService{
         return null;
     }
 
-    @Override
-    public Shopping getShoppingId() {
-        return null;
+
+    public String getShoppingId(int id) {
+        List<Shopping> shoppings=getShopping();
+        for(Shopping shop : shoppings){
+            if (shop.getIdShopping()==id){
+                return shop.getAddressSend();
+            }
+        }
+        return "Not found";
     }
 
     @Override
@@ -64,6 +73,7 @@ public class ShoppingService implements IShoppingService{
     public List getCancelShopping() {
         return null;
     }
+
 
     /*
     * Metodo para generar compra

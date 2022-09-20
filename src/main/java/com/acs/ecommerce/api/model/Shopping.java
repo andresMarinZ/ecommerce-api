@@ -9,10 +9,25 @@ public class Shopping{
     private int idProduct;
     private int amountProduct;
     private String addressSend;
+    private String addressFact;
+    private String paymentGateway;
+    private LocalTime dateBuy;
 
+    public String getStateBuy() {
+        return stateBuy;
+    }
+
+    public void setStateBuy(String stateBuy) {
+        this.stateBuy = stateBuy;
+    }
+
+    private String stateBuy;
 /*Otra opcion es crear el objeto localtime desde aqui*/
     private int increment=0;
-    public Shopping(int idShopper, int idProduct, int amountProduct, String addressSend, String addressFact, String paymentGateway, String dateBuy) {
+
+    public Shopping(){}
+
+    public Shopping(int idShopper, int idProduct, int amountProduct, String addressSend, String addressFact, String paymentGateway) {
         this.idShopping=increment;
         this.idShopper = idShopper;
         this.idProduct = idProduct;
@@ -20,13 +35,12 @@ public class Shopping{
         this.addressSend = addressSend;
         this.addressFact = addressFact;
         this.paymentGateway = paymentGateway;
-        this.dateBuy = dateBuy;
+        this.dateBuy = LocalTime.now();
         this.increment++;
     }
 
-    private String addressFact;
-    private String paymentGateway;
-    private String dateBuy;
+
+
 
     public int getIdShopping() {
         return idShopping;
@@ -84,11 +98,11 @@ public class Shopping{
         this.paymentGateway = paymentGateway;
     }
 
-    public String getDateBuy() {
+    public LocalTime getDateBuy() {
         return dateBuy;
     }
 
-    public void setDateBuy(String dateBuy) {
+    public void setDateBuy(LocalTime dateBuy) {
         this.dateBuy = dateBuy;
     }
 }
