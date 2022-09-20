@@ -105,7 +105,8 @@ public class ReviewService implements IReviewService {
      */
     private boolean ValidateReviewByProduct(String productId){
         var product = _iProductService.getByid(productId);
-        return  Objects.nonNull(product.stream().findFirst());
+//        return  Objects.nonNull(product.stream().findFirst());
+        return true;
     }
 
     /*
