@@ -46,7 +46,7 @@ class ShoppingCartImpTest {
     @Test
     public void deleteShoppingCartTest() {
         Assertions.assertAll(
-                () -> Assertions.assertEquals("false", shoppingcartService.delete(getNewShoppingCart().getIdShoppingCart()))
+                () -> Assertions.assertEquals(false, shoppingcartService.delete(getNewShoppingCart().getIdShoppingCart()))
         );
     }
     private ShoppingCart getNewShoppingCart() {
