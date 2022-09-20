@@ -10,8 +10,11 @@ import java.util.Optional;
 
 @Service
 public class ProductService implements IProductService {
-    private static final List<ProductModel> productsModel = new ArrayList<>();
+    private static  List<ProductModel> productsModel = new ArrayList<>();
 
+    public ProductService(List<ProductModel> productInjection) {
+        productsModel = productInjection;
+    }
 
     @Override
     public List<ProductModel> get() {
@@ -19,17 +22,19 @@ public class ProductService implements IProductService {
     }
 
     @Override
-    public List<ProductModel> getByid(String idProduct) {
+    public ProductModel getByid(String idProduct) {
         Optional<ProductModel> optionalProduct = productsModel.stream()
-                .filter(quote -> quote.getIdProduct().equals(idProduct))
+                .filter(product -> product.getIdProduct().equals(idProduct))
                 .findFirst();
 
-        return (List<ProductModel>) optionalProduct.orElse(null);
+        return optionalProduct.orElse(null);
     }
 
     @Override
     public ProductModel create(ProductModel productModel) {
-        return null;
+        productsModel.add(productModel);
+
+        return productModel;
     }
 
     @Override
@@ -38,7 +43,9 @@ public class ProductService implements IProductService {
     }
 
     @Override
-    public boolean delete(String idQuote) {
-        return false;
+    public ProductModel delete(String idQuote, ProductModel productModel) {
+        return null;
     }
+
+
 }
