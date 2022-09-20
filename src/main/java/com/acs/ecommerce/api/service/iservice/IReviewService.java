@@ -6,6 +6,7 @@ import java.util.List;
 
 public interface IReviewService {
 
+    List<ReviewModel> getByProductId(String productId);
     List<ReviewModel> getAll();
     ReviewModel save(ReviewModel reviewModel);
 
