@@ -6,10 +6,12 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
-import com.acs.ecommerce.api.model.ShoppingCart;
-import static org.junit.jupiter.api.Assertions.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+
+import static org.mockito.ArgumentMatchers.booleanThat;
+import static org.mockito.Mockito.when;
 
 @ExtendWith(SpringExtension.class)
 class ShoppingCartImpTest {
@@ -41,6 +43,12 @@ class ShoppingCartImpTest {
         );
     }
 
+    @Test
+    public void deleteShoppingCartTest() {
+        Assertions.assertAll(
+                () -> Assertions.assertEquals("false", shoppingcartService.delete(getNewShoppingCart().getIdShoppingCart()))
+        );
+    }
     private ShoppingCart getNewShoppingCart() {
         ShoppingCart shoppingcart = new ShoppingCart();
         shoppingcart.setIdProduct("1");
