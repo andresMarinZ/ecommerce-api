@@ -29,6 +29,13 @@ public class ProductController {
         return Objects.isNull(productModel) ? ResponseEntity.notFound().build() : ResponseEntity.ok(productModel);
     }
 
+    @GetMapping("/product/category/{idCategory}")
+    public ResponseEntity<ProductModel> getByCategory(@PathVariable String idCategory) {
+        ProductModel productModel = iProductService.getByCategory(idCategory);
+
+        return Objects.isNull(productModel) ? ResponseEntity.notFound().build() : ResponseEntity.ok(productModel);
+    }
+
     @PostMapping("/product")
     public ResponseEntity<ProductModel> create(@RequestBody ProductModel productModel) {
         ProductModel newProductModel = iProductService.create(productModel);

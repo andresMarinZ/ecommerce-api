@@ -13,4 +13,6 @@ public interface IProductService {
     ProductModel create(ProductModel productModel);
     ProductModel update(String idProduct, ProductModel productModel);
     ProductModel delete(String idQuote, ProductModel productModel);
+
+    ProductModel getByCategory(String productCategory);
 }

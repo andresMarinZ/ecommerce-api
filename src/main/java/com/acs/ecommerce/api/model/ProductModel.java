@@ -1,5 +1,6 @@
 package com.acs.ecommerce.api.model;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 public class ProductModel {
@@ -9,13 +10,13 @@ public class ProductModel {
     private int amountToSell;
     private String productCategory;
     private String urlProductImage;
-    private Date dateAddProduct;
+    private LocalDateTime dateAddProduct = LocalDateTime.now();
 
     public ProductModel(){
 
     }
 
-    public ProductModel(String idProduct, String productName, String productDescription, int amountToSell, String productCategory, String urlProductImage, Date dateAddProduct, int documentNumber) {
+    public ProductModel(String idProduct, String productName, String productDescription, int amountToSell, String productCategory, String urlProductImage, LocalDateTime dateAddProduct, int documentNumber) {
         this.idProduct = idProduct;
         this.productName = productName;
         this.productDescription = productDescription;
@@ -24,7 +25,6 @@ public class ProductModel {
         this.urlProductImage = urlProductImage;
         this.dateAddProduct = dateAddProduct;
         this.documentNumber = documentNumber;
-
     }
 
     private int documentNumber;
@@ -77,11 +77,11 @@ public class ProductModel {
         this.urlProductImage = urlProductImage;
     }
 
-    public Date getDateAddProduct() {
+    public LocalDateTime getDateAddProduct() {
         return dateAddProduct;
     }
 
-    public void setDateAddProduct(Date dateAddProduct) {
+    public void setDateAddProduct(LocalDateTime dateAddProduct) {
         this.dateAddProduct = dateAddProduct;
     }
 

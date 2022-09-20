@@ -47,5 +47,11 @@ public class ProductService implements IProductService {
         return null;
     }
 
-
+    @Override
+    public ProductModel getByCategory(String productCategory) {
+        Optional<ProductModel> optionalProduct = productsModel.stream()
+        .filter(product -> product.getProductCategory().equals(productCategory))
+        .findFirst();
+        return optionalProduct.orElse(null);
+    }
 }
