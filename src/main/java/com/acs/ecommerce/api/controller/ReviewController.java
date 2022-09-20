@@ -7,8 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -17,8 +15,6 @@ public class ReviewController {
 
     @Autowired
     IReviewService _reviewService;
-
-    private final List<ReviewModel> reviewList = new ArrayList<>();
 
     @DeleteMapping("/delete/{reviewId}")
     public ResponseEntity<Response<ReviewModel>> deleteReview(@PathVariable String reviewId) {
@@ -30,11 +26,9 @@ public class ReviewController {
             var responseEntity = new Response<ReviewModel>();
             responseEntity.setMessage("Delete success");
             responseEntity.setStatus(true);
-            responseEntity.setData(null);
 
             return new ResponseEntity<>(responseEntity, null, HttpStatus.OK);
         }
-
 
         var responseEntity = new Response<ReviewModel>();
         responseEntity.setMessage("Delete fail");
@@ -45,8 +39,10 @@ public class ReviewController {
     @GetMapping("/review/{productId}")
     public ResponseEntity<Response<ReviewModel>> search(String productId) {
 
+        List<ReviewModel> reviewList = _reviewService.getByProductId(productId);
+
         var responseEntity = new Response<ReviewModel>();
-        responseEntity.setMessage("created success");
+        responseEntity.setMessage("Successful query");
         responseEntity.setStatus(true);
         responseEntity.setData(reviewList);
 
@@ -59,7 +55,7 @@ public class ReviewController {
         List<ReviewModel> listReviews = _reviewService.getAll();
 
         var responseEntity = new Response<List<ReviewModel>>();
-        responseEntity.setMessage("created success");
+        responseEntity.setMessage("Successful query");
         responseEntity.setStatus(true);
         responseEntity.setData(listReviews);
 
@@ -69,12 +65,12 @@ public class ReviewController {
     @PostMapping("/review")
     public ResponseEntity<Response<ReviewModel>> save(@RequestBody ReviewModel review) {
 
-        var insert = _reviewService.save(review);
+        ReviewModel newReview = _reviewService.save(review);
 
         var responseEntity = new Response<ReviewModel>();
         responseEntity.setMessage("created success");
         responseEntity.setStatus(true);
-        responseEntity.setData(insert);
+        responseEntity.setData(newReview);
         return new ResponseEntity<>(responseEntity, null, HttpStatus.CREATED);
     }
 
@@ -86,13 +82,12 @@ public class ReviewController {
         var responseEntity = new Response<ReviewModel>();
 
         if (Objects.isNull(updateReview)) {
-            responseEntity.setMessage("review not found");
+            responseEntity.setMessage("Review not updated");
             responseEntity.setStatus(false);
-            responseEntity.setData(null);
             return new ResponseEntity<>(responseEntity, null, HttpStatus.BAD_REQUEST);
         }
 
-        responseEntity.setMessage("updated success");
+        responseEntity.setMessage("Updated review");
         responseEntity.setStatus(true);
         responseEntity.setData(updateReview);
 

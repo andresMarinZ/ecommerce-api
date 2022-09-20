@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.stream.Collectors;
 
 @Service
 public class ReviewService implements IReviewService {
@@ -17,6 +18,11 @@ public class ReviewService implements IReviewService {
         this.LoadWordProfanity();
     }
 
+    public List<ReviewModel> getByProductId(String productId) {
+        return reviews.stream()
+                .filter(review -> review.getProductId().equals(productId))
+                .collect(Collectors.toList());
+    }
     public List<ReviewModel> getAll() {
         return reviews;
     }
@@ -28,7 +34,6 @@ public class ReviewService implements IReviewService {
 
         return optionalReview.orElse(null);
     }
-
 
     /*
         - La api deberá permitir crear una revisión solamente a un usuario de tipo comprador.
@@ -84,7 +89,6 @@ public class ReviewService implements IReviewService {
         return true;
     }
 
-
     private boolean ValidateReviewByUser(String userId){
         return true;
     }
@@ -97,19 +101,19 @@ public class ReviewService implements IReviewService {
     * Validate if description is greater than 1000 characters.
     */
     private boolean ValidateReviewByCountDescription(String description){
-        return  description.length() <= 1000 ? true : false;
+        return description.length() <= 1000;
     }
     /*
      * Validate Word Profanity in preload list words
      */
     private boolean ValidateReviewByWordProfanity(String description){
-        AtomicInteger countWods = new AtomicInteger();
-        listWordProfanity.stream().forEach((p)-> {
+        AtomicInteger countWorlds = new AtomicInteger();
+        listWordProfanity.forEach((p)-> {
             if(description.contains(p)){
-                countWods.addAndGet(1);
-            };
+                countWorlds.addAndGet(1);
+            }
         });
-        return  (countWods.get() == 0) ? true : false;
+        return countWorlds.get() == 0;
     }
 
     /*
