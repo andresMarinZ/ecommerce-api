@@ -26,12 +26,11 @@ class ReviewServiceTest {
     private static final List<ReviewModel> reviewMockList = new ArrayList<>();
     private static final List<ProductModel> productMockList = new ArrayList<>();
     private final ReviewService reviewServices;
-
-    @InjectMocks
-    private  IProductService IProductService;
+    private  final ProductService productService;
 
     public ReviewServiceTest() {
         reviewServices = new ReviewService(reviewMockList);
+        productService = new ProductService(productMockList);
     }
 
     @BeforeEach
