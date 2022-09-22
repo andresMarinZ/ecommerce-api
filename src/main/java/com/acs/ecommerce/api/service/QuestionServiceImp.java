@@ -22,17 +22,15 @@ public class QuestionServiceImp implements QuestionService {
         String questionText = question.getQuestionText();
         Response response = new Response();
 
-        if (questionText.length() < 1000) {
-            boolean vulgarWordInPhrase = containsVulgarWords(questionText, vulgarWords);
+        boolean textLengthLessThan1000 = textLengthLessThan1000(questionText);
+        boolean vulgarWordInPhrase = containsVulgarWords(questionText, vulgarWords);
+        boolean productExists = producExists(productId);
+        boolean isAuthorizedUser = isAuthorizedUser(buyerId, productId);
+
+        if (textLengthLessThan1000) {
             if (vulgarWordInPhrase) {
-                // TODO - Get Buyer type
-                boolean isAuthorizedBuyer = true;
-
-                if (isAuthorizedBuyer) {
-                    // TODO - Product exists?
-                    boolean productExist = true;
-
-                    if (productExist) {
+                if (isAuthorizedUser) {
+                    if (productExists) {
                         question.setId(UUID.randomUUID().toString());
                         question.setCreationDate(new Date(System.currentTimeMillis()));
                         questions.add(question);
@@ -51,6 +49,19 @@ public class QuestionServiceImp implements QuestionService {
         }
 
         return response;
+    }
+
+    public boolean isAuthorizedUser(String buyerId, String productId){
+        return !Objects.equals(buyerId, "") || !Objects.equals(productId, "");
+    }
+
+    public boolean textLengthLessThan1000(String questionText) {
+        return questionText.length() < 1000;
+    }
+
+    public boolean producExists(String producExists){
+        //TODO - Get product
+        return true;
     }
 
     public List<Question> getAll(String buyerId) {
