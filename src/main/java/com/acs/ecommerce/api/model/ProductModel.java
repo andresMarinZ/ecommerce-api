@@ -1,14 +1,14 @@
 package com.acs.ecommerce.api.model;
 
 import java.time.LocalDateTime;
-import java.util.Date;
 
 public class ProductModel {
     private String idProduct;
     private String productName;
     private String productDescription;
     private int amountToSell;
-    private String productCategory;
+
+    private long idCategory;
     private String urlProductImage;
     private LocalDateTime dateAddProduct = LocalDateTime.now();
 
@@ -16,12 +16,12 @@ public class ProductModel {
 
     }
 
-    public ProductModel(String idProduct, String productName, String productDescription, int amountToSell, String productCategory, String urlProductImage, LocalDateTime dateAddProduct, int documentNumber) {
+    public ProductModel(String idProduct, String productName, String productDescription, int amountToSell, long idCategory, String urlProductImage, LocalDateTime dateAddProduct, int documentNumber) {
         this.idProduct = idProduct;
         this.productName = productName;
         this.productDescription = productDescription;
         this.amountToSell = amountToSell;
-        this.productCategory = productCategory;
+        this.idCategory = idCategory;
         this.urlProductImage = urlProductImage;
         this.dateAddProduct = dateAddProduct;
         this.documentNumber = documentNumber;
@@ -61,12 +61,12 @@ public class ProductModel {
         this.amountToSell = amountToSell;
     }
 
-    public String getProductCategory() {
-        return productCategory;
+    public long getIdCategory() {
+        return idCategory;
     }
 
-    public void setProductCategory(String productCategory) {
-        this.productCategory = productCategory;
+    public void setProductCategory(long idCategory) {
+        this.idCategory = idCategory;
     }
 
     public String getUrlProductImage() {
@@ -100,12 +100,10 @@ public class ProductModel {
                 ", productName='" + productName + '\'' +
                 ", productDescription='" + productDescription + '\'' +
                 ", amountToSell=" + amountToSell +
-                ", productCategory='" + productCategory + '\'' +
+                ", productCategory='" + idCategory + '\'' +
                 ", urlProductImage='" + urlProductImage + '\'' +
                 ", dateAddProduct=" + dateAddProduct +
                 ", documentNumber=" + documentNumber +
                 '}';
     }
-
-
 }
