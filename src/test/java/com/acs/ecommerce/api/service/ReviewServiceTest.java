@@ -27,11 +27,11 @@ class ReviewServiceTest {
     private static final List<ReviewModel> reviewMockList = new ArrayList<>();
     private static final List<ProductModel> productMockList = new ArrayList<>();
     private final ReviewService reviewServices;
-    private static final IProductService IProductService = new ProductService(productMockList);
+    private final IProductService IProductService;
 
 
     public ReviewServiceTest() {
-
+        IProductService = new ProductService(productMockList);
         reviewServices = new ReviewService(reviewMockList, IProductService);
     }
 
