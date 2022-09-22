@@ -25,8 +25,8 @@ class ShoppingServiceTest {
         String shopCreated = shoppingService.buyProduct(getNewshop().get(0));
         String shopCreated2 = shoppingService.buyProduct(getNewshop().get(1));
 
-        String barrio = shoppingService.getShoppingId(0);
-        String barrio2 = shoppingService.getShoppingId(1);
+        String barrio = shoppingService.getShoppingId(1);
+        String barrio2 = shoppingService.getShoppingId(2);
 
         assertAll(
                 () -> Assertions.assertEquals("Created", shopCreated),

@@ -31,8 +31,9 @@ public class ShoppingService implements IShoppingService{
     }
     @Override
     public String buyProduct(Shopping buy) {
-        buy.setStateBuy("Created");
+        buy.setIdShopping(getShopping().size()+1);
         shopping.add(buy);
+        buy.setStateBuy("Created");
         return buy.getStateBuy().toString();
     }
 
