@@ -6,12 +6,14 @@ import java.time.LocalTime;
 public class Shopping{
     private int idShopping;
     private int idShopper;
-    private int idProduct;
+    private String idProduct;
     private int amountProduct;
     private String addressSend;
     private String addressFact;
     private String paymentGateway;
     private LocalTime dateBuy;
+
+    private int idSeller;
 
     public String getStateBuy() {
         return stateBuy;
@@ -27,20 +29,26 @@ public class Shopping{
 
     public Shopping(){}
 
-    public Shopping(int idShopper, int idProduct, int amountProduct, String addressSend, String addressFact, String paymentGateway) {
+    public Shopping(int idShopper, int idSeller, String idProduct, int amountProduct, String addressSend, String addressFact, String paymentGateway) {
         this.idShopping=increment;
         this.idShopper = idShopper;
+        this.idSeller = idSeller;
         this.idProduct = idProduct;
         this.amountProduct = amountProduct;
         this.addressSend = addressSend;
         this.addressFact = addressFact;
         this.paymentGateway = paymentGateway;
         this.dateBuy = LocalTime.now();
-        this.increment++;
     }
 
 
+    public int getIdSeller() {
+        return idSeller;
+    }
 
+    public void setIdSeller(int idSeller) {
+        this.idSeller = idSeller;
+    }
 
     public int getIdShopping() {
         return idShopping;
@@ -58,11 +66,11 @@ public class Shopping{
         this.idShopper = idShopper;
     }
 
-    public int getIdProduct() {
+    public String getIdProduct() {
         return idProduct;
     }
 
-    public void setIdProduct(int idProduct) {
+    public void setIdProduct(String idProduct) {
         this.idProduct = idProduct;
     }
 

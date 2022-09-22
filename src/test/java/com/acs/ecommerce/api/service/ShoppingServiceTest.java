@@ -19,11 +19,15 @@ class ShoppingServiceTest {
     public ShoppingServiceTest() {
         this.shoppingService = new ShoppingService(shoppingMocklist);
     }
+    @Test
+    void testDelete(){
+
+    }
 
     @Test /*Validando lo que entrea a la lista*/
     void testbuyProduct() {
-        String shopCreated = shoppingService.buyProduct(getNewshop().get(0));
-        String shopCreated2 = shoppingService.buyProduct(getNewshop().get(1));
+        String shopCreated = shoppingService.buyProduct(2,5,"2",30,"san javier","55421","bancolombia");
+        String shopCreated2 = shoppingService.buyProduct(1,5,"14",20,"san carlos","34556","PSE");
 
         String barrio = shoppingService.getShoppingId(1);
         String barrio2 = shoppingService.getShoppingId(2);
@@ -33,7 +37,7 @@ class ShoppingServiceTest {
                 () -> Assertions.assertEquals("san javier", barrio),
                 () -> Assertions.assertEquals("Created", shopCreated2),
                 () -> Assertions.assertEquals("san carlos", barrio2)
-
+                             
                 );
      }
 
@@ -45,8 +49,8 @@ class ShoppingServiceTest {
     private List<Shopping> getNewshop() {
         //Shopping shopPrueba=new Shopping();
         List<Shopping> shops=new ArrayList<>();
-        Shopping shop = new Shopping(2,2,30,"san javier","55421","bancolombia");
-        Shopping shop2 = new Shopping(1,14,20,"san carlos","34556","PSE");
+        Shopping shop = new Shopping();
+        Shopping shop2 = new Shopping();
 
         shops.add(shop);
         shops.add(shop2);

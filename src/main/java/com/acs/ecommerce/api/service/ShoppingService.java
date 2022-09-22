@@ -13,6 +13,7 @@ import java.util.List;
 public class ShoppingService implements IShoppingService{
 
     public static List<Shopping> shopping = new ArrayList<>();
+    public static List<Shopping> shoppingDelete = new ArrayList<>();
     public ShoppingService(List<Shopping> shoppingInjected){
         shopping=shoppingInjected;
     }
@@ -21,37 +22,48 @@ public class ShoppingService implements IShoppingService{
     public  List<Shopping> getShopping() {
         return shopping;
     } //No permite dejar el override si esta en estatico
-
+    public  List<Shopping> getShoppingDelete() {return shoppingDelete;}
     /*Crea compra con los datos que recibe desde el carrito*/
 
     /*Metodo para establecer la hora de compra*/ /*necesitariamos crear una hora de compra en constructor para que no se sobreescriba*/
-    public LocalTime cancel_time(){
+    public LocalTime Time(){
         LocalTime cancelTime = LocalTime.now();
         return cancelTime;
     }
+
+
     @Override
-    public String buyProduct(Shopping buy) {
+    public String buyProduct(int idShopper, int idSeller,String idProduct,int amount, String address,String addressF,String payment ) {
+
+        // (ShoppingCart cart)
+        Shopping buy = new Shopping();
+        buy.setIdShopper(idShopper);
+        buy.setIdProduct(idProduct);
+        buy.setIdSeller(idSeller);
+        buy.setAmountProduct(amount);
+        buy.setAddressSend(address);
+        buy.setAddressFact(addressF);
+        buy.setPaymentGateway(payment);
+        buy.setDateBuy(Time());
         buy.setIdShopping(getShopping().size()+1);
-        shopping.add(buy);
         buy.setStateBuy("Created");
+        shopping.add(buy);
         return buy.getStateBuy().toString();
     }
 
     /*Elimina compra segun el Id propio de compras*/
     @Override
-    public String cancelShopping(int id ) {
-        List<Shopping> shopping = getShopping();
-        LocalTime cancelT = cancel_time();
+    public void cancelShopping(int id ) {
+        LocalTime cancelT = Time();
          /*Comparar fecha del atributo getdate con la creada al momento de invocar a cancelShopping*/
-        for(Shopping shop : shopping){
-            int minutes = (int) ChronoUnit.MINUTES.between(shop.getDateBuy(), cancelT);
-            if(shop.getIdShopping() == id && minutes > 5){
+        for(Shopping shop : getShopping()){
+            int minutesBuy = (int) ChronoUnit.MINUTES.between(shop.getDateBuy(), cancelT);
+            if(shop.getIdShopping() == id && minutesBuy < 5){
+                shop.setStateBuy("Delete");
+                shoppingDelete.add(shop);
                 shopping.remove(shop);
-                return "compra eliminada";
             }
-            return "Compra no se pudo eliminar, tiempo limite excedido";
         }
-        return null;
     }
 
 
@@ -66,9 +78,25 @@ public class ShoppingService implements IShoppingService{
     }
 
     @Override
-    public Shopping getShoppingUser() {
+    public Shopping getShoppingUser(int idShopper) {
+        for(Shopping shop : getShopping()){
+            if (shop.getIdShopping()==idShopper){
+                return shop;
+            }
+        }
         return null;
     }
+
+    @Override
+    public Shopping getShoppingSeller(int idSeller) {
+        for(Shopping shop : getShopping()){
+            if (shop.getIdShopping()==idSeller){
+                return shop;
+            }
+        }
+        return null;
+    }
+
 
     @Override
     public List getCancelShopping() {
