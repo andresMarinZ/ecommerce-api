@@ -9,6 +9,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -26,11 +27,12 @@ class ReviewServiceTest {
     private static final List<ReviewModel> reviewMockList = new ArrayList<>();
     private static final List<ProductModel> productMockList = new ArrayList<>();
     private final ReviewService reviewServices;
-    private  final ProductService productService;
+    private static final IProductService IProductService = new ProductService(productMockList);
+
 
     public ReviewServiceTest() {
-        reviewServices = new ReviewService(reviewMockList);
-        productService = new ProductService(productMockList);
+
+        reviewServices = new ReviewService(reviewMockList, IProductService);
     }
 
     @BeforeEach

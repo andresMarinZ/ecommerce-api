@@ -16,11 +16,13 @@ public class ReviewService implements IReviewService {
     private static List<ReviewModel> reviews = new ArrayList<>();
     private static final List<String> listWordProfanity = new ArrayList<>();
 
-    @Autowired
-    IProductService _iProductService;
 
-    public ReviewService(List<ReviewModel> reviewInjection){
+    private static IProductService _IProductService;
+
+    @Autowired
+    public ReviewService(List<ReviewModel> reviewInjection, IProductService IProductService){
         reviews = reviewInjection;
+        _IProductService = IProductService;
         this.LoadWordProfanity();
     }
 
@@ -46,7 +48,6 @@ public class ReviewService implements IReviewService {
         - La revisión solamente se creará a un producto existente.
         - La revisión no deberá superar los 1000 caracteres.
         - La revisión no deberá contener palabras soezes.
-        - La api debe validar que la url de la imágen sea una url con estructura válida. --> no se hace
     */
     public ReviewModel save(ReviewModel reviewModel) {
 
@@ -104,9 +105,8 @@ public class ReviewService implements IReviewService {
      * return boolean
      */
     private boolean ValidateReviewByProduct(String productId){
-        var product = _iProductService.getByid(productId);
-//        return  Objects.nonNull(product.stream().findFirst());
-        return true;
+        var product = _IProductService.getByid(productId);
+        return Objects.nonNull(product);
     }
 
     /*
