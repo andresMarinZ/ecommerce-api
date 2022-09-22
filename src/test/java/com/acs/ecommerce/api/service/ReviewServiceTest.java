@@ -34,6 +34,7 @@ class ReviewServiceTest {
         reviewModel.setId(reviewId);
         reviewModel.setCreatedAt(new Date(System.currentTimeMillis()));
         reviewModel.setProductId("1234");
+        reviewModel.setDescription("Hello");
         reviewModel.setViewed(viewed);
 
         return reviewModel;
@@ -87,6 +88,46 @@ class ReviewServiceTest {
 
         //Assert
         Assertions.assertTrue(reviewDelete);
+    }
+
+    @Test
+    public void updateReviewWhenReviewNotFoundThenExpectNull(){
+        //Arrange
+        ReviewModel reviewModel = setReviewModel(false,"");
+        reviewMockList.add(reviewModel);
+        //Act
+
+        var reviewUpdate = reviewServices.update("123",reviewModel);
+
+        //Assert
+        Assertions.assertNull(reviewUpdate);
+    }
+
+    @Test
+    public void updateReviewWhenReviewViewedThenExpectNull(){
+        //Arrange
+        ReviewModel reviewModel = setReviewModel(true,"123");
+        reviewMockList.add(reviewModel);
+        //Act
+
+        var reviewUpdate = reviewServices.update("123",reviewModel);
+
+        //Assert
+        Assertions.assertNull(reviewUpdate);
+    }
+
+    @Test
+    public void updateReviewThenExpectTrue(){
+        //Arrange
+        ReviewModel reviewModel = reviewServices.save(setReviewModel(false,"123"));
+        ReviewModel reviewModelUpdate = setReviewModel(false,"123");
+        reviewModelUpdate.setDescription("Hello world");
+        //Act
+
+        var reviewUpdate = reviewServices.update(reviewModel.getId(),reviewModelUpdate);
+
+        //Assert
+        Assertions.assertEquals("Hello world",reviewUpdate.getDescription());
     }
 
     @AfterEach
