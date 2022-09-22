@@ -1,6 +1,7 @@
 package com.acs.ecommerce.api.controller;
 
 import com.acs.ecommerce.api.model.CategoryModel;
+import com.acs.ecommerce.api.model.ProductModel;
 import com.acs.ecommerce.api.service.CategoryServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -36,6 +37,8 @@ public class CategoryController {
     public ResponseEntity<CategoryModel> update(@PathVariable String idProduct, @RequestBody CategoryModel categoryModel) {
         CategoryModel categoryModelUpdated = categoryService.update(idProduct, categoryModel);
         return ResponseEntity.ok(categoryModelUpdated);
+    }
+
     }
 
     //- La api deberá permitir eliminar una categoría sí y solo sí no se ha asociado a un producto.

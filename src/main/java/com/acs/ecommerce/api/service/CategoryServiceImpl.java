@@ -1,8 +1,13 @@
 package com.acs.ecommerce.api.service;
 
 import com.acs.ecommerce.api.model.CategoryModel;
+import com.acs.ecommerce.api.model.ProductModel;
 import com.acs.ecommerce.api.service.iservice.ICategory;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.*;
 
@@ -54,13 +59,16 @@ public class CategoryServiceImpl implements ICategory {
 
     @Override
     public CategoryModel update(String idProduct, CategoryModel categoryModel) {
-        CategoryModel oldCategory = getByProduct(idProduct);
 
-        if (Objects.isNull(oldCategory)) {
+        idProduct<ProductService> category  = categories.stream()
+                .filter(category -> category.getName().equals(categoryModel.getName()))
+                .findFirst();
+
+        if (idProduct.equals()) {
             return null;
         }
 
-        oldCategory.setName(categoryModel.getName());
+        .setName(categoryModel.getName());
 
         return oldCategory;
     }
