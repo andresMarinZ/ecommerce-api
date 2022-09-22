@@ -13,10 +13,9 @@ public class CategoryServiceImpl implements ICategory {
 
 //    - La api deberá permitir consultar todas las categorías asociadas a un producto.
     @Override
-    public CategoryModel getByProduct(String idProduct) {
-        Optional<CategoryModel> optionalCategory = categories.stream()
-                .filter(product -> product.getIdProduct.equals(idProduct))
-                .findFirst();
+    public CategoryModel getCategory(String idCategory) {
+        if (idCategory)
+
 
         return optionalCategory.orElse(null);
     }

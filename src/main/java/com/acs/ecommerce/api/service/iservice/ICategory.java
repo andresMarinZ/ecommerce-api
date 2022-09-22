@@ -8,7 +8,7 @@ import java.util.List;
 
 @Service
 public interface ICategory {
-    CategoryModel getByProduct(String idProduct);
+    CategoryModel getCategory(String idCategory);
     CategoryModel create(CategoryModel categoryModel);
     CategoryModel update(String idProduct, CategoryModel categoryModel);
     boolean delete(String idProduct);

@@ -16,8 +16,8 @@ public class CategoryController {
 
     //- La api deberá permitir consultar todas las categorías asociadas a un producto.
     @GetMapping("/category/{idProduct}")
-    public ResponseEntity<CategoryModel> getByProduct(@PathVariable String idProduct) {
-        CategoryModel categoryModel = categoryService.getByProduct(idProduct);
+    public ResponseEntity<CategoryModel> getCategory(@PathVariable String idCategory) {
+        CategoryModel categoryModel = categoryService.getCategory(idCategory);
         return ResponseEntity.ok(categoryModel);
     }
 
