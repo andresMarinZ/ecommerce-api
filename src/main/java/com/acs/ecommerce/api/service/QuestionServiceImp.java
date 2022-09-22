@@ -2,6 +2,8 @@ package com.acs.ecommerce.api.service;
 
 import com.acs.ecommerce.api.model.Question;
 import com.acs.ecommerce.api.model.Response;
+import com.acs.ecommerce.api.service.iservice.IProductService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -15,6 +17,12 @@ public class QuestionServiceImp implements QuestionService {
 
     //ArrayList<String> vulgarWords =  new ArrayList<>(Arrays.asList("hijueputa", "pirobo", "gamin", "gonorrea"));
     String[] vulgarWords = {"hijueputa", "pirobo", "gamin", "gonorrea"};
+
+    private static IProductService _iProductService;
+    @Autowired
+    public QuestionServiceImp(IProductService iProductService){
+        _iProductService = iProductService;
+    }
 
     public Response create(Question question) {
         String buyerId = question.getBuyerId();
@@ -51,17 +59,17 @@ public class QuestionServiceImp implements QuestionService {
         return response;
     }
 
-    public boolean isAuthorizedUser(String buyerId, String productId){
+    private boolean isAuthorizedUser(String buyerId, String productId){
         return !Objects.equals(buyerId, "") || !Objects.equals(productId, "");
     }
 
-    public boolean textLengthLessThan1000(String questionText) {
+    private boolean textLengthLessThan1000(String questionText) {
         return questionText.length() < 1000;
     }
 
-    public boolean producExists(String producExists){
-        //TODO - Get product
-        return true;
+    private boolean producExists(String idProduct){
+        var product = _iProductService.getByid(idProduct);
+        return Objects.nonNull(product);
     }
 
     public List<Question> getAll(String buyerId) {
@@ -72,7 +80,7 @@ public class QuestionServiceImp implements QuestionService {
         return optionalQuestion;
     }
 
-    public static boolean containsVulgarWords(String inputString, String[] words) {
+    private static boolean containsVulgarWords(String inputString, String[] words) {
         List<String> inputStringList = Arrays.asList(inputString.split(" "));
         List<String> wordsList = Arrays.asList(words);
         return wordsList.stream().anyMatch(inputStringList::contains);
