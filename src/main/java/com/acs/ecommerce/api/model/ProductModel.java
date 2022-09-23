@@ -7,12 +7,10 @@ public class ProductModel {
     private String productName;
     private String productDescription;
     private int amountToSell;
-
     private long idCategory;
     private String urlProductImage;
     private LocalDateTime dateAddProduct = LocalDateTime.now();
     private String userId;
-
     public ProductModel(){
 
     }

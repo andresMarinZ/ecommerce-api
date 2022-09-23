@@ -1,17 +1,14 @@
 package com.acs.ecommerce.api.service;
 
-import com.acs.ecommerce.api.enums.UserTypeEnum;
 import com.acs.ecommerce.api.model.ProductModel;
-import com.acs.ecommerce.api.model.User;
 import com.acs.ecommerce.api.service.iservice.IProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
+
+import java.util.regex.*;
 
 @Service
 public class ProductService implements IProductService {
@@ -39,11 +36,12 @@ public class ProductService implements IProductService {
 
     @Override
     public ProductModel create(ProductModel productModel) {
-        //vendedor?
-        //URL
+
+        if(!this.ValidateProductByUser(productModel.getUserId())||
+           !this.UrlValida(productModel.getUrlProductImage())||
+           !this.DatesValidate(productModel)) return new ProductModel();
+        productModel.setIdProduct(UUID.randomUUID().toString());
         //tope de vendedor
-        //no nullos en campos
-        //fecha automatica
         productsModel.add(productModel);
 
         return productModel;
@@ -51,7 +49,6 @@ public class ProductService implements IProductService {
 
     @Override
     public ProductModel update(String idProduct, ProductModel productModel) {
-        //sin restriccion editar nombre descripcion y url
         //con restriccion cantidad a vender tope vendedor
         //categoria solo si no tiene ventas
 
@@ -61,7 +58,6 @@ public class ProductService implements IProductService {
     @Override
     public ProductModel delete(String idQuote, ProductModel productModel) {
         //eliminar por ID solo si no tiene ventas
-
         return null;
     }
     @Override
@@ -76,25 +72,33 @@ public class ProductService implements IProductService {
                 .filter(product -> product.getProductName().contains(Keyword))
                 .collect(Collectors.toList());
     }
-
-    /*public static boolean UrlValida(String Url) {
-
-        try {
-            (new URl(Url)).openStream().close();
-    private boolean ValidateReviewByUser(String userId){
+    private boolean ValidateProductByUser(String userId){
         var user = _UserService.getByIdUser(userId);
 
-        if(Objects.nonNull(user) && user.getUserType().equals("Buyer")){
+        return Objects.nonNull(user) && user.getUserType().equals("Buyer");
+    }
+    private boolean UrlValida(String url) {
+        String regex = "((http|https)://)(www.)?"
+                + "[a-zA-Z0-9@:%._\\+~#?&//=]"
+                + "{2,256}\\.[a-z]"
+                + "{2,6}\\b([-a-zA-Z0-9@:%"
+                + "._\\+~#?&//=]*)";
+        Pattern p = Pattern.compile(regex);
+        if (url == null) {
+            return false;
+        }
+        Matcher m = p.matcher(url);
+        return m.matches();
+    }
+    private boolean DatesValidate(ProductModel productModel) {
+
+        if((productModel.getProductName()!=null)||
+           (productModel.getProductDescription()!=null)||
+           (productModel.getUserId()!=null)){
             return true;
         }
         return false;
     }
 
-            return true;
-        } catch (Exception) {
-        }
 
-        return false;
-
-    }*/
 }

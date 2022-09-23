@@ -20,7 +20,6 @@ public class User {
     private String documentType;
     private int documentNumber;
     private String StoreName;
-
     private String idShoppingCart;
 
 
