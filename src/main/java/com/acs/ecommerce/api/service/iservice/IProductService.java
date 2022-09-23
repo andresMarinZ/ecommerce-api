@@ -7,12 +7,11 @@ import java.util.List;
 import java.util.Optional;
 
 public interface IProductService {
-   List<ProductModel> get();
-   ProductModel getByid(String idProduct);
-    //ProductModel getByid(String idProduct);
+    List<ProductModel> get();
+    ProductModel getByid(String idProduct);
     ProductModel create(ProductModel productModel);
     ProductModel update(String idProduct, ProductModel productModel);
-    ProductModel delete(String idQuote, ProductModel productModel);
-    List<ProductModel> getProductByKeyword(String productCategory);
+    ProductModel delete(String idProduct, ProductModel productModel);
+    List<ProductModel> getProductByKeyword(String Keyword);
     List<ProductModel> getByIdCategory(long idCategory);
 }

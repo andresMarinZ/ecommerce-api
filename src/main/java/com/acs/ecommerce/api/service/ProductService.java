@@ -4,18 +4,16 @@ import com.acs.ecommerce.api.model.ProductModel;
 import com.acs.ecommerce.api.service.iservice.IProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.util.*;
 import java.util.stream.Collectors;
-
 import java.util.regex.*;
 
 @Service
 public class ProductService implements IProductService {
     private static  List<ProductModel> productsModel = new ArrayList<>();
     private static UserService _UserService;
-
     private static ShoppingService _IShoppingService;
+
     @Autowired
     public ProductService(List<ProductModel> productInjection, UserService userService, ShoppingService shoppingInjection) {
         _UserService = userService;
@@ -51,10 +49,10 @@ public class ProductService implements IProductService {
 
     @Override
     public ProductModel update(String idProduct, ProductModel productModel) {
+
         Optional<ProductModel> optionalProduct = productsModel.stream()
                 .filter(product -> product.getIdProduct().equals(idProduct))
                 .findFirst();
-
         if(optionalProduct!=null){
             return null;
         }
@@ -66,6 +64,7 @@ public class ProductService implements IProductService {
 
     @Override
     public ProductModel delete(String idProduct, ProductModel productModel) {
+
         Optional<ProductModel> optionalProduct = productsModel.stream()
                 .filter(product -> product.getIdProduct().equals(idProduct))
                 .findFirst();
@@ -75,28 +74,31 @@ public class ProductService implements IProductService {
         //eliminar por ID solo si no tiene ventas
         return null;
     }
+
     @Override
     public List<ProductModel> getByIdCategory(long idCategory) {
         return productsModel.stream()
                 .filter(product -> product.getIdCategory() == idCategory)
                 .collect(Collectors.toList());
     }
+
     @Override
     public List<ProductModel> getProductByKeyword(String Keyword) {
         return productsModel.stream()
                 .filter(product -> product.getProductName().contains(Keyword))
                 .collect(Collectors.toList());
     }
+
     private boolean ValidateProductByUser(String userId){
         var user = _UserService.getByIdUser(userId);
-
         return Objects.nonNull(user) && user.getUserType().equals("Buyer");
     }
+
     private boolean ValidateShoppingById(int shoppingId, ProductModel productModel){
         var shopping = _IShoppingService.getShoppingId(shoppingId);
-
         return Objects.nonNull(shopping) && shopping.getIdProduct().equals(productModel.getIdProduct());
     }
+
     private boolean UrlValida(String url) {
         String regex = "((http|https)://)(www.)?"
                 + "[a-zA-Z0-9@:%._\\+~#?&//=]"
@@ -110,8 +112,8 @@ public class ProductService implements IProductService {
         Matcher m = p.matcher(url);
         return m.matches();
     }
-    private boolean DatesValidate(ProductModel productModel) {
 
+    private boolean DatesValidate(ProductModel productModel) {
         if((productModel.getProductName()!=null)||
            (productModel.getProductDescription()!=null)||
            (productModel.getUserId()!=null)){
