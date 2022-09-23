@@ -30,7 +30,6 @@ public class ProductService implements IProductService {
         Optional<ProductModel> optionalProduct = productsModel.stream()
                 .filter(product -> product.getIdProduct().equals(idProduct))
                 .findFirst();
-        //permite buscar por palabras clave relacionado con el nombre
         return optionalProduct.orElse(null);
     }
 
@@ -49,6 +48,12 @@ public class ProductService implements IProductService {
 
     @Override
     public ProductModel update(String idProduct, ProductModel productModel) {
+        Optional<ProductModel> optionalProduct = productsModel.stream()
+                .filter(product -> product.getIdProduct().equals(idProduct))
+                .findFirst();
+        if(optionalProduct!=null){
+            return null;
+        }
         //con restriccion cantidad a vender tope vendedor
         //categoria solo si no tiene ventas
 
@@ -56,7 +61,13 @@ public class ProductService implements IProductService {
     }
 
     @Override
-    public ProductModel delete(String idQuote, ProductModel productModel) {
+    public ProductModel delete(String idProduct, ProductModel productModel) {
+        Optional<ProductModel> optionalProduct = productsModel.stream()
+                .filter(product -> product.getIdProduct().equals(idProduct))
+                .findFirst();
+        if(optionalProduct!=null){
+            return null;
+        }
         //eliminar por ID solo si no tiene ventas
         return null;
     }
