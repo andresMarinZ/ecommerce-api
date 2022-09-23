@@ -1,5 +1,6 @@
 package com.acs.ecommerce.api.service;
 
+import com.acs.ecommerce.api.enums.UserTypeEnum;
 import com.acs.ecommerce.api.model.ProductModel;
 import com.acs.ecommerce.api.model.ReviewModel;
 import com.acs.ecommerce.api.model.User;
@@ -110,16 +111,18 @@ class ReviewServiceTest {
     public void saveWhenProductNotExist(){
         //Arrange
             reviewMockModel.setProductId("2");
+            reviewMockModel.setBuyerId("1");
 
         //Act
             var save = reviewServices.save(reviewMockModel);
         //Assert
-        Assertions.assertNull(save);
+        Assertions.assertNull(save.getId());
     }
     @Test
     public void saveWhenProductExist(){
         //Arrange
         reviewMockModel.setProductId("1");
+        reviewMockModel.setBuyerId("1");
 
         //Act
         var save = reviewServices.save(reviewMockModel);
@@ -164,13 +167,14 @@ class ReviewServiceTest {
                             "It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, " +
                             "and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.";
 
+        reviewMockModel.setBuyerId("1");
         reviewMockModel.setProductId("1");
         reviewMockModel.setDescription(description);
 
         //Act
         var save = reviewServices.save(reviewMockModel);
         //Assert
-        Assertions.assertNull(save);
+        Assertions.assertNull(save.getId());
     }
 
     @Test
@@ -178,6 +182,7 @@ class ReviewServiceTest {
         //Arrange
         String description = "Lorem Ipsum is simply dummy text of the printing and typesetting industry. ";
 
+        reviewMockModel.setBuyerId("1");
         reviewMockModel.setProductId("1");
         reviewMockModel.setDescription(description);
 
@@ -192,13 +197,14 @@ class ReviewServiceTest {
         //Arrange
         String description = "Lorem Ipsum Gay is simply dummy text of the Marica printing and typesetting industry. ";
 
+        reviewMockModel.setBuyerId("1");
         reviewMockModel.setProductId("1");
         reviewMockModel.setDescription(description);
 
         //Act
         var save = reviewServices.save(reviewMockModel);
         //Assert
-        Assertions.assertNotNull(save);
+        Assertions.assertNull(save.getId());
     }
 
     @Test
@@ -206,6 +212,7 @@ class ReviewServiceTest {
         //Arrange
         String description = "Lorem Ipsum is simply dummy text of the printing and typesetting industry. ";
 
+        reviewMockModel.setBuyerId("1");
         reviewMockModel.setProductId("1");
         reviewMockModel.setDescription(description);
 
@@ -222,6 +229,7 @@ class ReviewServiceTest {
 
     private void userModel(){
         userMockModel.setId("1");
+        userMockModel.setUserType(String.valueOf(UserTypeEnum.BUYER));
         userMockList.add(userMockModel);
     }
     @Test
