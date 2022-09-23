@@ -9,6 +9,7 @@ import java.util.Objects;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -21,24 +22,31 @@ class ShoppingServiceTest {
     }
     @Test
     void testDelete(){
-
+        assertAll(
+                () -> Assertions.assertEquals("Delete",shoppingService.getShoppingId(1).getStateBuy())
+        );
     }
 
     @Test /*Validando lo que entrea a la lista*/
-    void testbuyProduct() {
+    void testbuyProduct() throws InterruptedException {
         String shopCreated = shoppingService.buyProduct(2,5,"2",30,"san javier","55421","bancolombia");
-        String shopCreated2 = shoppingService.buyProduct(1,5,"14",20,"san carlos","34556","PSE");
+        String shopCreated2 =shoppingService.buyProduct(1,5,"14",20,"san carlos","34556","PSE");
 
-        String barrio = shoppingService.getShoppingId(1);
-        String barrio2 = shoppingService.getShoppingId(2);
+
+        Shopping barrio = shoppingService.getShoppingId(1);
+        Shopping barrio2 = shoppingService.getShoppingId(2);
 
         assertAll(
                 () -> Assertions.assertEquals("Created", shopCreated),
-                () -> Assertions.assertEquals("san javier", barrio),
+                () -> Assertions.assertEquals("san javier", barrio.getAddressSend()),
                 () -> Assertions.assertEquals("Created", shopCreated2),
-                () -> Assertions.assertEquals("san carlos", barrio2)
-                             
-                );
+                () -> Assertions.assertEquals("san carlos", barrio2.getAddressSend())
+          );
+        TimeUnit.MINUTES.sleep(6);
+        this.shoppingService.cancelShopping(1);
+        assertAll(
+                () -> Assertions.assertEquals("Created",shoppingService.getShoppingId(1).getStateBuy())
+        );
      }
 
     @Test
@@ -51,7 +59,6 @@ class ShoppingServiceTest {
         List<Shopping> shops=new ArrayList<>();
         Shopping shop = new Shopping();
         Shopping shop2 = new Shopping();
-
         shops.add(shop);
         shops.add(shop2);
 

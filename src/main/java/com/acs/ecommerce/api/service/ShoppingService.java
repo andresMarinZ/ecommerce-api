@@ -30,7 +30,15 @@ public class ShoppingService implements IShoppingService{
         LocalTime cancelTime = LocalTime.now();
         return cancelTime;
     }
-
+    @Override
+    public Shopping getShoppingDeleteId(int id){
+        for(Shopping shop : getShoppingDelete()){
+            if (shop.getIdShopping()==id){
+                return shop;
+            }
+        }
+        return null;
+    }
 
     @Override
     public String buyProduct(int idShopper, int idSeller,String idProduct,int amount, String address,String addressF,String payment ) {
@@ -58,23 +66,22 @@ public class ShoppingService implements IShoppingService{
          /*Comparar fecha del atributo getdate con la creada al momento de invocar a cancelShopping*/
         for(Shopping shop : getShopping()){
             int minutesBuy = (int) ChronoUnit.MINUTES.between(shop.getDateBuy(), cancelT);
-            if(shop.getIdShopping() == id && minutesBuy < 5){
+            if(shop.getIdShopping() == id && minutesBuy <= 5){
                 shop.setStateBuy("Delete");
                 shoppingDelete.add(shop);
-                shopping.remove(shop);
+                //shopping.remove(shop);
             }
         }
     }
 
 
-    public String getShoppingId(int id) {
-        List<Shopping> shoppings=getShopping();
-        for(Shopping shop : shoppings){
+    public Shopping getShoppingId(int id) {
+        for(Shopping shop : getShopping()){
             if (shop.getIdShopping()==id){
-                return shop.getAddressSend();
+                return shop;
             }
         }
-        return "Not found";
+        return null;
     }
 
     @Override
