@@ -8,9 +8,10 @@ import java.util.List;
 
 @Service
 public interface ICategory {
-    CategoryModel getCategory(String idCategory);
-    CategoryModel create(CategoryModel categoryModel);
-    CategoryModel update(String idProduct, CategoryModel categoryModel);
-    boolean delete(String idProduct);
+    List<CategoryModel> getAllCategories();
+
+    CategoryModel createCategory(CategoryModel categoryModel);
+    CategoryModel updateCategory(String idProduct, CategoryModel categoryModel);
+    boolean deleteCategory(String idProduct);
 
 }

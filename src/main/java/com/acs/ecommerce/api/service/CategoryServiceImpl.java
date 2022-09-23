@@ -14,22 +14,25 @@ import java.util.*;
 @Service("category")
 public class CategoryServiceImpl implements ICategory {
 
-    private static final List<CategoryModel> categories = new ArrayList<>();
+    private static List<CategoryModel> categories = new ArrayList<>();
+    //instanciar servicio de productos
+    private static final ProductService productService = new ProductService();
 
-//    - La api deberá permitir consultar todas las categorías asociadas a un producto.
+    public CategoryServiceImpl(List<CategoryModel> categoryMockList) {
+        categories = categoryMockList;
+    }
+
+    //    - La api deberá permitir retornar todos los nombres de las categorias categorías.
     @Override
-    public CategoryModel getCategory(String idCategory) {
-        if (idCategory)
-
-
-        return optionalCategory.orElse(null);
+    public List<CategoryModel> getAllCategories() {
+        return categories;
     }
 
 //    - La api deberá permitir crear una categoría solamente a usuarios de tipo administrador.
 //- El nombre de la categoría no deberá superar los 100 caracteres.
 //- No se debe permitir la duplicidad de una categoría.
     @Override
-    public CategoryModel create(CategoryModel categoryModel) {
+    public CategoryModel createCategory(CategoryModel categoryModel) {
         if (categoryModel.getName().length() > 100) {
             return null;
         }
@@ -46,10 +49,10 @@ public class CategoryServiceImpl implements ICategory {
             categoryModel.setId(Long.valueOf(UUID.randomUUID().toString()));
             categoryModel.setCreationDate(new Date(System.currentTimeMillis()));
             categories.add(categoryModel);
-
+            return categoryModel;
         }
+        return null;
 
-        return categoryModel;
 
     }
 
@@ -58,32 +61,39 @@ public class CategoryServiceImpl implements ICategory {
 //- Solo se podrá editar el texto de la categoría.
 
     @Override
-    public CategoryModel update(String idProduct, CategoryModel categoryModel) {
+    public CategoryModel updateCategory(String idCategory, CategoryModel categoryModel) {
 
-        idProduct<ProductService> category  = categories.stream()
-                .filter(category -> category.getName().equals(categoryModel.getName()))
+        Optional<CategoryModel> optionalCategory = categories.stream()
+                .filter(category -> category.getId().equals(idCategory))
                 .findFirst();
 
-        if (idProduct.equals()) {
-            return null;
+        if (optionalCategory.isPresent()) {
+            CategoryModel categoryModelFound = optionalCategory.get();
+            if(optionalCategory.equals(productService.getByCategory(idCategory)) ) {
+                categoryModelFound.setName(categoryModel.getName());
+                return categoryModelFound;
+            }
         }
-
-        .setName(categoryModel.getName());
-
-        return oldCategory;
+        return null;
     }
 
     //- La api deberá permitir eliminar una categoría sí y solo sí esta no ha sido asociada a un producto.
     @Override
-    public boolean delete(String idProduct) {
-        CategoryModel category = getByProduct(idProduct);
+    public boolean deleteCategory(String idProduct) {
+        Optional<CategoryModel> optionalCategory = categories.stream()
+                .filter(category -> category.getId().equals(idProduct))
+                .findFirst();
 
-        if (Objects.isNull(category)) {
-            return false;
+        if (optionalCategory.isPresent()) {
+            CategoryModel categoryModelFound = optionalCategory.get();
+            if(optionalCategory.equals(productService.getByCategory(idProduct)) ) {
+                categories.remove(categoryModelFound);
+                return true;
+            }
         }
 
-        categories.remove(category);
+        return false;
 
-        return true;
+
     }
 }
