@@ -1,19 +1,25 @@
 package com.acs.ecommerce.api.service;
 
+import com.acs.ecommerce.api.enums.UserTypeEnum;
 import com.acs.ecommerce.api.model.ProductModel;
+import com.acs.ecommerce.api.model.User;
 import com.acs.ecommerce.api.service.iservice.IProductService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
 public class ProductService implements IProductService {
     private static  List<ProductModel> productsModel = new ArrayList<>();
-
-    public ProductService(List<ProductModel> productInjection) {
+    private static UserService _UserService;
+    @Autowired
+    public ProductService(List<ProductModel> productInjection, UserService userService) {
+        _UserService = userService;
         productsModel = productInjection;
     }
 
@@ -75,6 +81,14 @@ public class ProductService implements IProductService {
 
         try {
             (new URl(Url)).openStream().close();
+    private boolean ValidateReviewByUser(String userId){
+        var user = _UserService.getByIdUser(userId);
+
+        if(Objects.nonNull(user) && user.getUserType().equals("Buyer")){
+            return true;
+        }
+        return false;
+    }
 
             return true;
         } catch (Exception) {

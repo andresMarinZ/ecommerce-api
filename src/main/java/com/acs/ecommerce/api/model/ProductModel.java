@@ -11,6 +11,7 @@ public class ProductModel {
     private long idCategory;
     private String urlProductImage;
     private LocalDateTime dateAddProduct = LocalDateTime.now();
+    private String userId;
 
     public ProductModel(){
 
@@ -92,6 +93,10 @@ public class ProductModel {
     public void setDocumentNumber(int documentNumber) {
         this.documentNumber = documentNumber;
     }
+
+    public String getUserId() { return userId; }
+
+    public void setUserId(String userId) { this.userId = userId; }
 
     @Override
     public String toString() {
