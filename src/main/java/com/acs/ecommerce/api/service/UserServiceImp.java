@@ -12,7 +12,11 @@ public class UserServiceImp implements UserService{
         return users;
     }
 
+
+
     private static List<User> users = new ArrayList<>();
+
+
     //
     public UserServiceImp(List<User> usersInjected) {
         users = usersInjected;
@@ -68,19 +72,23 @@ public class UserServiceImp implements UserService{
 
     }
 
+
+
     public boolean delete(String idUser, String idShoppingCart) {
         boolean deleted = false;
-        return idShoppingCart.equals(' ');
+        return deleted; //idShoppingCart.equals(' ');
     }
 
-    public boolean delete(String idUser) {
+   public boolean delete(String idUser) {
         User user = getByIdUser(idUser);
 
-        if (Objects.isNull(user)) {
-            return false;
+       if (Objects.isNull(user)) {
+            return true;
         }
 
         return users.removeIf(users -> users.getId().equals(idUser));
     }
+
+
 
 }

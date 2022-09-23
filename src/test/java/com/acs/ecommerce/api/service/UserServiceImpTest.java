@@ -19,13 +19,17 @@ class UserServiceImpTest {
     private final List<User> users = new ArrayList<>();
     private final UserService userService;
 
+    User user;
+
     public UserServiceImpTest() {
         this.userService = new UserServiceImp(users);
     }
 
     @BeforeEach
     public void initializeUserList(){
+
         users.clear();
+        users.add(new User("1"));
     }
 
     @Test
@@ -54,7 +58,7 @@ class UserServiceImpTest {
     public void updateUserSuccessfullyTest() {
         User userCreated = userService.create(getNewUser());
         User userToUpdate = getNewUser();
-        userToUpdate.setFirstName("editFirsname");
+        userToUpdate.setFirstName("editFirstname");
         userToUpdate.setLastName("edit");
         userToUpdate.setDocumentType("CC");
         userToUpdate.setDocumentNumber(998765432);
@@ -62,7 +66,7 @@ class UserServiceImpTest {
         User userUpdated = userService.update(userCreated.getFirstName(), userCreated.getLastName(),
                 userCreated.getDocumentType(), userCreated.getDocumentNumber(), userToUpdate);
 
-        Assertions.assertEquals("editFirsname", userUpdated.getFirstName());
+        Assertions.assertEquals("editFirstname", userUpdated.getFirstName());
         Assertions.assertEquals("edit", userUpdated.getLastName());
         Assertions.assertEquals("CC", userUpdated.getDocumentType());
         Assertions.assertEquals(998765432, userUpdated.getDocumentNumber());
@@ -71,6 +75,15 @@ class UserServiceImpTest {
     public void updateUserUnsuccessfullyTest() {
 
     }
+
+    @Test
+    void deleteTest(){
+        users.add(user);
+        boolean result = userService.delete("1", " ");
+        assertFalse(result);
+
+    }
+
 
     private User getNewUser() {
         User user = new User();
@@ -83,13 +96,6 @@ class UserServiceImpTest {
         user.setStoreName("store");
 
         return user;
-    }
-
-    @Test
-    public void deleteTest(){
-
-        // DEPENDEMOS DEL COMPAÑERO DE CARRITO
-
     }
 
 }
