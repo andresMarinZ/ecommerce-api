@@ -1,5 +1,6 @@
 package com.acs.ecommerce.api.service;
 
+import com.acs.ecommerce.api.enums.UserTypeEnum;
 import com.acs.ecommerce.api.model.ProductModel;
 import com.acs.ecommerce.api.model.ReviewModel;
 import com.acs.ecommerce.api.service.iservice.IProductService;
@@ -16,13 +17,15 @@ public class ReviewService implements IReviewService {
     private static List<ReviewModel> reviews = new ArrayList<>();
     private static final List<String> listWordProfanity = new ArrayList<>();
 
-
+    //Imports IService
     private static IProductService _IProductService;
+    private static UserService _IUserService;
 
     @Autowired
-    public ReviewService(List<ReviewModel> reviewInjection, IProductService IProductService){
+    public ReviewService(List<ReviewModel> reviewInjection, IProductService IProductService, UserService IUserService){
         reviews = reviewInjection;
         _IProductService = IProductService;
+        _IUserService = IUserService;
         this.LoadWordProfanity();
     }
 
@@ -44,12 +47,9 @@ public class ReviewService implements IReviewService {
     }
 
     /*
-        - La api deberá permitir crear una revisión solamente a un usuario de tipo comprador.
-        - La revisión solamente se creará a un producto existente.
-        - La revisión no deberá superar los 1000 caracteres.
-        - La revisión no deberá contener palabras soezes.
-    */
-    public ReviewModel save(ReviewModel reviewModel) {
+        Method for save new review.
+     */
+     public ReviewModel save(ReviewModel reviewModel) {
 
         if(!this.ValidateReviewByProduct(reviewModel.getProductId()) ||
            !this.ValidateReviewByUser(reviewModel.getBuyerId()) ||
@@ -97,7 +97,8 @@ public class ReviewService implements IReviewService {
     }
 
     private boolean ValidateReviewByUser(String userId){
-        return true;
+        var user = _IUserService.getByIdUser(userId);
+        return user.getUserType().equals(UserTypeEnum.BUYER);
     }
 
     /*

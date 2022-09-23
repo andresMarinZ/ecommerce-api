@@ -2,6 +2,7 @@ package com.acs.ecommerce.api.service;
 
 import com.acs.ecommerce.api.model.ProductModel;
 import com.acs.ecommerce.api.model.ReviewModel;
+import com.acs.ecommerce.api.model.User;
 import com.acs.ecommerce.api.service.iservice.IProductService;
 import com.acs.ecommerce.api.service.iservice.IReviewService;
 import org.junit.jupiter.api.AfterEach;
@@ -19,26 +20,28 @@ import java.util.UUID;
 import static org.junit.jupiter.api.Assertions.*;
 
 class ReviewServiceTest {
-
-
-
     private  static final ProductModel productMockModel = new ProductModel();
+    private static  final User userMockModel = new User();
     private static final ReviewModel reviewMockModel = new ReviewModel();
     private static final List<ReviewModel> reviewMockList = new ArrayList<>();
     private static final List<ProductModel> productMockList = new ArrayList<>();
+    private static  final List<User> userMockList = new ArrayList<>();
     private final ReviewService reviewServices;
     private final IProductService IProductService;
+    private static UserService IUserService;
 
 
     public ReviewServiceTest() {
         IProductService = new ProductService(productMockList);
-        reviewServices = new ReviewService(reviewMockList, IProductService);
+        IUserService = new UserServiceImp(userMockList);
+        reviewServices = new ReviewService(reviewMockList, IProductService, IUserService);
     }
 
     @BeforeEach
     public void initializeReviewList() {
         reviewMockList.clear();
         this.productModel();
+        this.userModel();
     }
 
     private ReviewModel setReviewModel(Boolean viewed, String reviewId){
@@ -125,6 +128,28 @@ class ReviewServiceTest {
     }
 
     @Test
+    public void saveWhenUserNoExist(){
+        //Arrange
+        reviewMockModel.setBuyerId("2");
+
+        //Act
+        var save = reviewServices.save(reviewMockModel);
+        //Assert
+        Assertions.assertNotNull(save);
+    }
+
+    @Test
+    public void saveWhenUserExist(){
+        //Arrange
+        reviewMockModel.setBuyerId("1");
+
+        //Act
+        var save = reviewServices.save(reviewMockModel);
+        //Assert
+        Assertions.assertNotNull(save);
+    }
+
+    @Test
     public void saveWhenDescriptionGreaterOneThousand(){
         //Arrange
         String description = "Lorem Ipsum is simply dummy text of the printing and typesetting industry. " +
@@ -193,6 +218,11 @@ class ReviewServiceTest {
     private void productModel(){
         productMockModel.setIdProduct("1");
         productMockList.add(productMockModel);
+    }
+
+    private void userModel(){
+        userMockModel.setId("1");
+        userMockList.add(userMockModel);
     }
     @Test
     public void updateReviewWhenReviewNotFoundThenExpectNull(){
