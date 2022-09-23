@@ -14,10 +14,13 @@ import java.util.regex.*;
 public class ProductService implements IProductService {
     private static  List<ProductModel> productsModel = new ArrayList<>();
     private static UserService _UserService;
+
+    private static ShoppingService _IShoppingService;
     @Autowired
-    public ProductService(List<ProductModel> productInjection, UserService userService) {
+    public ProductService(List<ProductModel> productInjection, UserService userService, ShoppingService shoppingInjection) {
         _UserService = userService;
         productsModel = productInjection;
+        _IShoppingService = shoppingInjection;
     }
 
     @Override
@@ -51,6 +54,7 @@ public class ProductService implements IProductService {
         Optional<ProductModel> optionalProduct = productsModel.stream()
                 .filter(product -> product.getIdProduct().equals(idProduct))
                 .findFirst();
+
         if(optionalProduct!=null){
             return null;
         }
@@ -87,6 +91,11 @@ public class ProductService implements IProductService {
         var user = _UserService.getByIdUser(userId);
 
         return Objects.nonNull(user) && user.getUserType().equals("Buyer");
+    }
+    private boolean ValidateShoppingById(int shoppingId, ProductModel productModel){
+        var shopping = _IShoppingService.getShoppingId(shoppingId);
+
+        return Objects.nonNull(shopping) && shopping.getIdProduct().equals(productModel.getIdProduct());
     }
     private boolean UrlValida(String url) {
         String regex = "((http|https)://)(www.)?"
