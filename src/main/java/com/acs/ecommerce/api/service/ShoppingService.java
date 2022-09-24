@@ -86,7 +86,7 @@ public class ShoppingService implements IShoppingService{
     }
     public Shopping getShoppingIdProduct(String idProduct) {
         for(Shopping shop : getShopping()){
-            if (shop.getIdProduct()==idProduct){
+            if (shop.getIdProduct().equals(idProduct)){
                 return shop;
             }
         }

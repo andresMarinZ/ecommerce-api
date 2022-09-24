@@ -51,37 +51,25 @@ public class ProductService implements IProductService {
     @Override
     public ProductModel update(String idProduct, ProductModel productModel) {
 
-        Optional<ProductModel> optionalProduct = productsModel.stream()
-                .filter(product -> product.getIdProduct().equals(idProduct))
-                .findFirst();
-        if(optionalProduct!=null){
-            return null;
-        }
-        //con restriccion cantidad a vender tope vendedor
-        //categoria solo si no tiene ventas
+        ProductModel product = this.getByid(idProduct);
 
-        return null;
+        if (Objects.isNull(product) && !this.ValidateShoppingById(idProduct)) {
+            return new ProductModel();
+        } else {
+            product.setProductCategory(productModel.getIdCategory());
+            product.setAmountToSell(productModel.getAmountToSell());
+            //con restriccion cantidad a vender tope vendedor
+            return product;
+        }
     }
 
-    /*@Override
-    public ProductModel delete(String idProduct, ProductModel productModel) {
-
-        Optional<ProductModel> optionalProduct = productsModel.stream()
-                .filter(product -> product.getIdProduct().equals(idProduct))
-                .findFirst();
-        if(optionalProduct!=null){
-            return null;
-        }
-        //eliminar por ID solo si no tiene ventas
-        return null;
-    }*/
     public Boolean delete(String idProduct) {
 
         ProductModel product = this.getByid(idProduct);
 
-        if (Objects.isNull(idProduct)&&!this.ValidateShoppingById(idProduct)) {
-            return false;
-        }
+        if (Objects.isNull(product) && !this.ValidateShoppingById(idProduct)) {
+                return false;
+            }
         productsModel.remove(product);
         return true;
     }
