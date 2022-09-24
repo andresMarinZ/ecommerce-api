@@ -14,7 +14,6 @@ public interface UserService {
 
     User getByIdUser(String idUser);
 
-
     User create(User user);
 
     User update(String firstName, String LastName, String documentType, int documentNumber, User user);
