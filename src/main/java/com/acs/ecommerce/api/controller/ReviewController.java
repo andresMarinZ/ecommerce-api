@@ -37,7 +37,7 @@ public class ReviewController {
     }
 
     @GetMapping("/review/{productId}")
-    public ResponseEntity<Response<ReviewModel>> search(String productId) {
+    public ResponseEntity<Response<ReviewModel>> search(@PathVariable String productId) {
 
         List<ReviewModel> reviewList = _reviewService.getByProductId(productId);
 
