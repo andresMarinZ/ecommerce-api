@@ -29,7 +29,6 @@ class UserServiceImpTest {
     public void initializeUserList(){
 
         users.clear();
-        users.add(new User("1"));
     }
 
     @Test
