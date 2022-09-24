@@ -23,8 +23,8 @@ public class ProductController {
    // private final List<ProductModel> productModels = new ArrayList<>();
 
     @GetMapping("/product/{idProduct}")
-    public ResponseEntity<ProductModel> getById(@PathVariable String idProduct) {
-        ProductModel productModel = iProductService.getByid(idProduct);
+    public ResponseEntity<ProductModel> getProductById(@PathVariable String idProduct) {
+        ProductModel productModel = iProductService.getProductById(idProduct);
 
         return Objects.isNull(productModel) ? ResponseEntity.notFound().build() : ResponseEntity.ok(productModel);
     }

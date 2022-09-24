@@ -28,7 +28,7 @@ public class ProductService implements IProductService {
     }
 
     @Override
-    public ProductModel getByid(String idProduct) {
+    public ProductModel getProductById(String idProduct) {
         Optional<ProductModel> optionalProduct = productsModel.stream()
                 .filter(product -> product.getIdProduct().equals(idProduct))
                 .findFirst();
@@ -51,7 +51,7 @@ public class ProductService implements IProductService {
     @Override
     public ProductModel update(String idProduct, ProductModel productModel) {
 
-        ProductModel product = this.getByid(idProduct);
+        ProductModel product = this.getProductById(idProduct);
 
         if (Objects.isNull(product)) {
             return new ProductModel();
@@ -59,7 +59,7 @@ public class ProductService implements IProductService {
             product.setProductName(productModel.getProductName());
             product.setProductDescription(productModel.getProductDescription());
             product.setUrlProductImage(productModel.getUrlProductImage());
-            if(!this.ValidateShoppingById(idProduct)) {
+            if(!this.ValidateShoppingByProductId(idProduct)) {
                 product.setProductCategory(productModel.getIdCategory());
                 product.setAmountToSell(productModel.getAmountToSell());
                 return product;
@@ -70,9 +70,9 @@ public class ProductService implements IProductService {
 
     public Boolean delete(String idProduct) {
 
-        ProductModel product = this.getByid(idProduct);
+        ProductModel product = this.getProductById(idProduct);
 
-        if (Objects.isNull(product) && !this.ValidateShoppingById(idProduct)) {
+        if (Objects.isNull(product) && !this.ValidateShoppingByProductId(idProduct)) {
                 return false;
             }
         productsModel.remove(product);
@@ -97,7 +97,7 @@ public class ProductService implements IProductService {
         return Objects.nonNull(user) && user.getUserType().equals("Buyer");
     }
 
-    private boolean ValidateShoppingById(String idProduct){
+    private boolean ValidateShoppingByProductId(String idProduct){
         var shopping = _IShoppingService.getShoppingIdProduct(idProduct);
         return Objects.nonNull(shopping) && shopping.getStateBuy().equals("Created");
     }
@@ -124,6 +124,4 @@ public class ProductService implements IProductService {
         }
         return false;
     }
-
-
 }

@@ -8,7 +8,7 @@ import java.util.Optional;
 
 public interface IProductService {
     List<ProductModel> get();
-    ProductModel getByid(String idProduct);
+    ProductModel getProductById(String idProduct);
     ProductModel create(ProductModel productModel);
     ProductModel update(String idProduct, ProductModel productModel);
     ProductModel delete(String idProduct, ProductModel productModel);
