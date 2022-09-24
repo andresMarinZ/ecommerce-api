@@ -1,6 +1,7 @@
 package com.acs.ecommerce.api.service;
 
 import com.acs.ecommerce.api.model.ProductModel;
+import com.acs.ecommerce.api.model.ReviewModel;
 import com.acs.ecommerce.api.service.iservice.IProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -62,7 +63,7 @@ public class ProductService implements IProductService {
         return null;
     }
 
-    @Override
+    /*@Override
     public ProductModel delete(String idProduct, ProductModel productModel) {
 
         Optional<ProductModel> optionalProduct = productsModel.stream()
@@ -73,8 +74,17 @@ public class ProductService implements IProductService {
         }
         //eliminar por ID solo si no tiene ventas
         return null;
-    }
+    }*/
+    public Boolean delete(String idProduct) {
 
+        ProductModel product = this.getByid(idProduct);
+
+        if (Objects.isNull(idProduct)&&!this.ValidateShoppingById(idProduct)) {
+            return false;
+        }
+        productsModel.remove(product);
+        return true;
+    }
     @Override
     public List<ProductModel> getByIdCategory(long idCategory) {
         return productsModel.stream()
@@ -94,9 +104,9 @@ public class ProductService implements IProductService {
         return Objects.nonNull(user) && user.getUserType().equals("Buyer");
     }
 
-    private boolean ValidateShoppingById(int shoppingId, ProductModel productModel){
-        var shopping = _IShoppingService.getShoppingId(shoppingId);
-        return Objects.nonNull(shopping) && shopping.getIdProduct().equals(productModel.getIdProduct());
+    private boolean ValidateShoppingById(String idProduct){
+        var shopping = _IShoppingService.getShoppingIdProduct(idProduct);
+        return Objects.nonNull(shopping) && shopping.getStateBuy().equals("Created");
     }
 
     private boolean UrlValida(String url) {
