@@ -4,6 +4,7 @@ import java.time.temporal.*;
 import java.time.format.*;
 
 import com.acs.ecommerce.api.model.Shopping;
+import com.acs.ecommerce.api.model.ShoppingCart;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -41,14 +42,14 @@ public class ShoppingService implements IShoppingService{
     }
 
     @Override
-    public String buyProduct(int idShopper, int idSeller,String idProduct,int amount, String address,String addressF,String payment ) {
+    public String buyProduct(ShoppingCart shoppingCart, int idSeller, String address, String addressF, String payment ) {
 
         // (ShoppingCart cart)
         Shopping buy = new Shopping();
-        buy.setIdShopper(idShopper);
-        buy.setIdProduct(idProduct);
+        buy.setIdShopper(shoppingCart.getIdShopping());
+        buy.setIdProduct(shoppingCart.getIdProduct());
         buy.setIdSeller(idSeller);
-        buy.setAmountProduct(amount);
+        buy.setAmountProduct(shoppingCart.getAmountToSell());
         buy.setAddressSend(address);
         buy.setAddressFact(addressF);
         buy.setPaymentGateway(payment);

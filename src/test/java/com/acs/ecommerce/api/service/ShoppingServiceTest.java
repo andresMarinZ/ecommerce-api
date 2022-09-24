@@ -1,4 +1,5 @@
 package com.acs.ecommerce.api.service;
+import com.acs.ecommerce.api.model.ShoppingCart;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
@@ -15,11 +16,16 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class ShoppingServiceTest {
     public static List<Shopping> shoppingMocklist =new ArrayList<>();
+    public static List<ShoppingCart> shoppingCartMocklist =new ArrayList<>();
     private final ShoppingService shoppingService;
+
+    private final ShoppingCart shoppingCart;
 
     public ShoppingServiceTest() {
         this.shoppingService = new ShoppingService(shoppingMocklist);
+        this.shoppingCart =new ShoppingCart();
     }
+
     @Test
     void testDelete(){
         assertAll(
@@ -29,8 +35,9 @@ class ShoppingServiceTest {
 
     @Test /*Validando lo que entrea a la lista*/
     void testbuyProduct() throws InterruptedException {
-        String shopCreated = shoppingService.buyProduct(2,5,"2",30,"san javier","55421","bancolombia");
-        String shopCreated2 =shoppingService.buyProduct(1,5,"14",20,"san carlos","34556","PSE");
+
+        String shopCreated = shoppingService.buyProduct(shoppingCart,5,"san javier","55421","TSE");
+        String shopCreated2 =shoppingService.buyProduct(shoppingCart,10,"san antonio","54647","PSE");
 
 
         Shopping barrio = shoppingService.getShoppingId(1);

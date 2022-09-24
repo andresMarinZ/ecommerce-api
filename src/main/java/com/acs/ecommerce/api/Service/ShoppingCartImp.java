@@ -5,7 +5,7 @@ import org.springframework.stereotype.Service;
 import java.util.*;
 
 @Service
-public class ShoppingCartImp implements ShoppingCartService{
+public class ShoppingCartImp implements com.acs.ecommerce.api.Service.ShoppingCartService {
     private static List<ShoppingCart> shoppingcarts = new ArrayList<>();
 
     public ShoppingCartImp(List<ShoppingCart> shoppingcartInjected) {
