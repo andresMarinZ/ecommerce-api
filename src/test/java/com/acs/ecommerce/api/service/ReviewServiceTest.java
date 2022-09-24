@@ -50,7 +50,8 @@ class ReviewServiceTest {
         ReviewModel reviewModel = new ReviewModel();
         reviewModel.setId(reviewId);
         reviewModel.setCreatedAt(new Date(System.currentTimeMillis()));
-        reviewModel.setProductId("1234");
+        reviewModel.setProductId("1");
+        reviewModel.setBuyerId("1");
         reviewModel.setDescription("Hello");
         reviewModel.setViewed(viewed);
 
