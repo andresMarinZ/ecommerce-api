@@ -1,5 +1,6 @@
 package com.acs.ecommerce.api.service;
 
+import com.acs.ecommerce.api.enums.UserTypeEnum;
 import com.acs.ecommerce.api.model.ProductModel;
 import com.acs.ecommerce.api.model.ReviewModel;
 import com.acs.ecommerce.api.service.iservice.IProductService;
@@ -16,11 +17,15 @@ public class ReviewService implements IReviewService {
     private static List<ReviewModel> reviews = new ArrayList<>();
     private static final List<String> listWordProfanity = new ArrayList<>();
 
-    @Autowired
-    IProductService _iProductService;
+    //Imports IService
+    private static IProductService _IProductService;
+    private static UserService _IUserService;
 
-    public ReviewService(List<ReviewModel> reviewInjection){
+    @Autowired
+    public ReviewService(List<ReviewModel> reviewInjection, IProductService IProductService, UserService IUserService){
         reviews = reviewInjection;
+        _IProductService = IProductService;
+        _IUserService = IUserService;
         this.LoadWordProfanity();
     }
 
@@ -42,13 +47,9 @@ public class ReviewService implements IReviewService {
     }
 
     /*
-        - La api deberá permitir crear una revisión solamente a un usuario de tipo comprador.
-        - La revisión solamente se creará a un producto existente.
-        - La revisión no deberá superar los 1000 caracteres.
-        - La revisión no deberá contener palabras soezes.
-        - La api debe validar que la url de la imágen sea una url con estructura válida. --> no se hace
-    */
-    public ReviewModel save(ReviewModel reviewModel) {
+        Method for save new review.
+     */
+     public ReviewModel save(ReviewModel reviewModel) {
 
         if(!this.ValidateReviewByProduct(reviewModel.getProductId()) ||
            !this.ValidateReviewByUser(reviewModel.getBuyerId()) ||
@@ -58,6 +59,7 @@ public class ReviewService implements IReviewService {
 
         reviewModel.setId(UUID.randomUUID().toString());
         reviewModel.setCreatedAt(new Date(System.currentTimeMillis()));
+        reviewModel.setViewed(false);
         reviews.add(reviewModel);
         return reviewModel;
     }
@@ -96,7 +98,8 @@ public class ReviewService implements IReviewService {
     }
 
     private boolean ValidateReviewByUser(String userId){
-        return true;
+        var user = _IUserService.getByIdUser(userId);
+        return user.getUserType().equals(String.valueOf(UserTypeEnum.BUYER));
     }
 
     /*
@@ -104,8 +107,8 @@ public class ReviewService implements IReviewService {
      * return boolean
      */
     private boolean ValidateReviewByProduct(String productId){
-        var product = _iProductService.getByid(productId);
-        return  Objects.nonNull(product.stream().findFirst());
+        var product = _IProductService.getByid(productId);
+        return Objects.nonNull(product);
     }
 
     /*
@@ -122,7 +125,7 @@ public class ReviewService implements IReviewService {
     private boolean ValidateReviewByWordProfanity(String description){
         AtomicInteger countWorlds = new AtomicInteger();
         listWordProfanity.forEach((p)-> {
-            if(description.contains(p)){
+            if(description.toLowerCase().contains(p.toLowerCase())){
                 countWorlds.addAndGet(1);
             }
         });
@@ -143,3 +146,4 @@ public class ReviewService implements IReviewService {
     }
 
 }
+
