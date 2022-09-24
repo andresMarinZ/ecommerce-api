@@ -62,6 +62,7 @@ public class ReviewController {
         return new ResponseEntity<>(responseEntity, null, HttpStatus.OK);
     }
 
+    /*Endpoint Created Review*/
     @PostMapping("/review")
     public ResponseEntity<Response<ReviewModel>> save(@RequestBody ReviewModel review) {
 
@@ -69,9 +70,9 @@ public class ReviewController {
 
         var responseEntity = new Response<ReviewModel>();
         responseEntity.setMessage("created success");
-        responseEntity.setStatus(true);
+        responseEntity.setStatus(Objects.nonNull(newReview));
         responseEntity.setData(newReview);
-        return new ResponseEntity<>(responseEntity, null, HttpStatus.CREATED);
+        return new ResponseEntity<>(responseEntity, null,  Objects.nonNull(newReview) ? HttpStatus.CREATED : HttpStatus.BAD_REQUEST);
     }
 
     @PutMapping("/review/{reviewId}")
