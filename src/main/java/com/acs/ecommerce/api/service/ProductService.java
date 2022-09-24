@@ -53,12 +53,17 @@ public class ProductService implements IProductService {
 
         ProductModel product = this.getByid(idProduct);
 
-        if (Objects.isNull(product) && !this.ValidateShoppingById(idProduct)) {
+        if (Objects.isNull(product)) {
             return new ProductModel();
         } else {
-            product.setProductCategory(productModel.getIdCategory());
-            product.setAmountToSell(productModel.getAmountToSell());
-            //con restriccion cantidad a vender tope vendedor
+            product.setProductName(productModel.getProductName());
+            product.setProductDescription(productModel.getProductDescription());
+            product.setUrlProductImage(productModel.getUrlProductImage());
+            if(!this.ValidateShoppingById(idProduct)) {
+                product.setProductCategory(productModel.getIdCategory());
+                product.setAmountToSell(productModel.getAmountToSell());
+                return product;
+            }
             return product;
         }
     }
