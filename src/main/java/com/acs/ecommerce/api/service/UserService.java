@@ -9,6 +9,7 @@ public interface UserService {
     List<User> get();
     User getByUserType(String userType);
 
+
     User getByDocumentNumber(int DocumentNumber);
 
     User getByIdUser(String idUser);
@@ -18,5 +19,8 @@ public interface UserService {
     User update(String firstName, String LastName, String documentType, int documentNumber, User user);
 
     boolean delete(String idUser, String idShoppingCart);
+
+   //boolean delete1(String idUser);
+
 
 }

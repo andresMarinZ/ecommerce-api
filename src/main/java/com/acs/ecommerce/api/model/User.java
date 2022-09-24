@@ -20,9 +20,22 @@ public class User {
     private String documentType;
     private int documentNumber;
     private String StoreName;
+    //Pedido del equipo de Sebas
+    private int maxSell;
+    //Variable Henry
     private String idShoppingCart;
 
+    public User(int maxSell) {
+        this.maxSell = maxSell;
+    }
 
+    public int getMaxSell() {
+        return maxSell;
+    }
+
+    public void setMaxSell(int maxSell) {
+        this.maxSell = maxSell;
+    }
 
     public User() {
 

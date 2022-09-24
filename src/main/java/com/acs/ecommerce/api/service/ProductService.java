@@ -39,9 +39,10 @@ public class ProductService implements IProductService {
 
         if(!this.ValidateProductByUser(productModel.getUserId())||
            !this.UrlValida(productModel.getUrlProductImage())||
-           !this.DatesValidate(productModel)) return new ProductModel();
+           !this.DatesValidate(productModel)||
+           !this.ValidatemaxSellByUser(productModel.getUserId(),productModel.getAmountToSell())
+        ) return new ProductModel();
         productModel.setIdProduct(UUID.randomUUID().toString());
-        /*tope de vendedor*/
         productsModel.add(productModel);
 
         return productModel;
@@ -95,7 +96,10 @@ public class ProductService implements IProductService {
         var user = _UserService.getByIdUser(userId);
         return Objects.nonNull(user) && user.getUserType().equals("Buyer");
     }
-
+    private boolean ValidatemaxSellByUser(String userId, int amountToSell){
+        var user = _UserService.getByIdUser(userId);
+        return Objects.nonNull(user) && user.getMaxSell()>0 && user.getMaxSell()<amountToSell;
+    }
 
     private boolean ValidateShoppingByProductId(String idProduct){
         var shopping = _IShoppingService.getShoppingIdProduct(idProduct);
