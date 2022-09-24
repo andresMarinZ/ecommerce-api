@@ -2,6 +2,7 @@ package com.acs.ecommerce.api.service;
 
 import com.acs.ecommerce.api.model.CategoryModel;
 import com.acs.ecommerce.api.model.ProductModel;
+import com.acs.ecommerce.api.model.User;
 import com.acs.ecommerce.api.service.iservice.ICategory;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -17,6 +18,8 @@ public class CategoryServiceImpl implements ICategory {
     private static List<CategoryModel> categories = new ArrayList<>();
     //instanciar servicio de productos
     private static final ProductService productService = new ProductService();
+
+    private static final UserService userService = new UserServiceImp();
 
     public CategoryServiceImpl(List<CategoryModel> categoryMockList) {
         categories = categoryMockList;
@@ -45,7 +48,7 @@ public class CategoryServiceImpl implements ICategory {
             return null;
         }
 
-        if (user.getRole().equals("admin")) {
+        if (userService.getByUserType("admin").equals("admin")) {
             categoryModel.setId(Long.valueOf(UUID.randomUUID().toString()));
             categoryModel.setCreationDate(new Date(System.currentTimeMillis()));
             categories.add(categoryModel);
@@ -69,7 +72,7 @@ public class CategoryServiceImpl implements ICategory {
 
         if (optionalCategory.isPresent()) {
             CategoryModel categoryModelFound = optionalCategory.get();
-            if(optionalCategory.equals(productService.getByCategory(idCategory)) ) {
+            if(optionalCategory.equals(productService.getByIdCategory(Long.parseLong(idCategory))) ) {
                 categoryModelFound.setName(categoryModel.getName());
                 return categoryModelFound;
             }
@@ -86,7 +89,7 @@ public class CategoryServiceImpl implements ICategory {
 
         if (optionalCategory.isPresent()) {
             CategoryModel categoryModelFound = optionalCategory.get();
-            if(optionalCategory.equals(productService.getByCategory(idProduct)) ) {
+            if(optionalCategory.equals(productService.getByIdCategory(Long.parseLong(idProduct))) ) {
                 categories.remove(categoryModelFound);
                 return true;
             }

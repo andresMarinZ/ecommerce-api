@@ -5,14 +5,11 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(SpringExtension.class)
 class UserServiceImpTest {
@@ -20,7 +17,7 @@ class UserServiceImpTest {
     private final UserService userService;
 
     public UserServiceImpTest() {
-        this.userService = new UserServiceImp(users);
+        this.userService = new UserServiceImp();
     }
 
     @BeforeEach

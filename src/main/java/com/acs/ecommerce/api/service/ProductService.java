@@ -21,6 +21,10 @@ public class ProductService implements IProductService {
         _IShoppingService = shoppingInjection;
     }
 
+    public ProductService() {
+        this();
+    }
+
     @Override
     public List<ProductModel> get() {
         return null;

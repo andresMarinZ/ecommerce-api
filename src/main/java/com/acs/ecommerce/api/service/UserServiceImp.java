@@ -14,7 +14,7 @@ public class UserServiceImp implements UserService{
 
     private static List<User> users = new ArrayList<>();
     //
-    public UserServiceImp(List<User> usersInjected) {
+    public UserServiceImp() {
         users = usersInjected;
     }
 
