@@ -76,7 +76,7 @@ public class UserServiceImp implements UserService{
 
     public boolean delete(String idUser, String idShoppingCart) {
         boolean deleted = false;
-        return deleted; //idShoppingCart.equals(' ');
+        return idShoppingCart.equals(' ');
     }
 
    public boolean delete(String idUser) {
