@@ -36,7 +36,7 @@ public class QuestionServiceImp implements QuestionService {
         boolean isAuthorizedUser = isAuthorizedUser(buyerId, productId);
 
         if (textLengthLessThan1000) {
-            if (vulgarWordInPhrase) {
+            if (!vulgarWordInPhrase) {
                 if (isAuthorizedUser) {
                     if (productExists) {
                         question.setId(UUID.randomUUID().toString());
@@ -44,7 +44,7 @@ public class QuestionServiceImp implements QuestionService {
                         questions.add(question);
                         response.setResponse("Question created successfully");
                     } else {
-                        response.setResponse(String.format("Product {} doesn't exist", productId));
+                        response.setResponse(String.format("Product %s doesn't exist", productId));
                     }
                 } else {
                     response.setResponse("User not authorized to create question");
