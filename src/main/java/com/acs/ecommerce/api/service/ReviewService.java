@@ -59,6 +59,7 @@ public class ReviewService implements IReviewService {
 
         reviewModel.setId(UUID.randomUUID().toString());
         reviewModel.setCreatedAt(new Date(System.currentTimeMillis()));
+        reviewModel.setViewed(false);
         reviews.add(reviewModel);
         return reviewModel;
     }
@@ -98,7 +99,7 @@ public class ReviewService implements IReviewService {
 
     private boolean ValidateReviewByUser(String userId){
         var user = _IUserService.getByIdUser(userId);
-        return user.getUserType().equals(UserTypeEnum.BUYER);
+        return user.getUserType().equals(String.valueOf(UserTypeEnum.BUYER));
     }
 
     /*
@@ -124,7 +125,7 @@ public class ReviewService implements IReviewService {
     private boolean ValidateReviewByWordProfanity(String description){
         AtomicInteger countWorlds = new AtomicInteger();
         listWordProfanity.forEach((p)-> {
-            if(description.contains(p)){
+            if(description.toLowerCase().contains(p.toLowerCase())){
                 countWorlds.addAndGet(1);
             }
         });
