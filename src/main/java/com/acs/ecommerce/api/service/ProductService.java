@@ -1,7 +1,6 @@
 package com.acs.ecommerce.api.service;
 
 import com.acs.ecommerce.api.model.ProductModel;
-import com.acs.ecommerce.api.model.ReviewModel;
 import com.acs.ecommerce.api.service.iservice.IProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -42,7 +41,7 @@ public class ProductService implements IProductService {
            !this.UrlValida(productModel.getUrlProductImage())||
            !this.DatesValidate(productModel)) return new ProductModel();
         productModel.setIdProduct(UUID.randomUUID().toString());
-        //tope de vendedor
+        /*tope de vendedor*/
         productsModel.add(productModel);
 
         return productModel;
@@ -59,7 +58,7 @@ public class ProductService implements IProductService {
             product.setProductName(productModel.getProductName());
             product.setProductDescription(productModel.getProductDescription());
             product.setUrlProductImage(productModel.getUrlProductImage());
-            if(!this.ValidateShoppingByProductId(idProduct)) {
+            if(this.ValidateShoppingByProductId(idProduct)) {
                 product.setProductCategory(productModel.getIdCategory());
                 product.setAmountToSell(productModel.getAmountToSell());
                 return product;
@@ -72,7 +71,7 @@ public class ProductService implements IProductService {
 
         ProductModel product = this.getProductById(idProduct);
 
-        if (Objects.isNull(product) && !this.ValidateShoppingByProductId(idProduct)) {
+        if (Objects.isNull(product) && this.ValidateShoppingByProductId(idProduct)) {
                 return false;
             }
         productsModel.remove(product);
@@ -97,9 +96,10 @@ public class ProductService implements IProductService {
         return Objects.nonNull(user) && user.getUserType().equals("Buyer");
     }
 
+
     private boolean ValidateShoppingByProductId(String idProduct){
         var shopping = _IShoppingService.getShoppingIdProduct(idProduct);
-        return Objects.nonNull(shopping) && shopping.getStateBuy().equals("Created");
+        return !Objects.nonNull(shopping) || !shopping.getStateBuy().equals("Created");
     }
 
     private boolean UrlValida(String url) {
@@ -117,11 +117,8 @@ public class ProductService implements IProductService {
     }
 
     private boolean DatesValidate(ProductModel productModel) {
-        if((productModel.getProductName()!=null)||
-           (productModel.getProductDescription()!=null)||
-           (productModel.getUserId()!=null)){
-            return true;
-        }
-        return false;
+        return (productModel.getProductName() != null) ||
+                (productModel.getProductDescription() != null) ||
+                (productModel.getUserId() != null);
     }
 }
