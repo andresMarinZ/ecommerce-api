@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.booleanThat;
 import static org.mockito.Mockito.when;
 
@@ -18,6 +19,7 @@ class ShoppingCartImpTest {
     private final List<ShoppingCart> shoppingcartMockList = new ArrayList<>();
     private final ShoppingCartService shoppingcartService;
 
+    ShoppingCart ShoppingCart ;
     public ShoppingCartImpTest() {
         this.shoppingcartService = new ShoppingCartImp(shoppingcartMockList);
     }
@@ -31,7 +33,7 @@ class ShoppingCartImpTest {
     @Test
     public void getEmptyShoppingCartTest() {
         List<ShoppingCart> shoppingcartResult = shoppingcartService.get();
-        Assertions.assertTrue(shoppingcartResult.isEmpty());
+        assertTrue(shoppingcartResult.isEmpty());
     }
 
 
@@ -44,11 +46,13 @@ class ShoppingCartImpTest {
     }
 
     @Test
-    public void deleteShoppingCartTest() {
+   void deleteShoppingCart() {
+        boolean shoppingcartDelete = shoppingcartService.delete("1");
         Assertions.assertAll(
-                () -> Assertions.assertEquals(false, shoppingcartService.delete(getNewShoppingCart().getIdShoppingCart()))
+                () -> Assertions.assertFalse(shoppingcartDelete)
         );
     }
+
     private ShoppingCart getNewShoppingCart() {
         ShoppingCart shoppingcart = new ShoppingCart();
         shoppingcart.setIdProduct("1");
