@@ -37,7 +37,7 @@ class ShoppingServiceTest {
                 () -> Assertions.assertEquals("san javier", barrio),
                 () -> Assertions.assertEquals("Created", shopCreated2),
                 () -> Assertions.assertEquals("san carlos", barrio2)
-                             
+
                 );
      }
 
