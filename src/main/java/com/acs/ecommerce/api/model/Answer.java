@@ -57,4 +57,13 @@ public class Answer {
     public void setQuestionId(String questionId) {
         this.questionId = questionId;
     }
+
+    public String getBuyerId() {
+        return sellerId;
+    }
+
+
+    public String getQuestionText() {
+        return answerText;
+    }
 }
