@@ -4,9 +4,11 @@ import com.acs.ecommerce.api.model.ProductModel;
 import com.acs.ecommerce.api.service.iservice.IProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
-import java.util.regex.*;
 
 @Service
 public class ProductService implements IProductService {

@@ -1,7 +1,6 @@
 package com.acs.ecommerce.api.service;
 
 import com.acs.ecommerce.api.enums.UserTypeEnum;
-import com.acs.ecommerce.api.model.ProductModel;
 import com.acs.ecommerce.api.model.ReviewModel;
 import com.acs.ecommerce.api.service.iservice.IProductService;
 import com.acs.ecommerce.api.service.iservice.IReviewService;
@@ -107,7 +106,7 @@ public class ReviewService implements IReviewService {
      * return boolean
      */
     private boolean ValidateReviewByProduct(String productId){
-        var product = _IProductService.getByid(productId);
+        var product = _IProductService.getProductById(productId);
         return Objects.nonNull(product);
     }
 

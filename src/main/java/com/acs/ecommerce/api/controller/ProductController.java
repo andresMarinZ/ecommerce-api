@@ -1,18 +1,12 @@
 package com.acs.ecommerce.api.controller;
 
 import com.acs.ecommerce.api.model.ProductModel;
-import com.acs.ecommerce.api.model.ReviewModel;
-import com.acs.ecommerce.api.model.genericModel.Response;
 import com.acs.ecommerce.api.service.iservice.IProductService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
-import java.util.Optional;
 
 @RestController
 public class ProductController {
@@ -43,9 +37,9 @@ public class ProductController {
     }
     @GetMapping("/product/{idProduct}")
     public ResponseEntity<ProductModel> delete(@PathVariable String idProduct, @RequestBody ProductModel productModel) {
-        ProductModel deleteProductModel = iProductService.delete(idProduct,productModel);
+        Boolean deleteProductModel = iProductService.delete(idProduct);
 
-        return Objects.isNull(deleteProductModel) ? ResponseEntity.notFound().build() : ResponseEntity.ok(productModel);
+        return deleteProductModel ? ResponseEntity.notFound().build() : ResponseEntity.ok(productModel);
     }
     @GetMapping("/product/{Keyword}")
     public ResponseEntity<ProductModel> getProductByKeyword(@PathVariable String Keyword) {
