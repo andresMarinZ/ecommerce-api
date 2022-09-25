@@ -78,8 +78,14 @@ public class QuestionServiceImp implements QuestionService {
         List<Question> optionalQuestion = questions.stream()
                 .filter(question -> question.getBuyerId().equals(buyerId))
                 .collect(Collectors.toList());
-
         return optionalQuestion;
+    }
+
+    public Question getById(String questionId) {
+        Optional<Question> optionalQuestion = questions.stream()
+                .filter(question -> question.getId().equals(questionId))
+                .findFirst();
+        return optionalQuestion.orElse(null);
     }
 
     private static boolean containsVulgarWords(String inputString, String[] words) {

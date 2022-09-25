@@ -12,32 +12,27 @@ import java.util.*;
 @Service
 public class AnswerServiceImp implements AnswerService {
     private static List<Answer> answers = new ArrayList<>();
-    private static IProductService _iProductService;
+    private static QuestionService _questionService;
     @Autowired
-    public AnswerServiceImp(List<Answer> answersInjection, IProductService iProductService){
+    public AnswerServiceImp(List<Answer> answersInjection, QuestionService questionService){
         answers = answersInjection;
-        _iProductService = iProductService;
+        _questionService = questionService;
     }
     @Override
     public Response create(Answer answer) {
-        // TODO - Get Seller type -ed 25/09/2022
         String sellerId = answer.getSellerId();
-        String questionId = answer.getId();
-        String buyerId = answer.getBuyerId();
-        String questionText = answer.getQuestionText();
+        String questionId = answer.getQuestionId();
         Response response = new Response();
         boolean questionExists = questionExist(questionId);
         boolean authorizedseller = isAuthorizedUser(sellerId);
-        // TODO - Get Seller type -ed 25/09/2022
         if (authorizedseller) {
-            // TODO - Question exists? -ed 25/09/2022
             if (questionExists) {
                     answer.setId(UUID.randomUUID().toString());
                     answer.setCreationDate(new Date(System.currentTimeMillis()));
                     answers.add(answer);
                     response.setResponse("Answer created successfully");
             } else {
-                response.setResponse(String.format("Answer with id {} doesn't exist"));
+                response.setResponse(String.format("Answer with id %s doesn't exist", questionId));
             }
         } else {
             response.setResponse("User not authorized to create answer");
@@ -45,7 +40,8 @@ public class AnswerServiceImp implements AnswerService {
         return response;
     }
     private boolean questionExist(String questionId){
-        return !Objects.equals(questionId, "");
+        var question = _questionService.getById(questionId);
+        return Objects.nonNull(question);
     }
     private boolean isAuthorizedUser(String sellerId){
         return !Objects.equals(sellerId, "");

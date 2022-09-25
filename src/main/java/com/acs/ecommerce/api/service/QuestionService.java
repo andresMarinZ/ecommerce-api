@@ -8,4 +8,5 @@ import java.util.List;
 public interface QuestionService {
     Response create(Question question);
     List<Question> getAll(String buyerId);
+    Question getById(String questionId);
 }

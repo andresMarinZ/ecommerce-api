@@ -26,4 +26,9 @@ public class QuestionController {
     }
 
 
+    @GetMapping("question")
+    public ResponseEntity<Question> getQuestionById(@RequestParam(name = "questionId") String questionId) {
+        Question question = questionService.getById(questionId);
+        return Objects.isNull(question) ? ResponseEntity.notFound().build() : ResponseEntity.ok(question);
+    }
 }
