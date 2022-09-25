@@ -23,12 +23,11 @@ public class ProductController {
    // private final List<ProductModel> productModels = new ArrayList<>();
 
     @GetMapping("/product/{idProduct}")
-    public ResponseEntity<ProductModel> getById(@PathVariable String idProduct) {
-        ProductModel productModel = iProductService.getByid(idProduct);
+    public ResponseEntity<ProductModel> getProductById(@PathVariable String idProduct) {
+        ProductModel productModel = iProductService.getProductById(idProduct);
 
         return Objects.isNull(productModel) ? ResponseEntity.notFound().build() : ResponseEntity.ok(productModel);
     }
-
     @PostMapping("/product")
     public ResponseEntity<ProductModel> create(@RequestBody ProductModel productModel) {
         ProductModel newProductModel = iProductService.create(productModel);
@@ -41,6 +40,18 @@ public class ProductController {
         ProductModel updateProductModel = iProductService.update(idProduct,productModel);
 
         return ResponseEntity.ok(updateProductModel);
+    }
+    @GetMapping("/product/{idProduct}")
+    public ResponseEntity<ProductModel> delete(@PathVariable String idProduct, @RequestBody ProductModel productModel) {
+        ProductModel deleteProductModel = iProductService.delete(idProduct,productModel);
+
+        return Objects.isNull(deleteProductModel) ? ResponseEntity.notFound().build() : ResponseEntity.ok(productModel);
+    }
+    @GetMapping("/product/{Keyword}")
+    public ResponseEntity<ProductModel> getProductByKeyword(@PathVariable String Keyword) {
+        ProductModel productModel = (ProductModel) iProductService.getProductByKeyword(Keyword);
+
+        return Objects.isNull(productModel) ? ResponseEntity.notFound().build() : ResponseEntity.ok(productModel);
     }
 
 }
