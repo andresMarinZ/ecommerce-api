@@ -1,7 +1,9 @@
 package com.acs.ecommerce.api.service;
 
+import com.acs.ecommerce.api.enums.UserTypeEnum;
 import com.acs.ecommerce.api.model.ProductModel;
 import com.acs.ecommerce.api.model.ReviewModel;
+import com.acs.ecommerce.api.model.User;
 import com.acs.ecommerce.api.service.iservice.IProductService;
 import com.acs.ecommerce.api.service.iservice.IReviewService;
 import org.junit.jupiter.api.AfterEach;
@@ -19,26 +21,28 @@ import java.util.UUID;
 import static org.junit.jupiter.api.Assertions.*;
 
 class ReviewServiceTest {
-
-
-
     private  static final ProductModel productMockModel = new ProductModel();
+    private static  final User userMockModel = new User();
     private static final ReviewModel reviewMockModel = new ReviewModel();
     private static final List<ReviewModel> reviewMockList = new ArrayList<>();
     private static final List<ProductModel> productMockList = new ArrayList<>();
+    private static  final List<User> userMockList = new ArrayList<>();
     private final ReviewService reviewServices;
     private final IProductService IProductService;
+    private static UserService IUserService;
 
 
     public ReviewServiceTest() {
         IProductService = new ProductService(productMockList);
-        reviewServices = new ReviewService(reviewMockList, IProductService);
+        IUserService = new UserServiceImp(userMockList);
+        reviewServices = new ReviewService(reviewMockList, IProductService, IUserService);
     }
 
     @BeforeEach
     public void initializeReviewList() {
         reviewMockList.clear();
         this.productModel();
+        this.userModel();
     }
 
     private ReviewModel setReviewModel(Boolean viewed, String reviewId){
@@ -46,7 +50,8 @@ class ReviewServiceTest {
         ReviewModel reviewModel = new ReviewModel();
         reviewModel.setId(reviewId);
         reviewModel.setCreatedAt(new Date(System.currentTimeMillis()));
-        reviewModel.setProductId("1234");
+        reviewModel.setProductId("1");
+        reviewModel.setBuyerId("1");
         reviewModel.setDescription("Hello");
         reviewModel.setViewed(viewed);
 
@@ -107,16 +112,40 @@ class ReviewServiceTest {
     public void saveWhenProductNotExist(){
         //Arrange
             reviewMockModel.setProductId("2");
+            reviewMockModel.setBuyerId("1");
 
         //Act
             var save = reviewServices.save(reviewMockModel);
         //Assert
-        Assertions.assertNull(save);
+        Assertions.assertNull(save.getId());
     }
     @Test
     public void saveWhenProductExist(){
         //Arrange
         reviewMockModel.setProductId("1");
+        reviewMockModel.setBuyerId("1");
+
+        //Act
+        var save = reviewServices.save(reviewMockModel);
+        //Assert
+        Assertions.assertNotNull(save);
+    }
+
+    @Test
+    public void saveWhenUserNoExist(){
+        //Arrange
+        reviewMockModel.setBuyerId("2");
+
+        //Act
+        var save = reviewServices.save(reviewMockModel);
+        //Assert
+        Assertions.assertNotNull(save);
+    }
+
+    @Test
+    public void saveWhenUserExist(){
+        //Arrange
+        reviewMockModel.setBuyerId("1");
 
         //Act
         var save = reviewServices.save(reviewMockModel);
@@ -139,13 +168,14 @@ class ReviewServiceTest {
                             "It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, " +
                             "and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.";
 
+        reviewMockModel.setBuyerId("1");
         reviewMockModel.setProductId("1");
         reviewMockModel.setDescription(description);
 
         //Act
         var save = reviewServices.save(reviewMockModel);
         //Assert
-        Assertions.assertNull(save);
+        Assertions.assertNull(save.getId());
     }
 
     @Test
@@ -153,6 +183,7 @@ class ReviewServiceTest {
         //Arrange
         String description = "Lorem Ipsum is simply dummy text of the printing and typesetting industry. ";
 
+        reviewMockModel.setBuyerId("1");
         reviewMockModel.setProductId("1");
         reviewMockModel.setDescription(description);
 
@@ -167,13 +198,14 @@ class ReviewServiceTest {
         //Arrange
         String description = "Lorem Ipsum Gay is simply dummy text of the Marica printing and typesetting industry. ";
 
+        reviewMockModel.setBuyerId("1");
         reviewMockModel.setProductId("1");
         reviewMockModel.setDescription(description);
 
         //Act
         var save = reviewServices.save(reviewMockModel);
         //Assert
-        Assertions.assertNotNull(save);
+        Assertions.assertNull(save.getId());
     }
 
     @Test
@@ -181,6 +213,7 @@ class ReviewServiceTest {
         //Arrange
         String description = "Lorem Ipsum is simply dummy text of the printing and typesetting industry. ";
 
+        reviewMockModel.setBuyerId("1");
         reviewMockModel.setProductId("1");
         reviewMockModel.setDescription(description);
 
@@ -193,6 +226,12 @@ class ReviewServiceTest {
     private void productModel(){
         productMockModel.setIdProduct("1");
         productMockList.add(productMockModel);
+    }
+
+    private void userModel(){
+        userMockModel.setId("1");
+        userMockModel.setUserType(String.valueOf(UserTypeEnum.BUYER));
+        userMockList.add(userMockModel);
     }
     @Test
     public void updateReviewWhenReviewNotFoundThenExpectNull(){
