@@ -40,7 +40,7 @@ public class ProductService implements IProductService {
         if(!this.ValidateProductByUser(productModel.getUserId())||
            !this.UrlValida(productModel.getUrlProductImage())||
            !this.DatesValidate(productModel)||
-           !this.ValidatemaxSellByUser(productModel.getUserId(),productModel.getAmountToSell())
+           !this.ValidateSellByUser(productModel.getUserId(),productModel.getAmountToSell())
         ) return new ProductModel();
         productModel.setIdProduct(UUID.randomUUID().toString());
         productsModel.add(productModel);
@@ -96,7 +96,7 @@ public class ProductService implements IProductService {
         var user = _UserService.getByIdUser(userId);
         return Objects.nonNull(user) && user.getUserType().equals("Buyer");
     }
-    private boolean ValidatemaxSellByUser(String userId, int amountToSell){
+    private boolean ValidateSellByUser(String userId, int amountToSell){
         var user = _UserService.getByIdUser(userId);
         return Objects.nonNull(user) && user.getMaxSell()>0 && user.getMaxSell()<amountToSell;
     }
@@ -108,10 +108,10 @@ public class ProductService implements IProductService {
 
     private boolean UrlValida(String url) {
         String regex = "((http|https)://)(www.)?"
-                + "[a-zA-Z0-9@:%._\\+~#?&//=]"
+                + "[a-zA-Z0-9@:%._~#?&/=]"
                 + "{2,256}\\.[a-z]"
                 + "{2,6}\\b([-a-zA-Z0-9@:%"
-                + "._\\+~#?&//=]*)";
+                + "._+~#?&/=]*)";
         Pattern p = Pattern.compile(regex);
         if (url == null) {
             return false;
