@@ -22,10 +22,11 @@ class QuestionServiceImpTest {
     private final QuestionService questionMockService;
     private final IProductService iProductService;
     private final ProductModel productMockModel = new ProductModel();
+    private final Question questionsMock = new Question();
 
     public QuestionServiceImpTest() {
         this.iProductService = new ProductService(productmocklist);
-        this.questionMockService = new QuestionServiceImp(iProductService);
+        this.questionMockService = new QuestionServiceImp(iProductService, questiomocklist);
     }
 
     private Question getNewQuestion(String questionText, String buyerId, String sellerId, String productId) {
@@ -41,10 +42,29 @@ class QuestionServiceImpTest {
         productMockModel.setIdProduct("1");
         productmocklist.add(productMockModel);
     }
+    
+    private void questionModel(){
+        final Question q1 = new Question();
+        q1.setBuyerId("999");
+        questiomocklist.add(q1);
+        final Question q2 = new Question();
+        q2.setBuyerId("123");
+        questiomocklist.add(q2);
+        final Question q3 = new Question();
+        q3.setBuyerId("456");
+        questiomocklist.add(q3);
+        final Question q4 = new Question();
+        q4.setBuyerId("895");
+        questiomocklist.add(q4);
+        final Question q5 = new Question();
+        q5.setBuyerId("999");
+        questiomocklist.add(q5);
+    }
 
     @BeforeEach
     public void initializeProductList() {
         this.productModel();
+        this.questionModel();
     }
 
     @Test
@@ -93,6 +113,9 @@ class QuestionServiceImpTest {
 
     @Test
     public void getAll() {
+        String buyerId = "999";
+        List<Question> questions = questionMockService.getAll(buyerId);
+        Assertions.assertTrue(questions.size() == 2);
     }
 
 

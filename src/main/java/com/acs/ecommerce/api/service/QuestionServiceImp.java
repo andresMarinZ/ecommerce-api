@@ -13,19 +13,21 @@ import java.util.stream.Collectors;
 
 @Service
 public class QuestionServiceImp implements QuestionService {
-    private static final List<Question> questions = new ArrayList<>();
+    private static List<Question> questions = new ArrayList<>();
 
     //ArrayList<String> vulgarWords =  new ArrayList<>(Arrays.asList("hijueputa", "pirobo", "gamin", "gonorrea"));
     String[] vulgarWords = {"hijueputa", "pirobo", "gamin", "gonorrea"};
 
     private static IProductService _iProductService;
     @Autowired
-    public QuestionServiceImp(IProductService iProductService){
+    public QuestionServiceImp(IProductService iProductService, List<Question> questionsInjection){
+        questions = questionsInjection;
         _iProductService = iProductService;
     }
 
     public Response create(Question question) {
         String buyerId = question.getBuyerId();
+        String sellerId = question.getSellerId();
         String productId = question.getProductId();
         String questionText = question.getQuestionText();
         Response response = new Response();
@@ -33,7 +35,7 @@ public class QuestionServiceImp implements QuestionService {
         boolean textLengthLessThan1000 = textLengthLessThan1000(questionText);
         boolean vulgarWordInPhrase = containsVulgarWords(questionText, vulgarWords);
         boolean productExists = producExists(productId);
-        boolean isAuthorizedUser = isAuthorizedUser(buyerId, productId);
+        boolean isAuthorizedUser = isAuthorizedUser(buyerId, sellerId);
 
         if (textLengthLessThan1000) {
             if (!vulgarWordInPhrase) {
@@ -59,8 +61,8 @@ public class QuestionServiceImp implements QuestionService {
         return response;
     }
 
-    private boolean isAuthorizedUser(String buyerId, String productId){
-        return !Objects.equals(buyerId, "") || !Objects.equals(productId, "");
+    private boolean isAuthorizedUser(String buyerId, String sellerId){
+        return !Objects.equals(buyerId, "") || !Objects.equals(sellerId, "");
     }
 
     private boolean textLengthLessThan1000(String questionText) {

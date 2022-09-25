@@ -1,14 +1,22 @@
 package com.acs.ecommerce.api.service;
 
 import com.acs.ecommerce.api.model.Answer;
+import com.acs.ecommerce.api.model.Question;
 import com.acs.ecommerce.api.model.Response;
+import com.acs.ecommerce.api.service.iservice.IProductService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
 
 @Service
 public class AnswerServiceImp implements AnswerService {
-    private static final List<Answer> answers = new ArrayList<>();
+    private static List<Answer> answers = new ArrayList<>();
+
+    @Autowired
+    public AnswerServiceImp(List<Answer> answersInjection){
+        answers = answersInjection;
+    }
 
     @Override
     public Response create(Answer answer) {
