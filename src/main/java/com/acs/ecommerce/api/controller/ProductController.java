@@ -35,7 +35,7 @@ public class ProductController {
 
         return ResponseEntity.ok(updateProductModel);
     }
-    @GetMapping("/product/{idProduct}")
+    @DeleteMapping("/product/{idProduct}")
     public ResponseEntity<ProductModel> delete(@PathVariable String idProduct, @RequestBody ProductModel productModel) {
         Boolean deleteProductModel = iProductService.delete(idProduct);
 
@@ -44,6 +44,12 @@ public class ProductController {
     @GetMapping("/product/{Keyword}")
     public ResponseEntity<ProductModel> getProductByKeyword(@PathVariable String Keyword) {
         ProductModel productModel = (ProductModel) iProductService.getProductByKeyword(Keyword);
+
+        return Objects.isNull(productModel) ? ResponseEntity.notFound().build() : ResponseEntity.ok(productModel);
+    }
+    @GetMapping("/product/{idCategory}")
+    public ResponseEntity<ProductModel> getByIdCategory(@PathVariable long idCategory) {
+        ProductModel productModel = (ProductModel) iProductService.getByIdCategory(idCategory);
 
         return Objects.isNull(productModel) ? ResponseEntity.notFound().build() : ResponseEntity.ok(productModel);
     }

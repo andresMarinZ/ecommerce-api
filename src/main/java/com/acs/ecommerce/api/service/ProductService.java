@@ -24,11 +24,6 @@ public class ProductService implements IProductService {
     }
 
     @Override
-    public List<ProductModel> get() {
-        return null;
-    }
-
-    @Override
     public ProductModel getProductById(String idProduct) {
         Optional<ProductModel> optionalProduct = productsModel.stream()
                 .filter(product -> product.getIdProduct().equals(idProduct))
@@ -62,7 +57,7 @@ public class ProductService implements IProductService {
             product.setProductDescription(productModel.getProductDescription());
             product.setUrlProductImage(productModel.getUrlProductImage());
             if(this.ValidateShoppingByProductId(idProduct)) {
-                product.setProductCategory(productModel.getIdCategory());
+                product.setIdCategory(productModel.getIdCategory());
                 product.setAmountToSell(productModel.getAmountToSell());
                 return product;
             }
