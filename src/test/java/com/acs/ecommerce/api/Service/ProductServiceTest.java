@@ -35,6 +35,7 @@ class ProductServiceTest {
     public void initializeProductList() {
         MocklistproductsModel.clear();
         this.userModel();
+        this.shoppingModel();
     }
 
     private void shoppingModel() {
@@ -84,9 +85,10 @@ class ProductServiceTest {
     }
 
     @Test
-    void ValidateCreateProductByUserNotexistent(){
+    void ValidateCreateProductByUserNotexist(){
         //Arrange
         productModel();
+        userModel();
         productMockModel.setUserId("2");
         //Act
         ProductModel new_product_model = productService.create(productMockModel);
@@ -246,7 +248,49 @@ class ProductServiceTest {
         Assertions.assertEquals(new_product_model.getIdCategory(),producttestZ.getIdCategory());
     }
 
+    @Test
+    void ValidategetProductByKeywordNotexist(){
+        //Arrange
+        productModel();
+        String keyword = "cordones";
+        //Act
+        List <ProductModel> productlist = new ArrayList<ProductModel>(productService.getProductByKeyword(keyword));
+        //Assert
+        Assertions.assertTrue(productlist.isEmpty());
+    }
 
+    @Test
+    void ValidategetProductByKeywordexist(){
+        //Arrange
+        productModel();
+        String keyword = "con";
+        //Act
+        List <ProductModel> productlist = new ArrayList<ProductModel>(productService.getProductByKeyword(keyword));
+        //Assert
+        Assertions.assertFalse(productlist.isEmpty());
+    }
+
+    @Test
+    void ValidategetByIdCategoryNotexist(){
+        //Arrange
+        productModel();
+        long idCategory = 2;
+        //Act
+        List <ProductModel> productlistBycategory = new ArrayList<ProductModel>(productService.getByIdCategory(idCategory));
+        //Assert
+        Assertions.assertTrue(productlistBycategory.isEmpty());
+    }
+
+    @Test
+    void ValidategetByIdCategoryexist(){
+        //Arrange
+        productModel();
+        long idCategory = 1;
+        //Act
+        List <ProductModel> productlistBycategory = new ArrayList<ProductModel>(productService.getByIdCategory(idCategory));
+        //Assert
+        Assertions.assertFalse(productlistBycategory.isEmpty());
+    }
 
     /*Delete
     @Test
