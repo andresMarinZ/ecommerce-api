@@ -6,6 +6,7 @@ import com.acs.ecommerce.api.model.ShoppingCart;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -16,10 +17,11 @@ public class ControllerShopping {
     IShoppingService iShoppingService;
 
     //
-    @GetMapping("/buy") //No tengo claras esta ruta
+
+    @PostMapping("/Createbuy")
     public String BuyProduct(@RequestBody ShoppingCart shoppingCart, int idSeller, String address, String addressF, String payment ){
-        String buy = iShoppingService.buyProduct(shoppingCart, idSeller, address,  addressF,  payment);
-        return buy;
+        String buy1 = iShoppingService.buyProduct(shoppingCart, idSeller, address,  addressF,  payment);
+        return buy1;
     }
 
     @GetMapping("/delete")
@@ -46,4 +48,9 @@ public class ControllerShopping {
         return  shopping;
     }
 
+     /*@GetMapping("/buy") //No tengo claras esta ruta
+    public String BuyProduct(@RequestBody ShoppingCart shoppingCart, int idSeller, String address, String addressF, String payment ){
+        String buy = iShoppingService.buyProduct(shoppingCart, idSeller, address,  addressF,  payment);
+        return buy;
+    }*/
 }
