@@ -23,6 +23,8 @@ class ProductServiceTest {
 
     public static List<Shopping> Mocklistshopping = new ArrayList<>();
 
+    private static final Shopping shoppingMockModel = new Shopping();
+
     public ProductServiceTest(){
         ShoppingService _IShoppingService = new ShoppingService(Mocklistshopping);
         UserService _UserService = new UserServiceImp(MocklistusersModel);
@@ -35,6 +37,11 @@ class ProductServiceTest {
         this.userModel();
     }
 
+    private void shoppingModel() {
+        shoppingMockModel.setIdProduct("1");
+        shoppingMockModel.setStateBuy("Created");
+        Mocklistshopping.add(shoppingMockModel);
+    }
     private void userModel() {
         userMockModel.setId("1");
         userMockModel.setUserType("Buyer");
@@ -77,7 +84,7 @@ class ProductServiceTest {
     }
 
     @Test
-    void ValidateProductByUserNotexistent(){
+    void ValidateCreateProductByUserNotexistent(){
         //Arrange
         productModel();
         productMockModel.setUserId("2");
@@ -86,20 +93,9 @@ class ProductServiceTest {
         //Assert
         Assertions.assertNull(new_product_model.getUserId());
     }
-    /*
-    @Test
-    void ValidateProductByUserexistent(){
-        //Arrange
-        productModel();
-        productMockModel.setUserId("1");
-        //Act
-        ProductModel new_product_model = productService.create(productMockModel);
-        //Assert
-        Assertions.assertNotNull(new_product_model.getUserId());
-    }*/
 
     @Test
-    void ValidateUrlNotValidate(){
+    void ValidateCreateUrlNotValidate(){
         //Arrange
         productModel();
         productMockModel.setUrlProductImage("htts//:loquesea");
@@ -110,7 +106,7 @@ class ProductServiceTest {
     }
 
     @Test
-    void ValidateDatesProductNameNotValidate(){
+    void ValidateCreateDatesProductNameNotValidate(){
         //Arrange
         productModel();
         productMockModel.setProductName("cordones");
@@ -121,7 +117,7 @@ class ProductServiceTest {
     }
 
     @Test
-    void ValidateDatesProductDescriptionNotValidate(){
+    void ValidateCreateDatesProductDescriptionNotValidate(){
         //Arrange
         productModel();
         productMockModel.setProductDescription("extra largos");
@@ -132,7 +128,7 @@ class ProductServiceTest {
     }
 
     @Test
-    void ValidateDatesUserIdNotValidate(){
+    void ValidateCreateDatesUserIdNotValidate(){
         //Arrange
         productModel();
         productMockModel.setUserId("2");
@@ -143,18 +139,116 @@ class ProductServiceTest {
     }
 
     @Test
-    void ValidateSellByUserNotValidate(){
+    void ValidateCreateSellByUserValidateAndAmountNotValidate(){
         //Arrange
         productModel();
         userModel();
-        productMockModel.setUserId("2");
-        userMockModel.setMaxSell(10);
+        productMockModel.setUserId("1");
+        productMockModel.setAmountToSell(150);
         //Act
         ProductModel new_product_model = productService.create(productMockModel);
         //Assert
         Assertions.assertNull(new_product_model.getUserId());
     }
-    /*
+
+    @Test
+    void ValidateCreateSellByUserNotValidate(){
+        //Arrange
+        productModel();
+        userModel();
+        productMockModel.setUserId("2");
+        productMockModel.setAmountToSell(50);
+        //Act
+        ProductModel new_product_model = productService.create(productMockModel);
+        //Assert
+        Assertions.assertNull(new_product_model.getUserId());
+    }
+
+    @Test
+    void ValidateCreateAllOk(){
+        //Arrange
+        productModel();
+        userModel();
+        productMockModel.setIdProduct("1");
+        productMockModel.setProductName("condones");
+        productMockModel.setIdCategory(1);
+        productMockModel.setProductDescription("extra grandes");
+        productMockModel.setUrlProductImage("https://www.google.com");
+        productMockModel.setUserId("1");
+        productMockModel.setDocumentNumber(1);
+        productMockModel.setAmountToSell(100);
+        userMockModel.setId("1");
+        userMockModel.setUserType("Buyer");
+        userMockModel.setMaxSell(50);
+        //Act
+        ProductModel new_product_model = productService.create(productMockModel);
+        //Assert
+        Assertions.assertNotNull(new_product_model.getUserId());
+    }
+
+    @Test
+    void ValidateUpdateProductIdNotValidate(){
+        //Arrange
+        productModel();
+        shoppingModel();
+        String id_product = "2";
+        shoppingMockModel.setStateBuy("Created");
+        //Act
+        ProductModel new_product_model = productService.update(id_product,productMockModel);
+        //Assert
+        Assertions.assertNull(new_product_model.getUserId());
+    }
+
+    @Test
+    void ValidateUpdateShoppingStateBuyNotValidate(){
+        //Arrange
+        productModel();
+        shoppingModel();
+        String id_product = "1";
+        shoppingMockModel.setStateBuy("Delete");
+        Long actualIdcategory = productMockModel.getIdCategory();
+        productMockModel.setIdCategory(2);
+        //Act
+        ProductModel new_product_model = productService.update(id_product,productMockModel);
+        //Assert
+        Assertions.assertNotEquals(new_product_model.getIdCategory(),actualIdcategory);
+    }
+
+    @Test
+    void ValidateUpdateShoppingByProductIdNotValidate(){
+        //Arrange
+        productModel();
+        shoppingModel();
+        String id_product = "1";
+        shoppingMockModel.setStateBuy("Created");
+        ProductModel producttestZ = new ProductModel();
+        producttestZ.setIdCategory(2);
+        shoppingMockModel.setIdProduct("2");
+        //Act
+        ProductModel new_product_model = productService.update(id_product,producttestZ);
+        //Assert
+        Assertions.assertNotEquals(new_product_model.getIdCategory(),producttestZ.getIdCategory());
+    }
+
+    @Test
+    void ValidateUpdateAllOk(){
+        //Arrange
+        productModel();
+        shoppingModel();
+        String id_product = "1";
+        shoppingMockModel.setStateBuy("Created");
+        ProductModel producttestZ = new ProductModel();
+        producttestZ.setIdCategory(2);
+        shoppingMockModel.setIdProduct("1");
+        //Act
+        ProductModel new_product_model = productService.update(id_product,producttestZ);
+        //Assert
+        Assertions.assertEquals(new_product_model.getIdCategory(),producttestZ.getIdCategory());
+    }
+
+
+
+    /*Delete
     @Test
     void nnnn(){
         //Arrange

@@ -100,7 +100,7 @@ public class ProductService implements IProductService {
 
     private boolean ValidateShoppingByProductId(String idProduct){
         var shopping = _IShoppingService.getShoppingIdProduct(idProduct);
-        return !Objects.nonNull(shopping) || !shopping.getStateBuy().equals("Created");
+        return Objects.nonNull(shopping) && shopping.getStateBuy().equals("Created");
     }
 
     private boolean UrlValida(String url) {
