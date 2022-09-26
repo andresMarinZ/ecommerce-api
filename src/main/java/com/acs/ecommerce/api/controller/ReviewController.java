@@ -18,7 +18,7 @@ public class ReviewController {
     IReviewService _reviewService;
 
     @DeleteMapping("/delete/{reviewId}")
-    public ResponseEntity<Response<ReviewModel>> deleteReview(@PathVariable String reviewId) {
+    public ResponseEntity<Response<ReviewModel>> delete(@PathVariable String reviewId) {
 
         boolean isDelete = _reviewService.delete(reviewId);
 
@@ -38,7 +38,7 @@ public class ReviewController {
     }
 
     @GetMapping("/review/{productId}")
-    public ResponseEntity<Response<ReviewModel>> search(@PathVariable String productId) {
+    public ResponseEntity<Response<ReviewModel>> get(@PathVariable String productId) {
 
         List<ReviewModel> reviewList = _reviewService.getByProductId(productId);
 
@@ -65,7 +65,7 @@ public class ReviewController {
 
     /*Endpoint Created Review*/
     @PostMapping("/review")
-    public ResponseEntity<Response<ReviewModel>> save(@RequestBody ReviewModel review) {
+    public ResponseEntity<Response<ReviewModel>> create(@RequestBody ReviewModel review) {
 
         ReviewModel newReview = _reviewService.save(review);
 

@@ -5,7 +5,6 @@ import com.acs.ecommerce.api.model.ProductModel;
 import com.acs.ecommerce.api.model.ReviewModel;
 import com.acs.ecommerce.api.model.Shopping;
 import com.acs.ecommerce.api.model.User;
-import com.acs.ecommerce.api.service.iservice.IProductService;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -18,21 +17,18 @@ import java.util.List;
 class ReviewServiceTest {
     private static final ProductModel productMockModel = new ProductModel();
     private static final User userMockModel = new User();
-    public static List<Shopping> shoppingMocklist = new ArrayList<>();
+    public static List<Shopping> shoppingMockList = new ArrayList<>();
     private static final ReviewModel reviewMockModel = new ReviewModel();
     private static final List<ReviewModel> reviewMockList = new ArrayList<>();
     private static final List<ProductModel> productMockList = new ArrayList<>();
     private static final List<User> userMockList = new ArrayList<>();
     private final ReviewService reviewServices;
-    private final IProductService IProductService;
-    private static UserService IUserService;
-    private final ShoppingService shoppingService;
 
 
     public ReviewServiceTest() {
-        this.shoppingService = new ShoppingService(shoppingMocklist);
-        IUserService = new UserServiceImp(userMockList);
-        IProductService = new ProductService(productMockList, IUserService, shoppingService);
+        ShoppingService shoppingService = new ShoppingService(shoppingMockList);
+        UserService IUserService = new UserServiceImp(userMockList);
+        com.acs.ecommerce.api.service.iservice.IProductService IProductService = new ProductService(productMockList, IUserService, shoppingService);
         reviewServices = new ReviewService(reviewMockList, IProductService, IUserService);
     }
 
@@ -51,13 +47,12 @@ class ReviewServiceTest {
         reviewModel.setProductId("1");
         reviewModel.setBuyerId("1");
         reviewModel.setDescription("Hello");
+        reviewModel.setUrlImage("https://www.google.com");
         reviewModel.setViewed(viewed);
 
         return reviewModel;
 
     }
-
-    ;
 
     @Test
     public void getAllReviewsWhenIsEmptyThenExpectsTrue() {
@@ -161,12 +156,12 @@ class ReviewServiceTest {
                 "Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, " +
                 "when an unknown printer took a galley of type and scrambled it to make a type specimen book. " +
                 "It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. " +
-                "It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, " +
+                "It was popularised in the 1960s with the release of Litre set sheets containing Lorem Ipsum passages, " +
                 "and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum." +
                 "Lorem Ipsum is simply dummy text of the printing and typesetting industry. " +
                 "Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. " +
                 "It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. " +
-                "It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, " +
+                "It was popularised in the 1960s with the release of Elettra sheets containing Lorem Ipsum passages, " +
                 "and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.";
 
         reviewMockModel.setBuyerId("1");
