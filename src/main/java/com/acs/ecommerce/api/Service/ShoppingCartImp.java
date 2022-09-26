@@ -1,11 +1,12 @@
-package com.acs.ecommerce.api.Service;
+package com.acs.ecommerce.api.service;
 
 import com.acs.ecommerce.api.model.ShoppingCart;
 import org.springframework.stereotype.Service;
+
 import java.util.*;
 
 @Service
-public class ShoppingCartImp implements com.acs.ecommerce.api.Service.ShoppingCartService {
+public class ShoppingCartImp implements com.acs.ecommerce.api.service.ShoppingCartService {
     private static List<ShoppingCart> shoppingcarts = new ArrayList<>();
 
     public ShoppingCartImp(List<ShoppingCart> shoppingcartInjected) {

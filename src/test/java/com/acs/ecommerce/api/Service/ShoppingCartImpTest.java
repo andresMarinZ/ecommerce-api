@@ -1,4 +1,4 @@
-package com.acs.ecommerce.api.Service;
+package com.acs.ecommerce.api.service;
 
 import com.acs.ecommerce.api.model.ShoppingCart;
 import org.junit.jupiter.api.Assertions;
@@ -6,17 +6,14 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
+
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
-
-import static org.mockito.ArgumentMatchers.booleanThat;
-import static org.mockito.Mockito.when;
 
 @ExtendWith(SpringExtension.class)
 class ShoppingCartImpTest {
     private final List<ShoppingCart> shoppingcartMockList = new ArrayList<>();
-    private final ShoppingCartService shoppingcartService;
+    private final ShoppingCartImp shoppingcartService;
 
     public ShoppingCartImpTest() {
         this.shoppingcartService = new ShoppingCartImp(shoppingcartMockList);

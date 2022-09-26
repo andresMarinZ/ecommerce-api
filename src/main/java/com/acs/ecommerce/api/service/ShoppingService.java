@@ -86,6 +86,14 @@ public class ShoppingService implements com.acs.ecommerce.api.Service.IShoppingS
         }
         return null;
     }
+    public Shopping getShoppingIdProduct(String idProduct) {
+        for(Shopping shop : getShopping()){
+            if (shop.getIdProduct().equals(idProduct)){
+                return shop;
+            }
+        }
+        return null;
+    }
 
     @Override
     public Shopping getShoppingUser(int idShopper) {
