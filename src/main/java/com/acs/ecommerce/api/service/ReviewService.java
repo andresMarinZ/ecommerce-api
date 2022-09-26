@@ -21,7 +21,7 @@ public class ReviewService implements IReviewService {
     private static UserService _IUserService;
 
     @Autowired
-    public ReviewService(List<ReviewModel> reviewInjection, IProductService IProductService, UserService IUserService){
+    public ReviewService(List<ReviewModel> reviewInjection, IProductService IProductService, UserService IUserService) {
         reviews = reviewInjection;
         _IProductService = IProductService;
         _IUserService = IUserService;
@@ -29,10 +29,18 @@ public class ReviewService implements IReviewService {
     }
 
     public List<ReviewModel> getByProductId(String productId) {
+
+        List<ReviewModel> listReview = reviews.stream()
+                .filter(review -> review.getProductId().equals(productId))
+                .collect(Collectors.toList());
+
+        listReview.forEach(reviewModel -> reviewModel.setViewed(true));
+
         return reviews.stream()
                 .filter(review -> review.getProductId().equals(productId))
                 .collect(Collectors.toList());
     }
+
     public List<ReviewModel> getAll() {
         return reviews;
     }
@@ -48,12 +56,12 @@ public class ReviewService implements IReviewService {
     /*
         Method for save new review.
      */
-     public ReviewModel save(ReviewModel reviewModel) {
+    public ReviewModel save(ReviewModel reviewModel) {
 
-        if(!this.ValidateReviewByProduct(reviewModel.getProductId()) ||
-           !this.ValidateReviewByUser(reviewModel.getBuyerId()) ||
-           !this.ValidateReviewByCountDescription(reviewModel.getDescription()) ||
-           !this.ValidateReviewByWordProfanity(reviewModel.getDescription())
+        if (!this.ValidateReviewByProduct(reviewModel.getProductId()) ||
+                !this.ValidateReviewByUser(reviewModel.getBuyerId()) ||
+                !this.ValidateReviewByCountDescription(reviewModel.getDescription()) ||
+                !this.ValidateReviewByWordProfanity(reviewModel.getDescription())
         ) return new ReviewModel();
 
         reviewModel.setId(UUID.randomUUID().toString());
@@ -96,7 +104,7 @@ public class ReviewService implements IReviewService {
         return true;
     }
 
-    private boolean ValidateReviewByUser(String userId){
+    private boolean ValidateReviewByUser(String userId) {
         var user = _IUserService.getByIdUser(userId);
         return user.getUserType().equals(String.valueOf(UserTypeEnum.BUYER));
     }
@@ -105,26 +113,27 @@ public class ReviewService implements IReviewService {
      * Validate if product exist or not.
      * return boolean
      */
-    private boolean ValidateReviewByProduct(String productId){
+    private boolean ValidateReviewByProduct(String productId) {
         var product = _IProductService.getProductById(productId);
         return Objects.nonNull(product);
     }
 
     /*
-    * Validate if description is greater than 1000 characters.
-    * return boolean
-    */
-    private boolean ValidateReviewByCountDescription(String description){
+     * Validate if description is greater than 1000 characters.
+     * return boolean
+     */
+    private boolean ValidateReviewByCountDescription(String description) {
         return description.length() <= 1000;
     }
+
     /*
      * Validate Word Profanity in preload list words
      * return boolean
      */
-    private boolean ValidateReviewByWordProfanity(String description){
+    private boolean ValidateReviewByWordProfanity(String description) {
         AtomicInteger countWorlds = new AtomicInteger();
-        listWordProfanity.forEach((p)-> {
-            if(description.toLowerCase().contains(p.toLowerCase())){
+        listWordProfanity.forEach((p) -> {
+            if (description.toLowerCase().contains(p.toLowerCase())) {
                 countWorlds.addAndGet(1);
             }
         });
@@ -132,9 +141,9 @@ public class ReviewService implements IReviewService {
     }
 
     /*
-    * Load Word Profanity to list words
-    */
-    private void LoadWordProfanity(){
+     * Load Word Profanity to list words
+     */
+    private void LoadWordProfanity() {
         listWordProfanity.add("gonorrea");
         listWordProfanity.add("hijueputa");
         listWordProfanity.add("marica");
