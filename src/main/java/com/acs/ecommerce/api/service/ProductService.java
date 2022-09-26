@@ -1,4 +1,4 @@
-package com.acs.ecommerce.api.service;
+package com.acs.ecommerce.api.Service;
 
 import com.acs.ecommerce.api.model.ProductModel;
 import com.acs.ecommerce.api.service.iservice.IProductService;

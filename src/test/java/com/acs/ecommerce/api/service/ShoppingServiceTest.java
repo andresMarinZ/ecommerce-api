@@ -1,4 +1,4 @@
-package com.acs.ecommerce.api.service;
+package com.acs.ecommerce.api.Service;
 import com.acs.ecommerce.api.model.ShoppingCart;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -17,19 +17,19 @@ import static org.junit.jupiter.api.Assertions.*;
 class ShoppingServiceTest {
     public static List<Shopping> shoppingMocklist =new ArrayList<>();
     public static List<ShoppingCart> shoppingCartMocklist =new ArrayList<>();
-    private final ShoppingService shoppingService;
+    private final com.acs.ecommerce.api.Service.ShoppingService shoppingService;
 
     private final ShoppingCart shoppingCart;
 
     public ShoppingServiceTest() {
-        this.shoppingService = new ShoppingService(shoppingMocklist);
+        this.shoppingService = new com.acs.ecommerce.api.Service.ShoppingService(shoppingMocklist);
         this.shoppingCart =new ShoppingCart();
     }
 
     @Test
     void testDelete(){
         assertAll(
-                () -> Assertions.assertEquals("Delete",shoppingService.getShoppingId(1).getStateBuy())
+                () -> Assertions.assertEquals("Deleted",shoppingService.getShoppingId(1).getStateBuy())
         );
     }
 
@@ -47,7 +47,7 @@ class ShoppingServiceTest {
                 () -> Assertions.assertEquals("Created", shopCreated),
                 () -> Assertions.assertEquals("san javier", barrio.getAddressSend()),
                 () -> Assertions.assertEquals("Created", shopCreated2),
-                () -> Assertions.assertEquals("san carlos", barrio2.getAddressSend())
+                () -> Assertions.assertEquals(10, barrio2.getIdSeller())
           );
         TimeUnit.MINUTES.sleep(6);
         this.shoppingService.cancelShopping(1);
