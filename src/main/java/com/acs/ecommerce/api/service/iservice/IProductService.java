@@ -1,17 +1,14 @@
 package com.acs.ecommerce.api.service.iservice;
 
 import com.acs.ecommerce.api.model.ProductModel;
-import com.acs.ecommerce.api.model.ReviewModel;
 
 import java.util.List;
-import java.util.Optional;
 
 public interface IProductService {
-    List<ProductModel> get();
-    ProductModel getByid(String idProduct);
+    ProductModel getProductById(String idProduct);
     ProductModel create(ProductModel productModel);
     ProductModel update(String idProduct, ProductModel productModel);
-    ProductModel delete(String idProduct, ProductModel productModel);
+    Boolean delete(String idProduct);
     List<ProductModel> getProductByKeyword(String Keyword);
     List<ProductModel> getByIdCategory(long idCategory);
 }

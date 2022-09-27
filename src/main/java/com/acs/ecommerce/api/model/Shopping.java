@@ -42,6 +42,9 @@ public class Shopping{
     }
 
 
+
+
+
     public int getIdSeller() {
         return idSeller;
     }

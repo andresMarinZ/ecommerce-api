@@ -1,63 +1,97 @@
 package com.acs.ecommerce.api.controller;
 
-import com.acs.ecommerce.api.service.iservice.genericModel.Response;
 import com.acs.ecommerce.api.model.ReviewModel;
+import com.acs.ecommerce.api.model.genericModel.Response;
+import com.acs.ecommerce.api.service.iservice.IReviewService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @RestController
 public class ReviewController {
-    private final List<ReviewModel> reviewList = new ArrayList<>();
 
-    /*private IReviewService _IReviewService;
     @Autowired
-    public ReviewController(IReviewService IReviewService){
-        _IReviewService = IReviewService;
-    }*/
+    IReviewService _reviewService;
 
-    @GetMapping("/review/{productId}")
-    public ResponseEntity<Response<ReviewModel>> search(String productId) {
+    @DeleteMapping("/delete/{reviewId}")
+    public ResponseEntity<Response<ReviewModel>> delete(@PathVariable String reviewId) {
+
+        boolean isDelete = _reviewService.delete(reviewId);
+
+        if (isDelete) {
+
+            var responseEntity = new Response<ReviewModel>();
+            responseEntity.setMessage("Delete success");
+            responseEntity.setStatus(true);
+
+            return new ResponseEntity<>(responseEntity, null, HttpStatus.OK);
+        }
 
         var responseEntity = new Response<ReviewModel>();
-        responseEntity.setMessage("created success");
-        responseEntity.setStatus(true);
-        responseEntity.setData(reviewList.stream().findFirst());
-
-        return new ResponseEntity<>(responseEntity, null, HttpStatus.OK);
+        responseEntity.setMessage("Delete fail");
+        responseEntity.setStatus(false);
+        return new ResponseEntity<>(responseEntity, null, HttpStatus.BAD_REQUEST);
     }
 
-    @GetMapping("/review-all")
-    public ResponseEntity<Response<List<ReviewModel>>> searchAll() {
+    @GetMapping("/review/{productId}")
+    public ResponseEntity<Response<ReviewModel>> get(@PathVariable String productId) {
 
-        var responseEntity = new Response<List<ReviewModel>>();
-        responseEntity.setMessage("created success");
+        List<ReviewModel> reviewList = _reviewService.getByProductId(productId);
+
+        var responseEntity = new Response<ReviewModel>();
+        responseEntity.setMessage("Successful query");
         responseEntity.setStatus(true);
         responseEntity.setData(reviewList);
 
         return new ResponseEntity<>(responseEntity, null, HttpStatus.OK);
     }
 
-    @PostMapping("/review")
-    public ResponseEntity<Response<ReviewModel>> save(@RequestBody ReviewModel review) {
-        reviewList.add(review);
-        var responseEntity = new Response<ReviewModel>();
-        responseEntity.setMessage("created success");
+    @GetMapping("/review-all")
+    public ResponseEntity<Response<List<ReviewModel>>> getAll() {
+
+        List<ReviewModel> listReviews = _reviewService.getAll();
+
+        var responseEntity = new Response<List<ReviewModel>>();
+        responseEntity.setMessage("Successful query");
         responseEntity.setStatus(true);
-        responseEntity.setData(review);
-        return new ResponseEntity<>(responseEntity, null, HttpStatus.CREATED);
+        responseEntity.setData(listReviews);
+
+        return new ResponseEntity<>(responseEntity, null, HttpStatus.OK);
     }
 
-    @PutMapping("/review")
-    public ResponseEntity<Response<ReviewModel>> update(@RequestBody ReviewModel review) {
+    /*Endpoint Created Review*/
+    @PostMapping("/review")
+    public ResponseEntity<Response<ReviewModel>> create(@RequestBody ReviewModel review) {
+
+        ReviewModel newReview = _reviewService.save(review);
+
+        var responseEntity = new Response<ReviewModel>();
+        responseEntity.setMessage("created success");
+        responseEntity.setStatus(Objects.nonNull(newReview));
+        responseEntity.setData(newReview);
+        return new ResponseEntity<>(responseEntity, null,  Objects.nonNull(newReview) ? HttpStatus.CREATED : HttpStatus.BAD_REQUEST);
+    }
+
+    @PutMapping("/review/{reviewId}")
+    public ResponseEntity<Response<ReviewModel>> update(@PathVariable String reviewId, @RequestBody ReviewModel review) {
+
+        ReviewModel updateReview = _reviewService.update(reviewId, review);
+
         var responseEntity = new Response<ReviewModel>();
 
-        responseEntity.setMessage("updated success");
+        if (Objects.isNull(updateReview)) {
+            responseEntity.setMessage("Review not updated");
+            responseEntity.setStatus(false);
+            return new ResponseEntity<>(responseEntity, null, HttpStatus.BAD_REQUEST);
+        }
+
+        responseEntity.setMessage("Updated review");
         responseEntity.setStatus(true);
-        responseEntity.setData(review);
+        responseEntity.setData(updateReview);
 
         return new ResponseEntity<>(responseEntity, null, HttpStatus.CREATED);
     }
