@@ -11,23 +11,7 @@ public class ProductModel {
     private String urlProductImage;
     private LocalDateTime dateAddProduct = LocalDateTime.now();
     private String userId;
-    public ProductModel(){
-
-    }
-
-    public ProductModel(String idProduct, String productName, String productDescription, int amountToSell, long idCategory, String urlProductImage, LocalDateTime dateAddProduct, int documentNumber) {
-        this.idProduct = idProduct;
-        this.productName = productName;
-        this.productDescription = productDescription;
-        this.amountToSell = amountToSell;
-        this.idCategory = idCategory;
-        this.urlProductImage = urlProductImage;
-        this.dateAddProduct = dateAddProduct;
-        this.documentNumber = documentNumber;
-    }
-
     private int documentNumber;
-
     public String getIdProduct() {
         return idProduct;
     }
@@ -64,7 +48,7 @@ public class ProductModel {
         return idCategory;
     }
 
-    public void setProductCategory(long idCategory) {
+    public void setIdCategory(long idCategory) {
         this.idCategory = idCategory;
     }
 
@@ -84,29 +68,19 @@ public class ProductModel {
         this.dateAddProduct = dateAddProduct;
     }
 
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
+
     public int getDocumentNumber() {
         return documentNumber;
     }
 
     public void setDocumentNumber(int documentNumber) {
         this.documentNumber = documentNumber;
-    }
-
-    public String getUserId() { return userId; }
-
-    public void setUserId(String userId) { this.userId = userId; }
-
-    @Override
-    public String toString() {
-        return "ProductModel{" +
-                "idProduct='" + idProduct + '\'' +
-                ", productName='" + productName + '\'' +
-                ", productDescription='" + productDescription + '\'' +
-                ", amountToSell=" + amountToSell +
-                ", productCategory='" + idCategory + '\'' +
-                ", urlProductImage='" + urlProductImage + '\'' +
-                ", dateAddProduct=" + dateAddProduct +
-                ", documentNumber=" + documentNumber +
-                '}';
     }
 }

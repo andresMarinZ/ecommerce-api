@@ -3,38 +3,32 @@ package com.acs.ecommerce.api.service;
 import com.acs.ecommerce.api.enums.UserTypeEnum;
 import com.acs.ecommerce.api.model.ProductModel;
 import com.acs.ecommerce.api.model.ReviewModel;
+import com.acs.ecommerce.api.model.Shopping;
 import com.acs.ecommerce.api.model.User;
-import com.acs.ecommerce.api.service.iservice.IProductService;
-import com.acs.ecommerce.api.service.iservice.IReviewService;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.InjectMocks;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.UUID;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 class ReviewServiceTest {
-    private  static final ProductModel productMockModel = new ProductModel();
-    private static  final User userMockModel = new User();
+    private static final ProductModel productMockModel = new ProductModel();
+    private static final User userMockModel = new User();
+    public static List<Shopping> shoppingMockList = new ArrayList<>();
     private static final ReviewModel reviewMockModel = new ReviewModel();
     private static final List<ReviewModel> reviewMockList = new ArrayList<>();
     private static final List<ProductModel> productMockList = new ArrayList<>();
-    private static  final List<User> userMockList = new ArrayList<>();
+    private static final List<User> userMockList = new ArrayList<>();
     private final ReviewService reviewServices;
-    private final IProductService IProductService;
-    private static UserService IUserService;
 
 
     public ReviewServiceTest() {
-        IProductService = new ProductService(productMockList);
-        IUserService = new UserServiceImp(userMockList);
+        ShoppingService shoppingService = new ShoppingService(shoppingMockList);
+        UserService IUserService = new UserServiceImp(userMockList);
+        com.acs.ecommerce.api.service.iservice.IProductService IProductService = new ProductService(productMockList, IUserService, shoppingService);
         reviewServices = new ReviewService(reviewMockList, IProductService, IUserService);
     }
 
@@ -45,7 +39,7 @@ class ReviewServiceTest {
         this.userModel();
     }
 
-    private ReviewModel setReviewModel(Boolean viewed, String reviewId){
+    private ReviewModel setReviewModel(Boolean viewed, String reviewId) {
 
         ReviewModel reviewModel = new ReviewModel();
         reviewModel.setId(reviewId);
@@ -53,14 +47,15 @@ class ReviewServiceTest {
         reviewModel.setProductId("1");
         reviewModel.setBuyerId("1");
         reviewModel.setDescription("Hello");
+        reviewModel.setUrlImage("https://www.google.com");
         reviewModel.setViewed(viewed);
 
         return reviewModel;
 
-    };
+    }
 
     @Test
-    public void getAllReviewsWhenIsEmptyThenExpectsTrue(){
+    public void getAllReviewsWhenIsEmptyThenExpectsTrue() {
         //Arrange
         //Act
         List<ReviewModel> reviews = reviewServices.getAll();
@@ -70,9 +65,9 @@ class ReviewServiceTest {
     }
 
     @Test
-    public void deleteReviewWhenReviewNotFoundThenExpectFalse(){
+    public void deleteReviewWhenReviewNotFoundThenExpectFalse() {
         //Arrange
-        ReviewModel reviewModel = setReviewModel(false,"");
+        ReviewModel reviewModel = setReviewModel(false, "");
         reviewMockList.add(reviewModel);
         //Act
 
@@ -83,9 +78,9 @@ class ReviewServiceTest {
     }
 
     @Test
-    public void deleteReviewWhenReviewViewedThenExpectFalse(){
+    public void deleteReviewWhenReviewViewedThenExpectFalse() {
         //Arrange
-        ReviewModel reviewModel = setReviewModel(true,"123");
+        ReviewModel reviewModel = setReviewModel(true, "123");
         reviewMockList.add(reviewModel);
         //Act
 
@@ -96,9 +91,9 @@ class ReviewServiceTest {
     }
 
     @Test
-    public void deleteReviewThenExpectTrue(){
+    public void deleteReviewThenExpectTrue() {
         //Arrange
-        ReviewModel reviewModel = setReviewModel(false,"123");
+        ReviewModel reviewModel = setReviewModel(false, "123");
         reviewMockList.add(reviewModel);
         //Act
 
@@ -109,18 +104,19 @@ class ReviewServiceTest {
     }
 
     @Test
-    public void saveWhenProductNotExist(){
+    public void saveWhenProductNotExist() {
         //Arrange
-            reviewMockModel.setProductId("2");
-            reviewMockModel.setBuyerId("1");
+        reviewMockModel.setProductId("2");
+        reviewMockModel.setBuyerId("1");
 
         //Act
-            var save = reviewServices.save(reviewMockModel);
+        var save = reviewServices.save(reviewMockModel);
         //Assert
         Assertions.assertNull(save.getId());
     }
+
     @Test
-    public void saveWhenProductExist(){
+    public void saveWhenProductExist() {
         //Arrange
         reviewMockModel.setProductId("1");
         reviewMockModel.setBuyerId("1");
@@ -132,7 +128,7 @@ class ReviewServiceTest {
     }
 
     @Test
-    public void saveWhenUserNoExist(){
+    public void saveWhenUserNoExist() {
         //Arrange
         reviewMockModel.setBuyerId("2");
 
@@ -143,7 +139,7 @@ class ReviewServiceTest {
     }
 
     @Test
-    public void saveWhenUserExist(){
+    public void saveWhenUserExist() {
         //Arrange
         reviewMockModel.setBuyerId("1");
 
@@ -154,19 +150,19 @@ class ReviewServiceTest {
     }
 
     @Test
-    public void saveWhenDescriptionGreaterOneThousand(){
+    public void saveWhenDescriptionGreaterOneThousand() {
         //Arrange
         String description = "Lorem Ipsum is simply dummy text of the printing and typesetting industry. " +
-                             "Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, " +
-                            "when an unknown printer took a galley of type and scrambled it to make a type specimen book. " +
-                            "It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. " +
-                            "It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, " +
-                            "and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum." +
-                            "Lorem Ipsum is simply dummy text of the printing and typesetting industry. " +
-                            "Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. " +
-                            "It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. " +
-                            "It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, " +
-                            "and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.";
+                "Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, " +
+                "when an unknown printer took a galley of type and scrambled it to make a type specimen book. " +
+                "It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. " +
+                "It was popularised in the 1960s with the release of Litre set sheets containing Lorem Ipsum passages, " +
+                "and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum." +
+                "Lorem Ipsum is simply dummy text of the printing and typesetting industry. " +
+                "Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. " +
+                "It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. " +
+                "It was popularised in the 1960s with the release of Elettra sheets containing Lorem Ipsum passages, " +
+                "and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.";
 
         reviewMockModel.setBuyerId("1");
         reviewMockModel.setProductId("1");
@@ -179,7 +175,7 @@ class ReviewServiceTest {
     }
 
     @Test
-    public void saveWhenDescriptionSmallerOneThousand(){
+    public void saveWhenDescriptionSmallerOneThousand() {
         //Arrange
         String description = "Lorem Ipsum is simply dummy text of the printing and typesetting industry. ";
 
@@ -194,7 +190,7 @@ class ReviewServiceTest {
     }
 
     @Test
-    public void saveWhenDescriptionWordProfanity(){
+    public void saveWhenDescriptionWordProfanity() {
         //Arrange
         String description = "Lorem Ipsum Gay is simply dummy text of the Marica printing and typesetting industry. ";
 
@@ -209,7 +205,7 @@ class ReviewServiceTest {
     }
 
     @Test
-    public void saveWhenDescriptionNotWordProfanity(){
+    public void saveWhenDescriptionNotWordProfanity() {
         //Arrange
         String description = "Lorem Ipsum is simply dummy text of the printing and typesetting industry. ";
 
@@ -223,54 +219,55 @@ class ReviewServiceTest {
         Assertions.assertNotNull(save);
     }
 
-    private void productModel(){
+    private void productModel() {
         productMockModel.setIdProduct("1");
         productMockList.add(productMockModel);
     }
 
-    private void userModel(){
+    private void userModel() {
         userMockModel.setId("1");
         userMockModel.setUserType(String.valueOf(UserTypeEnum.BUYER));
         userMockList.add(userMockModel);
     }
+
     @Test
-    public void updateReviewWhenReviewNotFoundThenExpectNull(){
+    public void updateReviewWhenReviewNotFoundThenExpectNull() {
         //Arrange
-        ReviewModel reviewModel = setReviewModel(false,"");
+        ReviewModel reviewModel = setReviewModel(false, "");
         reviewMockList.add(reviewModel);
         //Act
 
-        var reviewUpdate = reviewServices.update("123",reviewModel);
+        var reviewUpdate = reviewServices.update("123", reviewModel);
 
         //Assert
         Assertions.assertNull(reviewUpdate);
     }
 
     @Test
-    public void updateReviewWhenReviewViewedThenExpectNull(){
+    public void updateReviewWhenReviewViewedThenExpectNull() {
         //Arrange
-        ReviewModel reviewModel = setReviewModel(true,"123");
+        ReviewModel reviewModel = setReviewModel(true, "123");
         reviewMockList.add(reviewModel);
         //Act
 
-        var reviewUpdate = reviewServices.update("123",reviewModel);
+        var reviewUpdate = reviewServices.update("123", reviewModel);
 
         //Assert
         Assertions.assertNull(reviewUpdate);
     }
 
     @Test
-    public void updateReviewThenExpectTrue(){
+    public void updateReviewThenExpectTrue() {
         //Arrange
-        ReviewModel reviewModel = reviewServices.save(setReviewModel(false,"123"));
-        ReviewModel reviewModelUpdate = setReviewModel(false,"123");
+        ReviewModel reviewModel = reviewServices.save(setReviewModel(false, "123"));
+        ReviewModel reviewModelUpdate = setReviewModel(false, "123");
         reviewModelUpdate.setDescription("Hello world");
         //Act
 
-        var reviewUpdate = reviewServices.update(reviewModel.getId(),reviewModelUpdate);
+        var reviewUpdate = reviewServices.update(reviewModel.getId(), reviewModelUpdate);
 
         //Assert
-        Assertions.assertEquals("Hello world",reviewUpdate.getDescription());
+        Assertions.assertEquals("Hello world", reviewUpdate.getDescription());
     }
 
     @AfterEach

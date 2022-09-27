@@ -4,6 +4,7 @@ import java.time.temporal.*;
 import java.time.format.*;
 
 import com.acs.ecommerce.api.model.Shopping;
+import com.acs.ecommerce.api.model.ShoppingCart;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -30,17 +31,25 @@ public class ShoppingService implements IShoppingService{
         LocalTime cancelTime = LocalTime.now();
         return cancelTime;
     }
-
+    @Override
+    public Shopping getShoppingDeleteId(int id){
+        for(Shopping shop : getShoppingDelete()){
+            if (shop.getIdShopping()==id){
+                return shop;
+            }
+        }
+        return null;
+    }
 
     @Override
-    public String buyProduct(int idShopper, int idSeller,String idProduct,int amount, String address,String addressF,String payment ) {
+    public String buyProduct(ShoppingCart shoppingCart, int idSeller, String address, String addressF, String payment ) {
 
         // (ShoppingCart cart)
         Shopping buy = new Shopping();
-        buy.setIdShopper(idShopper);
-        buy.setIdProduct(idProduct);
+        buy.setIdShopper(shoppingCart.getIdShopping());
+        buy.setIdProduct(shoppingCart.getIdProduct());
         buy.setIdSeller(idSeller);
-        buy.setAmountProduct(amount);
+        buy.setAmountProduct(shoppingCart.getAmountToSell());
         buy.setAddressSend(address);
         buy.setAddressFact(addressF);
         buy.setPaymentGateway(payment);
@@ -58,23 +67,30 @@ public class ShoppingService implements IShoppingService{
          /*Comparar fecha del atributo getdate con la creada al momento de invocar a cancelShopping*/
         for(Shopping shop : getShopping()){
             int minutesBuy = (int) ChronoUnit.MINUTES.between(shop.getDateBuy(), cancelT);
-            if(shop.getIdShopping() == id && minutesBuy < 5){
+            if(shop.getIdShopping() == id && minutesBuy <= 5){
                 shop.setStateBuy("Delete");
                 shoppingDelete.add(shop);
-                shopping.remove(shop);
+                //shopping.remove(shop);
             }
         }
     }
 
 
-    public String getShoppingId(int id) {
-        List<Shopping> shoppings=getShopping();
-        for(Shopping shop : shoppings){
+    public Shopping getShoppingId(int id) {
+        for(Shopping shop : getShopping()){
             if (shop.getIdShopping()==id){
-                return shop.getAddressSend();
+                return shop;
             }
         }
-        return "Not found";
+        return null;
+    }
+    public Shopping getShoppingIdProduct(String idProduct) {
+        for(Shopping shop : getShopping()){
+            if (shop.getIdProduct().equals(idProduct)){
+                return shop;
+            }
+        }
+        return null;
     }
 
     @Override
