@@ -1,4 +1,4 @@
-package com.acs.ecommerce.api.Service;
+package com.acs.ecommerce.api.service;
 
 import com.acs.ecommerce.api.model.Shopping;
 import com.acs.ecommerce.api.model.ShoppingCart;
@@ -10,6 +10,7 @@ public interface IShoppingService {
     public List<Shopping> getShopping();
     public List<Shopping> getShoppingDelete();
 
+    Shopping getShoppingbyState(String state);
     String buyProduct(ShoppingCart shoppingCart, int idSeller, String address, String addressF, String payment );
     public Shopping getShoppingDeleteId(int i);
     public String cancelShopping(int id);

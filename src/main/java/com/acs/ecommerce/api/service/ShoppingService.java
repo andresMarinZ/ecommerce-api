@@ -1,4 +1,4 @@
-package com.acs.ecommerce.api.Service;
+package com.acs.ecommerce.api.service;
 import java.time.*;
 import java.time.temporal.*;
 import java.time.format.*;
@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class ShoppingService implements com.acs.ecommerce.api.Service.IShoppingService {
+public class ShoppingService implements com.acs.ecommerce.api.service.IShoppingService {
 
     public static List<Shopping> shopping = new ArrayList<>();
     public static List<Shopping> shoppingDelete = new ArrayList<>();
@@ -86,6 +86,16 @@ public class ShoppingService implements com.acs.ecommerce.api.Service.IShoppingS
         }
         return null;
     }
+
+    public Shopping getShoppingbyState(String state) {
+        for(Shopping shop : getShoppingDelete()){
+            if (shop.getStateBuy()==state){
+                return shop;
+            }
+        }
+        return null;
+    }
+
     public Shopping getShoppingIdProduct(String idProduct) {
         for(Shopping shop : getShopping()){
             if (shop.getIdProduct().equals(idProduct)){

@@ -1,4 +1,4 @@
-package com.acs.ecommerce.api.Service;
+package com.acs.ecommerce.api.service;
 import com.acs.ecommerce.api.model.ShoppingCart;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -17,12 +17,12 @@ import static org.junit.jupiter.api.Assertions.*;
 class ShoppingServiceTest {
     public static List<Shopping> shoppingMocklist =new ArrayList<>();
     public static List<ShoppingCart> shoppingCartMocklist =new ArrayList<>();
-    private final com.acs.ecommerce.api.Service.ShoppingService shoppingService;
+    private final com.acs.ecommerce.api.service.ShoppingService shoppingService;
 
     private final ShoppingCart shoppingCart;
 
     public ShoppingServiceTest() {
-        this.shoppingService = new com.acs.ecommerce.api.Service.ShoppingService(shoppingMocklist);
+        this.shoppingService = new com.acs.ecommerce.api.service.ShoppingService(shoppingMocklist);
         this.shoppingCart =new ShoppingCart();
     }
 
@@ -49,10 +49,10 @@ class ShoppingServiceTest {
                 () -> Assertions.assertEquals("Created", shopCreated2),
                 () -> Assertions.assertEquals(10, barrio2.getIdSeller())
           );
-        TimeUnit.MINUTES.sleep(6);
+        TimeUnit.MINUTES.sleep(4);
         this.shoppingService.cancelShopping(1);
         assertAll(
-                () -> Assertions.assertEquals("Created",shoppingService.getShoppingId(1).getStateBuy())
+                () -> Assertions.assertEquals("Deleted",shoppingService.getShoppingId(1).getStateBuy())
         );
      }
 
