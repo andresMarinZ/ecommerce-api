@@ -1,4 +1,4 @@
-package com.acs.ecommerce.api.model.genericModel;
+package com.acs.ecommerce.api.service.iservice.genericModel;
 
 public class Response<T> {
 

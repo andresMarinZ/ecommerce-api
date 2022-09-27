@@ -1,9 +1,7 @@
 package com.acs.ecommerce.api.controller;
 
-import com.acs.ecommerce.api.model.genericModel.Response;
-import com.acs.ecommerce.api.service.iservice.IReviewService;
+import com.acs.ecommerce.api.service.iservice.genericModel.Response;
 import com.acs.ecommerce.api.model.ReviewModel;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
