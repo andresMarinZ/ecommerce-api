@@ -69,11 +69,12 @@ public class ProductService implements IProductService {
 
         ProductModel product = this.getProductById(idProduct);
 
-        if (Objects.isNull(product) && this.ValidateShoppingByProductId(idProduct)) {
-                return false;
+        if (!Objects.isNull(product) && !this.ValidateShoppingByProductId(idProduct)) {
+            productsModel.remove(product);
+            return true;
             }
         productsModel.remove(product);
-        return true;
+        return false;
     }
     @Override
     public List<ProductModel> getByIdCategory(long idCategory) {
