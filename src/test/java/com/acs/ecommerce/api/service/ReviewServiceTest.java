@@ -270,6 +270,33 @@ class ReviewServiceTest {
         Assertions.assertEquals("Hello world", reviewUpdate.getDescription());
     }
 
+    @Test
+    public void getReviewsByProductIdWhenReviewsNotExistThenExpectListReviewsEmpty(){
+        //Arrange
+        ReviewModel reviewModel = setReviewModel(false, "");
+        reviewMockList.add(reviewModel);
+        String productId = "2";
+        //Act
+        List<ReviewModel> listReviews = reviewServices.getByProductId(productId);
+
+        //Assert
+        Assertions.assertTrue(listReviews.isEmpty());
+
+    }
+    @Test
+    public void getReviewsByProductIdWhenReviewsExistThenExpectListReviewsNotEmpty(){
+        //Arrange
+        ReviewModel reviewModel = setReviewModel(false, "");
+        reviewMockList.add(reviewModel);
+        String productId = "1";
+        //Act
+        List<ReviewModel> listReviews = reviewServices.getByProductId(productId);
+
+        //Assert
+        Assertions.assertFalse(listReviews.isEmpty());
+
+    }
+
     @AfterEach
     void tearDown() {
     }
