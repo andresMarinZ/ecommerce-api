@@ -46,24 +46,24 @@ class QuestionServiceImpTest {
     
     private void questionModel(){
         final Question q1 = new Question();
-        q1.setBuyerId("999");
+        q1.setSellerId("999");
         q1.setId("1234");
         questiomocklist.add(q1);
         final Question q2 = new Question();
         q2.setId("5678");
-        q2.setBuyerId("123");
+        q2.setSellerId("123");
         questiomocklist.add(q2);
         final Question q3 = new Question();
         q3.setId("8945");
-        q3.setBuyerId("456");
+        q3.setSellerId("456");
         questiomocklist.add(q3);
         final Question q4 = new Question();
         q4.setId("1212");
-        q4.setBuyerId("895");
+        q4.setSellerId("895");
         questiomocklist.add(q4);
         final Question q5 = new Question();
         q5.setId("9999");
-        q5.setBuyerId("999");
+        q5.setSellerId("999");
         questiomocklist.add(q5);
     }
 
@@ -75,17 +75,7 @@ class QuestionServiceImpTest {
 
     @Test
     public void createWhenTextIsGreaterThan1000() {
-        final String questionText = "Lorem Ipsum is simply dummy text of the printing and typesetting industry. " +
-                "Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, " +
-                "when an unknown printer took a galley of type and scrambled it to make a type specimen book. " +
-                "It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. " +
-                "It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, " +
-                "and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum." +
-                "Lorem Ipsum is simply dummy text of the printing and typesetting industry. " +
-                "Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. " +
-                "It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. " +
-                "It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, " +
-                "and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.";
+        final String questionText = "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum. Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.";
         Response res = questionMockService.create(getNewQuestion(questionText, "", "", ""));
         Assertions.assertTrue(res.getResponse().equals("Entered text exceeds 1000 characters"));
     }
@@ -119,8 +109,8 @@ class QuestionServiceImpTest {
 
     @Test
     public void getAll() {
-        String buyerId = "999";
-        List<Question> questions = questionMockService.getAll(buyerId);
+        String sellerId = "999";
+        List<Question> questions = questionMockService.getAll(sellerId);
         Assertions.assertTrue(questions.size() == 2);
     }
 

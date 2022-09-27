@@ -36,15 +36,6 @@ public class Question {
     public void setId(String id) {
         this.id = id;
     }
-
-    public String getquestionText() {
-        return questionText;
-    }
-
-    public void setquestionText(String questionText) {
-        this.questionText = questionText;
-    }
-
     public Date getCreationDate() {
         return creationDate;
     }

@@ -32,7 +32,7 @@ public class AnswerServiceImp implements AnswerService {
                     answers.add(answer);
                     response.setResponse("Answer created successfully");
             } else {
-                response.setResponse(String.format("Answer with id %s doesn't exist", questionId));
+                response.setResponse(String.format("Question with id %s doesn't exist", questionId));
             }
         } else {
             response.setResponse("User not authorized to create answer");

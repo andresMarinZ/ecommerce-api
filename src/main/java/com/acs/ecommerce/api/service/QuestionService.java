@@ -7,6 +7,6 @@ import java.util.List;
 
 public interface QuestionService {
     Response create(Question question);
-    List<Question> getAll(String buyerId);
+    List<Question> getAll(String sellerId);
     Question getById(String questionId);
 }

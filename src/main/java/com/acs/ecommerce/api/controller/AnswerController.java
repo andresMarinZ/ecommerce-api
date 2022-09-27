@@ -14,12 +14,12 @@ public class AnswerController {
     @Autowired
     AnswerService answerService;
 
-    @PostMapping("answer")
+    @PostMapping("/answer")
     public ResponseEntity<Response> createAnswer(@RequestBody Answer answer) {
         return ResponseEntity.ok(answerService.create(answer));
     }
 
-    @PutMapping("answer")
+    @PutMapping("/answer")
     public ResponseEntity<Answer> updateAnswer(@RequestBody Answer answerToUpdate, @RequestParam(name = "answerId") String idAnswer) {
         Answer quoteUpdated = answerService.update(idAnswer, answerToUpdate);
         return Objects.isNull(quoteUpdated) ? ResponseEntity.notFound().build() : ResponseEntity.ok(quoteUpdated);
