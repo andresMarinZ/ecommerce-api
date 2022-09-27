@@ -1,7 +1,5 @@
 package com.acs.ecommerce.api.model;
 
-import java.util.Date;
-
 public class ReviewModel {
 
     private String id;
@@ -10,15 +8,11 @@ public class ReviewModel {
 
     private String UrlImage;
 
+    private String createdAt;
+
     private String buyerId;
 
-    private Boolean viewed;
-
     private String productId;
-
-    private Date createdAt;
-
-    private Date updatedAt;
     public String getId() {
         return id;
     }
@@ -43,11 +37,11 @@ public class ReviewModel {
         UrlImage = urlImage;
     }
 
-    public Date getCreatedAt() {
+    public String getCreatedAt() {
         return createdAt;
     }
 
-    public void setCreatedAt(Date createdAt) {
+    public void setCreatedAt(String createdAt) {
         this.createdAt = createdAt;
     }
 
@@ -65,21 +59,5 @@ public class ReviewModel {
 
     public void setProductId(String productId) {
         this.productId = productId;
-    }
-
-    public Boolean getViewed() {
-        return viewed;
-    }
-
-    public void setViewed(Boolean viewed) {
-        this.viewed = viewed;
-    }
-
-    public Date getUpdatedAt() {
-        return updatedAt;
-    }
-
-    public void setUpdatedAt(Date updatedAt) {
-        this.updatedAt = updatedAt;
     }
 }
