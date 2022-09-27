@@ -23,6 +23,10 @@ public class ProductService implements IProductService {
         _IShoppingService = shoppingInjection;
     }
 
+    public ProductService() {
+        this();
+    }
+
     @Override
     public ProductModel getProductById(String idProduct) {
         Optional<ProductModel> optionalProduct = productsModel.stream()

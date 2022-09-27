@@ -1,6 +1,5 @@
-package com.acs.ecommerce.api.model.genericModel;
+package com.acs.ecommerce.api.service.iservice.genericModel;
 
-//Class Generic model for response api
 public class Response<T> {
 
     private Object data;
