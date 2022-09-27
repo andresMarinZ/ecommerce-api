@@ -3,7 +3,6 @@ package com.acs.ecommerce.api.service;
 import com.acs.ecommerce.api.model.Shopping;
 import com.acs.ecommerce.api.model.ShoppingCart;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public interface IShoppingService {
