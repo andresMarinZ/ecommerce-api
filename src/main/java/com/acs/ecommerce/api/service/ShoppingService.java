@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class ShoppingService implements IShoppingService{
+public class ShoppingService implements com.acs.ecommerce.api.service.IShoppingService {
 
     public static List<Shopping> shopping = new ArrayList<>();
     public static List<Shopping> shoppingDelete = new ArrayList<>();
@@ -61,17 +61,19 @@ public class ShoppingService implements IShoppingService{
 
     /*Elimina compra segun el Id propio de compras*/
     @Override
-    public void cancelShopping(int id ) {
+    public String cancelShopping(int id) {
         LocalTime cancelT = Time();
-         /*Comparar fecha del atributo getdate con la creada al momento de invocar a cancelShopping*/
+        /*Comparar fecha del atributo getdate con la creada al momento de invocar a cancelShopping*/
         for(Shopping shop : getShopping()){
             int minutesBuy = (int) ChronoUnit.MINUTES.between(shop.getDateBuy(), cancelT);
             if(shop.getIdShopping() == id && minutesBuy <= 5){
-                shop.setStateBuy("Delete");
+                shop.setStateBuy("Deleted");
                 shoppingDelete.add(shop);
                 //shopping.remove(shop);
+                return shop.getStateBuy();
             }
         }
+        return "No es posible eliminar la compra";
     }
 
 
@@ -83,6 +85,16 @@ public class ShoppingService implements IShoppingService{
         }
         return null;
     }
+
+    public Shopping getShoppingbyState(String state) {
+        for(Shopping shop : getShoppingDelete()){
+            if (shop.getStateBuy()==state){
+                return shop;
+            }
+        }
+        return null;
+    }
+
     public Shopping getShoppingIdProduct(String idProduct) {
         for(Shopping shop : getShopping()){
             if (shop.getIdProduct().equals(idProduct)){
@@ -120,8 +132,8 @@ public class ShoppingService implements IShoppingService{
 
 
     /*
-    * Metodo para generar compra
-    */
+     * Metodo para generar compra
+     */
 
 
 
