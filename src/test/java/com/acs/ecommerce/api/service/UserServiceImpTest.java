@@ -5,7 +5,6 @@ import org.junit.jupiter.api.Test;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
@@ -13,14 +12,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 
 @ExtendWith(SpringExtension.class)
 class UserServiceImpTest {
     private final List<User> users = new ArrayList<>();
     private final UserService userService;
-
-    User user;
+    
 
     public UserServiceImpTest() {
         this.userService = new UserServiceImp(users);
@@ -77,9 +76,8 @@ class UserServiceImpTest {
 
     @Test
     void deleteTest(){
-        users.add(user);
-        boolean result = userService.delete("1", " ");
-        assertFalse(result);
+        boolean result = userService.delete("", "");
+        assertTrue(result);
 
     }
 
