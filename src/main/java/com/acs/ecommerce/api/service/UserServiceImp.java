@@ -31,6 +31,7 @@ public class UserServiceImp implements UserService{
         return optionalUser.orElse(null);
     }
 
+
     public User getByIdUser(String idUser){
         Optional<User> optionalUser = users.stream()
                 .filter(users -> users.getId().equals(idUser))
@@ -56,8 +57,10 @@ public class UserServiceImp implements UserService{
         return user;
     }
 
-    public User update(String firstName, String LastName, String documentType, int documentNumber, User user) {
-        User oldUser = getByDocumentNumber(documentNumber);
+
+
+    public User update(String idUser, User user) {
+        User oldUser = getByIdUser(idUser);
 
         if(Objects.isNull(oldUser)){
             return null;
@@ -74,15 +77,15 @@ public class UserServiceImp implements UserService{
 
 
 
-    public boolean delete(String idUser, String idShoppingCart) {
+   /* public boolean delete(String idUser, String idShoppingCart) {
         boolean deleted = false;
         return idShoppingCart.equals(' ');
-    }
+    }*/
 
-   public boolean delete(String idUser) {
+    public boolean delete(String idUser, String idShoppingCart) {
         User user = getByIdUser(idUser);
 
-       if (Objects.isNull(user)) {
+        if (Objects.isNull(user)) {
             return true;
         }
 

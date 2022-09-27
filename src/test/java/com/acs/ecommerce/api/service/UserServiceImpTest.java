@@ -1,18 +1,19 @@
 package com.acs.ecommerce.api.service;
 
 import com.acs.ecommerce.api.model.User;
+import org.junit.jupiter.api.Test;
+
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 
 @ExtendWith(SpringExtension.class)
 class UserServiceImpTest {
@@ -42,15 +43,15 @@ class UserServiceImpTest {
         User userCreated = userService.create(getNewUser());
         if (userCreated.getUserType().equals("ADMIN")){
 
-        Assertions.assertAll(
-                () -> Assertions.assertEquals("firstname", userCreated.getFirstName()),
-                () -> Assertions.assertEquals("lastname", userCreated.getLastName()),
-                () -> Assertions.assertEquals("ADMIN", userCreated.getUserType()),
-                () -> Assertions.assertEquals("CC", userCreated.getDocumentType()),
-                () -> Assertions.assertEquals("STORE", userCreated.getStoreName()),
-                () -> Assertions.assertEquals(4525522, userCreated.getDocumentNumber()),
-                () -> Assertions.assertTrue(Objects.nonNull(userCreated.getId()))
-        );}
+            Assertions.assertAll(
+                    () -> Assertions.assertEquals("firstname", userCreated.getFirstName()),
+                    () -> Assertions.assertEquals("lastname", userCreated.getLastName()),
+                    () -> Assertions.assertEquals("ADMIN", userCreated.getUserType()),
+                    () -> Assertions.assertEquals("CC", userCreated.getDocumentType()),
+                    () -> Assertions.assertEquals("STORE", userCreated.getStoreName()),
+                    () -> Assertions.assertEquals(4525522, userCreated.getDocumentNumber()),
+                    () -> Assertions.assertTrue(Objects.nonNull(userCreated.getId()))
+            );}
     }
 
     @Test
@@ -62,8 +63,7 @@ class UserServiceImpTest {
         userToUpdate.setDocumentType("CC");
         userToUpdate.setDocumentNumber(998765432);
 
-        User userUpdated = userService.update(userCreated.getFirstName(), userCreated.getLastName(),
-                userCreated.getDocumentType(), userCreated.getDocumentNumber(), userToUpdate);
+        User userUpdated = userService.update(userCreated.getId(), userToUpdate);
 
         Assertions.assertEquals("editFirstname", userUpdated.getFirstName());
         Assertions.assertEquals("edit", userUpdated.getLastName());

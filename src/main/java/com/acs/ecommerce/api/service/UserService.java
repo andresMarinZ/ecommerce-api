@@ -1,5 +1,6 @@
 package com.acs.ecommerce.api.service;
 
+
 import com.acs.ecommerce.api.model.User;
 
 import java.util.List;
@@ -16,11 +17,11 @@ public interface UserService {
 
     User create(User user);
 
-    User update(String firstName, String LastName, String documentType, int documentNumber, User user);
+    User update(String idUser, User user);
 
     boolean delete(String idUser, String idShoppingCart);
 
-   //boolean delete1(String idUser);
+    //boolean delete1(String idUser);
 
 
 }

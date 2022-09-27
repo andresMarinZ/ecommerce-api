@@ -1,15 +1,14 @@
 package com.acs.ecommerce.api.controller;
 
-import com.acs.ecommerce.api.model.User;
 import com.acs.ecommerce.api.service.UserService;
+import com.acs.ecommerce.api.model.User;
+import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import java.util.Optional;
 
 @RestController
 public class UserController {
@@ -17,13 +16,30 @@ public class UserController {
     @Autowired
     UserService userService;
 
-    //When we need an userTyper and DocumentNumber
-    @GetMapping("users/{userType},{documentNumber}" )
-    public ResponseEntity<User> getUser(@PathVariable String userType, int documentNumber, @RequestBody User user) {
-        //Consulto por tipo de usuario, PENDIENTE por tipo de documento
-        User myUsers = userService.getByUserType(userType);
 
-        return Objects.isNull(myUsers) ? ResponseEntity.notFound().build() : ResponseEntity.ok(myUsers);
+
+    //the list is created
+     @GetMapping("users")
+    public ResponseEntity<List<User>> get() {
+        List<User> users = userService.get();
+
+        return users.isEmpty() ? ResponseEntity.badRequest().body(users) : ResponseEntity.ok(users);
+    }
+
+    //Check the type of user
+    @GetMapping("users/{userType}")
+    public ResponseEntity<User> getByUserType(@PathVariable String userType) {
+        User users = userService.getByUserType(userType);
+
+        return Objects.isNull(users) ? ResponseEntity.notFound().build() : ResponseEntity.ok(users);
+    }
+
+    //consult the document number
+    @GetMapping("users/{userType}/{documentNumber}")
+    public ResponseEntity<User> getByDocumentNumber(@PathVariable int documentNumber) {
+        User users = userService.getByDocumentNumber(documentNumber);
+
+        return Objects.isNull(users) ? ResponseEntity.notFound().build() : ResponseEntity.ok(users);
     }
 
 
@@ -38,23 +54,35 @@ public class UserController {
         return null;
     }
 
+
     //- Names, surnames, document type and document number can be edited.
-    @PutMapping("users/{firstName},{LastName},{documentType}, {documentNumber}")
-    public ResponseEntity<User> update(@PathVariable String firstName, String LastName, String documentType, int documentNumber, @RequestBody User user) {
-        User userUpdated = userService.update(firstName, LastName, documentType, documentNumber, user);
+    //@PutMapping("users/{firstName}/{LastName}/{documentType}/{documentNumber}")
+    @PutMapping("users/{idUser}")
+    public ResponseEntity<User> update(@PathVariable String idUser, @RequestBody User user) {
+        User userUpdated = userService.update(idUser, user);
 
         return Objects.isNull(userUpdated) ? ResponseEntity.notFound().build() : ResponseEntity.ok(userUpdated);
     }
 
+
     //- A user will only be deleted if and only if he has no sales or products in an active cart.
     @DeleteMapping("users/{idUser}")
+    public ResponseEntity delete(@PathVariable String idUser, String idShoppingCart) {
+         if(idShoppingCart == null){
+            boolean deleted = userService.delete(idUser, idShoppingCart );
+            return deleted ? ResponseEntity.ok().build() : ResponseEntity.notFound().build();
+         }
+        return null;
+    }
+
+    //- A user will only be deleted if and only if he has no sales or products in an active cart.
+   /* @DeleteMapping("users/{idUser}")
     public ResponseEntity delete(@PathVariable String idUser, String idShoppingCart) {
         boolean deleted = false;
         if (idShoppingCart.equals(' ')){
             deleted = userService.delete(idUser, idShoppingCart);
         }
         return deleted ? ResponseEntity.ok().build() : ResponseEntity.notFound().build();
-    }
+    }*/
 
 }
-
