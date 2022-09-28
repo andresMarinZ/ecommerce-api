@@ -254,7 +254,7 @@ class ProductServiceTest {
         productModel();
         String keyword = "cordones";
         //Act
-        List <ProductModel> productlist = new ArrayList<ProductModel>(productService.getProductByKeyword(keyword));
+        List <ProductModel> productlist = new ArrayList<>(productService.getProductByKeyword(keyword));
         //Assert
         Assertions.assertTrue(productlist.isEmpty());
     }
@@ -265,7 +265,7 @@ class ProductServiceTest {
         productModel();
         String keyword = "con";
         //Act
-        List <ProductModel> productlist = new ArrayList<ProductModel>(productService.getProductByKeyword(keyword));
+        List <ProductModel> productlist = new ArrayList<>(productService.getProductByKeyword(keyword));
         //Assert
         Assertions.assertFalse(productlist.isEmpty());
     }
@@ -276,7 +276,7 @@ class ProductServiceTest {
         productModel();
         long idCategory = 2;
         //Act
-        List <ProductModel> productlistBycategory = new ArrayList<ProductModel>(productService.getByIdCategory(idCategory));
+        List <ProductModel> productlistBycategory = new ArrayList<>(productService.getByIdCategory(idCategory));
         //Assert
         Assertions.assertTrue(productlistBycategory.isEmpty());
     }
@@ -287,18 +287,9 @@ class ProductServiceTest {
         productModel();
         long idCategory = 1;
         //Act
-        List <ProductModel> productlistBycategory = new ArrayList<ProductModel>(productService.getByIdCategory(idCategory));
+        List <ProductModel> productlistBycategory = new ArrayList<>(productService.getByIdCategory(idCategory));
         //Assert
         Assertions.assertFalse(productlistBycategory.isEmpty());
     }
 
-    /*Delete
-    @Test
-    void nnnn(){
-        //Arrange
-        productModel();
-        productMockModel.setUserId("1");
-        //Act
-        //Assert
-    }*/
 }

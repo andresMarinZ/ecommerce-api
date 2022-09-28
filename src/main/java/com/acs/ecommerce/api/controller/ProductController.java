@@ -14,8 +14,6 @@ public class ProductController {
     @Autowired
     IProductService iProductService;
 
-   // private final List<ProductModel> productModels = new ArrayList<>();
-
     @GetMapping("/product/{idProduct}")
     public ResponseEntity<ProductModel> getProductById(@PathVariable String idProduct) {
         ProductModel productModel = iProductService.getProductById(idProduct);

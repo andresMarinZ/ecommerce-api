@@ -110,7 +110,7 @@ class ProductServiceTest {
     void ValidateCreateDatesProductNameNotValidate(){
         //Arrange
         productModel();
-        productMockModel.setProductName("cordones");
+        productMockModel.setProductName(null);
         //Act
         ProductModel new_product_model = productService.create(productMockModel);
         //Assert
@@ -121,7 +121,7 @@ class ProductServiceTest {
     void ValidateCreateDatesProductDescriptionNotValidate(){
         //Arrange
         productModel();
-        productMockModel.setProductDescription("extra largos");
+        productMockModel.setProductDescription(null);
         //Act
         ProductModel new_product_model = productService.create(productMockModel);
         //Assert
@@ -180,7 +180,7 @@ class ProductServiceTest {
         productMockModel.setAmountToSell(100);
         userMockModel.setId("1");
         userMockModel.setUserType("Buyer");
-        userMockModel.setMaxSell(50);
+        userMockModel.setMaxSell(500);
         //Act
         ProductModel new_product_model = productService.create(productMockModel);
         //Assert
@@ -237,7 +237,7 @@ class ProductServiceTest {
         productModel();
         shoppingModel();
         String id_product = "1";
-        shoppingMockModel.setStateBuy("Created");
+        shoppingMockModel.setStateBuy("Delete");
         ProductModel producttestZ = new ProductModel();
         producttestZ.setIdCategory(2);
         shoppingMockModel.setIdProduct("1");
@@ -295,7 +295,9 @@ class ProductServiceTest {
     void ValidateTruedelete(){
         //Arrange
         productModel();
+        shoppingModel();
         String idProduct = "1";
+        shoppingMockModel.setStateBuy("Delete");
         //Act
         boolean validatedelete = productService.delete(idProduct);
         //Assert
@@ -313,13 +315,5 @@ class ProductServiceTest {
         //Assert
         Assertions.assertFalse(validatedelete);
     }
-    /*Delete
-    @Test
-    void nnnn(){
-        //Arrange
-        productModel();
-        productMockModel.setUserId("1");
-        //Act
-        //Assert
-    }*/
+
 }

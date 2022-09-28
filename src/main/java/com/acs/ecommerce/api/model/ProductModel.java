@@ -3,15 +3,15 @@ package com.acs.ecommerce.api.model;
 import java.time.LocalDateTime;
 
 public class ProductModel {
-    private String idProduct;
-    private String productName;
-    private String productDescription;
-    private int amountToSell;
-    private long idCategory;
-    private String urlProductImage;
+    private String idProduct; //
+    private String productName; //
+    private String productDescription; //
+    private int amountToSell;//
+    private long idCategory;//
+    private String urlProductImage;//
     private LocalDateTime dateAddProduct = LocalDateTime.now();
-    private String userId;
-    private int documentNumber;
+    private String userId;//
+    private int documentNumber;//
     public String getIdProduct() {
         return idProduct;
     }
