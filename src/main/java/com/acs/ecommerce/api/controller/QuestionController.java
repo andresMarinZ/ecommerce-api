@@ -20,8 +20,8 @@ public class QuestionController {
         return ResponseEntity.ok(questionService.create(question));
     }
 
-    @GetMapping("/question/seller")
-    public ResponseEntity<List<Question>> getQuestion(@RequestParam(name = "sellerId") String buyerId) {
+    @GetMapping("/question/buyer")
+    public ResponseEntity<List<Question>> getQuestion(@RequestParam(name = "buyerId") String buyerId) {
         List<Question> question = questionService.getAll(buyerId);
         return Objects.isNull(question) ? ResponseEntity.notFound().build() : ResponseEntity.ok(question);
     }

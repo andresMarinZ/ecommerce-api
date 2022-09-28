@@ -74,9 +74,9 @@ public class QuestionServiceImp implements QuestionService {
         return Objects.nonNull(product);
     }
 
-    public List<Question> getAll(String sellerId) {
+    public List<Question> getAll(String buyerId) {
         List<Question> optionalQuestion = questions.stream()
-                .filter(question -> question.getSellerId().equals(sellerId))
+                .filter(question -> question.getBuyerId().equals(buyerId))
                 .collect(Collectors.toList());
         return optionalQuestion;
     }

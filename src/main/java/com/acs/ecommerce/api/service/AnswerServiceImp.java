@@ -48,7 +48,7 @@ public class AnswerServiceImp implements AnswerService {
     }
     private Answer getById(String idAnswer) {
         Optional<Answer> optionalAnswer = answers.stream()
-                .filter(question -> question.getId().equals(idAnswer))
+                .filter(answer -> answer.getId().equals(idAnswer))
                 .findFirst();
 
         return optionalAnswer.orElse(null);
