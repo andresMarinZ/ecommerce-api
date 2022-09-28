@@ -39,7 +39,7 @@ public class ShoppingService implements IShoppingService{
         }
         return null;
     }
-
+    //public String buyProduct(int idShopper, int idSeller,String idProduct,int amount, String address,String addressF,String payment )
     @Override
     public String buyProduct(int idShopper, int idSeller,String idProduct,int amount, String address,String addressF,String payment ) {
 
@@ -59,6 +59,22 @@ public class ShoppingService implements IShoppingService{
         return buy.getStateBuy().toString();
     }
 
+    /*public String buyProduct(ShoppingCart cart,int idSeller, String address,String addressF,String payment ) {
+        // (ShoppingCart cart)
+        Shopping buy = new Shopping();
+        buy.setIdShopper(cart.idShopper);
+        buy.setIdProduct(cart.idProduct);
+        buy.setIdSeller(idSeller);
+        buy.setAmountProduct(cart.amount);
+        buy.setAddressSend(address);
+        buy.setAddressFact(addressF);
+        buy.setPaymentGateway(payment);
+        buy.setDateBuy(Time());
+        buy.setIdShopping(getShopping().size()+1);
+        buy.setStateBuy("Created");
+        shopping.add(buy);
+        return buy.getStateBuy().toString();
+    }*/
     /*Elimina compra segun el Id propio de compras*/
     @Override
     public void cancelShopping(int id ) {
