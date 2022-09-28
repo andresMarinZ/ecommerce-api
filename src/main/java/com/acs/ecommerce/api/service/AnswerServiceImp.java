@@ -30,7 +30,7 @@ public class AnswerServiceImp implements AnswerService {
                     answer.setId(UUID.randomUUID().toString());
                     answer.setCreationDate(new Date(System.currentTimeMillis()));
                     answers.add(answer);
-                    response.setResponse("Answer created successfully");
+                    response.setResponse(String.format("Answer created successfully with id %s", answer.getId().toString()));
             } else {
                 response.setResponse(String.format("Question with id %s doesn't exist", questionId));
             }
