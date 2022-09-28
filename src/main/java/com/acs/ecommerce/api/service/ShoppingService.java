@@ -4,13 +4,14 @@ import java.time.temporal.*;
 import java.time.format.*;
 
 import com.acs.ecommerce.api.model.Shopping;
+import com.acs.ecommerce.api.model.ShoppingCart;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class ShoppingService implements IShoppingService{
+public class ShoppingService implements com.acs.ecommerce.api.service.IShoppingService {
 
     public static List<Shopping> shopping = new ArrayList<>();
     public static List<Shopping> shoppingDelete = new ArrayList<>();
@@ -41,14 +42,14 @@ public class ShoppingService implements IShoppingService{
     }
     //public String buyProduct(int idShopper, int idSeller,String idProduct,int amount, String address,String addressF,String payment )
     @Override
-    public String buyProduct(int idShopper, int idSeller,String idProduct,int amount, String address,String addressF,String payment ) {
+    public String buyProduct(ShoppingCart shoppingCart, int idSeller, String address, String addressF, String payment ) {
 
         // (ShoppingCart cart)
         Shopping buy = new Shopping();
-        buy.setIdShopper(idShopper);
-        buy.setIdProduct(idProduct);
+        buy.setIdShopper(shoppingCart.getIdShopping());
+        buy.setIdProduct(shoppingCart.getIdProduct());
         buy.setIdSeller(idSeller);
-        buy.setAmountProduct(amount);
+        buy.setAmountProduct(shoppingCart.getAmountToSell());
         buy.setAddressSend(address);
         buy.setAddressFact(addressF);
         buy.setPaymentGateway(payment);
@@ -77,23 +78,43 @@ public class ShoppingService implements IShoppingService{
     }*/
     /*Elimina compra segun el Id propio de compras*/
     @Override
-    public void cancelShopping(int id ) {
+    public String cancelShopping(int id) {
         LocalTime cancelT = Time();
-         /*Comparar fecha del atributo getdate con la creada al momento de invocar a cancelShopping*/
+        /*Comparar fecha del atributo getdate con la creada al momento de invocar a cancelShopping*/
         for(Shopping shop : getShopping()){
             int minutesBuy = (int) ChronoUnit.MINUTES.between(shop.getDateBuy(), cancelT);
             if(shop.getIdShopping() == id && minutesBuy <= 5){
-                shop.setStateBuy("Delete");
+                shop.setStateBuy("Deleted");
                 shoppingDelete.add(shop);
                 //shopping.remove(shop);
+                return shop.getStateBuy();
             }
         }
+        return "No es posible eliminar la compra";
     }
 
 
     public Shopping getShoppingId(int id) {
         for(Shopping shop : getShopping()){
             if (shop.getIdShopping()==id){
+                return shop;
+            }
+        }
+        return null;
+    }
+
+    public Shopping getShoppingbyState(String state) {
+        for(Shopping shop : getShoppingDelete()){
+            if (shop.getStateBuy()==state){
+                return shop;
+            }
+        }
+        return null;
+    }
+
+    public Shopping getShoppingIdProduct(String idProduct) {
+        for(Shopping shop : getShopping()){
+            if (shop.getIdProduct().equals(idProduct)){
                 return shop;
             }
         }
@@ -128,8 +149,8 @@ public class ShoppingService implements IShoppingService{
 
 
     /*
-    * Metodo para generar compra
-    */
+     * Metodo para generar compra
+     */
 
 
 
