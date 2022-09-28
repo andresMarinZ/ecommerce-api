@@ -84,11 +84,12 @@ class AnswerServiceImpTest {
 
     @Test
     public void createUserAndQuestion() {
-        String questionId = "364";
+        final String questionId = "364";
+        final String answerId = "567";
         Response res = AnswerServiceMock.create(getNewAnswer("", questionId, "123"));
         
-        Assertions.assertTrue(res.getResponse().equals("Answer created successfully"));
-    }
+        Assertions.assertTrue(res.getResponse().equals("Answer created successfully with id " + answerId));
+    }//falla
 
     @Test
     public void updateSuccessfully() {

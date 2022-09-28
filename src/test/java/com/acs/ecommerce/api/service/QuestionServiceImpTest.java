@@ -63,7 +63,7 @@ class QuestionServiceImpTest {
         questiomocklist.add(q4);
         final Question q5 = new Question();
         q5.setId("9999");
-        q5.setSellerId("999");
+        q5.setBuyerId("999");
         questiomocklist.add(q5);
     }
 
@@ -109,10 +109,10 @@ class QuestionServiceImpTest {
 
     @Test
     public void getAll() {
-        String sellerId = "999";
-        List<Question> questions = questionMockService.getAll(sellerId);
+        String buyerId = "999";
+        List<Question> questions = questionMockService.getAll(buyerId);
         Assertions.assertTrue(questions.size() == 2);
-    }
+    }//Falla
 
     @Test
     public void getById() {
@@ -124,6 +124,4 @@ class QuestionServiceImpTest {
                 () -> Assertions.assertTrue(Objects.nonNull(question.getBuyerId()))
         );
     }
-
-
 }
