@@ -1,18 +1,15 @@
 package com.acs.ecommerce.api.service;
-import com.acs.ecommerce.api.model.ShoppingCart;
-import org.junit.jupiter.api.*;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
+
 import com.acs.ecommerce.api.model.Shopping;
+import com.acs.ecommerce.api.model.ShoppingCart;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import java.util.List;
-import java.util.Objects;
+
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertAll;
 
 class ShoppingServiceTest {
     public static List<Shopping> shoppingMocklist =new ArrayList<>();
