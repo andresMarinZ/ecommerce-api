@@ -49,6 +49,7 @@ class AnswerServiceImpTest {
         final Question q2 = new Question();
         q2.setId("963");
         q2.setProductId("123");
+        q2.setId("456");
         questiomocklist.add(q2);
     }
     private void anwserModel() {
@@ -85,8 +86,8 @@ class AnswerServiceImpTest {
     @Test
     public void createUserAndQuestion() {
         final String questionId = "364";
-        final String answerId = "567";
-        Response res = AnswerServiceMock.create(getNewAnswer("", questionId, "123"));
+        final String answerId = "456";
+        Response res = AnswerServiceMock.create(getNewAnswer("", answerId, "356"));
         
         Assertions.assertTrue(res.getResponse().equals("Answer created successfully with id " + answerId));
     }//falla

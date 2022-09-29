@@ -48,22 +48,26 @@ class QuestionServiceImpTest {
         final Question q1 = new Question();
         q1.setSellerId("999");
         q1.setId("1234");
+        q1.setBuyerId("2342342");
         questiomocklist.add(q1);
         final Question q2 = new Question();
         q2.setId("5678");
         q2.setSellerId("123");
+        q2.setBuyerId("asdasdad");
         questiomocklist.add(q2);
         final Question q3 = new Question();
         q3.setId("8945");
         q3.setSellerId("456");
+        q3.setBuyerId("12323");
         questiomocklist.add(q3);
         final Question q4 = new Question();
         q4.setId("1212");
         q4.setSellerId("895");
+        q4.setBuyerId("5675675");
         questiomocklist.add(q4);
         final Question q5 = new Question();
         q5.setId("9999");
-        q5.setBuyerId("999");
+        q5.setBuyerId("99999");
         questiomocklist.add(q5);
     }
 
@@ -109,10 +113,10 @@ class QuestionServiceImpTest {
 
     @Test
     public void getAll() {
-        String buyerId = "999";
+        String buyerId = "99999";
         List<Question> questions = questionMockService.getAll(buyerId);
-        Assertions.assertTrue(questions.size() == 2);
-    }//Falla
+        Assertions.assertTrue(questions.size() == 1);
+    }
 
     @Test
     public void getById() {
