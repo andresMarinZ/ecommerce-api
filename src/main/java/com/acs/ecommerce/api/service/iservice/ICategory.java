@@ -11,7 +11,7 @@ public interface ICategory {
     List<CategoryModel> getAllCategories();
 
     CategoryModel createCategory(CategoryModel categoryModel);
-    CategoryModel updateCategory(String idProduct, CategoryModel categoryModel);
-    boolean deleteCategory(String idProduct);
+    CategoryModel updateCategory(Integer idProduct, CategoryModel categoryModel);
+    boolean deleteCategory(Integer idProduct);
 
 }

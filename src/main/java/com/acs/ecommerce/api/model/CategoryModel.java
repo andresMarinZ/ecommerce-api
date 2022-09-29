@@ -4,24 +4,28 @@ import java.util.Date;
 
 public class CategoryModel {
 
-        private Long id;
+        private Integer id;
         private String name;
         private Date creationDate;
 
         public CategoryModel() {
         }
 
-        public CategoryModel(Long id, String name, Date creationDate) {
+        public CategoryModel(Integer id, String name, Date creationDate) {
             this.id = id;
             this.name = name;
             this.creationDate = creationDate;
         }
 
-        public Long getId() {
+    public CategoryModel(Integer idCategory) {
+        this.id = idCategory;
+    }
+
+    public Integer getId() {
             return id;
         }
 
-        public void setId(Long id) {
+        public void setId(Integer id) {
             this.id = id;
         }
 

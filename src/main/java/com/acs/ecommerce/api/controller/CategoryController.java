@@ -14,46 +14,38 @@ public class CategoryController {
     @Autowired
     private CategoryServiceImpl categoryService;
 
-    //- La api deberá permitir consultar todas las categorías .
-    @GetMapping("/category}")
+    //Get name of categories
+    @GetMapping("/category")
     public ResponseEntity<List<CategoryModel>> getAllCategories() {
-        if(categoryService.getAllCategories().isEmpty()){
-            return ResponseEntity.noContent().build();
-        }
-        return ResponseEntity.ok(categoryService.getAllCategories());
+        List<CategoryModel> categoryModelList = categoryService.getAllCategories();
+        return categoryModelList.isEmpty() ? ResponseEntity.noContent().build() : ResponseEntity.ok(categoryService.getAllCategories());
     }
 
-    //- La api deberá permitir crear una categoría solamente a usuarios de tipo administrador.
-    //- El nombre de la categoría no deberá superar los 100 caracteres.
-    //- No se debe permitir la duplicidad de una categoría.
+    //    -The api should create a category only if the users type is ADMIN
+    //- The name of the category should not pass 100 characters
+    //- The category should not have the same name as another category
     @PostMapping("/category")
     public ResponseEntity<CategoryModel> createCategory(@RequestBody CategoryModel categoryModel) {
-        CategoryModel categoryModelCreated = categoryService.createCategory(categoryModel);
-        if (categoryModelCreated == null) {
-            return ResponseEntity.badRequest().build();
-        }
-        return ResponseEntity.ok(categoryModelCreated);
+        return ResponseEntity.ok(categoryService.createCategory(categoryModel));
     }
+
 
     //- La api deberá permitir editar una categoría sí y solo sí no se ha asociado a un producto.
-    //- Solo se podrá editar el texto de la categoría.
+    //- Only can edit the name of the category
     @PutMapping("/category/{idCategory}")
-    public ResponseEntity<CategoryModel> updateCategory(@PathVariable String idCategory, @RequestBody CategoryModel categoryModel) {
-        CategoryModel categoryModelUpdated = categoryService.updateCategory(idCategory, categoryModel);
-        if (categoryModelUpdated == null) {
-            return ResponseEntity.badRequest().build();
-        }
-        return ResponseEntity.ok(categoryModelUpdated);
+    public ResponseEntity<CategoryModel> updateCategory(@PathVariable Integer idCategory, @RequestBody CategoryModel categoryModel) {
+        CategoryModel categoryModel1 = categoryService.updateCategory(idCategory, categoryModel);
+        return categoryModel1 == null ? ResponseEntity.notFound().build() : ResponseEntity.ok(categoryModel1);
     }
 
 
-    //- La api deberá permitir eliminar una categoría sí y solo sí no se ha asociado a un producto.
-    @DeleteMapping("/category/{idProduct}")
-    public ResponseEntity<Boolean> deleteCategory(@PathVariable String idProduct) {
-        if (categoryService.deleteCategory(idProduct)) {
+    //- The api should permit delete a category sí y solo sí no se ha asociado a un producto.
+    @DeleteMapping("/category/{idCategory}")
+    public ResponseEntity<Boolean> deleteCategory(@PathVariable String idCategory) {
+        if (categoryService.deleteCategory(Integer.valueOf(idCategory))) {
             return ResponseEntity.ok(true);
         }
-        return ResponseEntity.badRequest().build();
+        return ResponseEntity.ok(categoryService.deleteCategory(Integer.valueOf(idCategory)));
     }
 
 
