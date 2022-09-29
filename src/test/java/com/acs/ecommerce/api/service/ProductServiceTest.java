@@ -35,7 +35,6 @@ class ProductServiceTest {
     public void initializeProductList() {
         MocklistproductsModel.clear();
         this.userModel();
-        this.shoppingModel();
     }
 
     private void shoppingModel() {
@@ -111,7 +110,7 @@ class ProductServiceTest {
     void ValidateCreateDatesProductNameNotValidate(){
         //Arrange
         productModel();
-        productMockModel.setProductName("cordones");
+        productMockModel.setProductName(null);
         //Act
         ProductModel new_product_model = productService.create(productMockModel);
         //Assert
@@ -122,7 +121,7 @@ class ProductServiceTest {
     void ValidateCreateDatesProductDescriptionNotValidate(){
         //Arrange
         productModel();
-        productMockModel.setProductDescription("extra largos");
+        productMockModel.setProductDescription(null);
         //Act
         ProductModel new_product_model = productService.create(productMockModel);
         //Assert
@@ -181,7 +180,7 @@ class ProductServiceTest {
         productMockModel.setAmountToSell(100);
         userMockModel.setId("1");
         userMockModel.setUserType("Buyer");
-        userMockModel.setMaxSell(50);
+        userMockModel.setMaxSell(500);
         //Act
         ProductModel new_product_model = productService.create(productMockModel);
         //Assert
@@ -238,7 +237,7 @@ class ProductServiceTest {
         productModel();
         shoppingModel();
         String id_product = "1";
-        shoppingMockModel.setStateBuy("Created");
+        shoppingMockModel.setStateBuy("Delete");
         ProductModel producttestZ = new ProductModel();
         producttestZ.setIdCategory(2);
         shoppingMockModel.setIdProduct("1");
@@ -254,7 +253,7 @@ class ProductServiceTest {
         productModel();
         String keyword = "cordones";
         //Act
-        List <ProductModel> productlist = new ArrayList<ProductModel>(productService.getProductByKeyword(keyword));
+        List <ProductModel> productlist = new ArrayList<>(productService.getProductByKeyword(keyword));
         //Assert
         Assertions.assertTrue(productlist.isEmpty());
     }
@@ -265,7 +264,7 @@ class ProductServiceTest {
         productModel();
         String keyword = "con";
         //Act
-        List <ProductModel> productlist = new ArrayList<ProductModel>(productService.getProductByKeyword(keyword));
+        List <ProductModel> productlist = new ArrayList<>(productService.getProductByKeyword(keyword));
         //Assert
         Assertions.assertFalse(productlist.isEmpty());
     }
@@ -276,7 +275,7 @@ class ProductServiceTest {
         productModel();
         long idCategory = 2;
         //Act
-        List <ProductModel> productlistBycategory = new ArrayList<ProductModel>(productService.getByIdCategory(idCategory));
+        List <ProductModel> productlistBycategory = new ArrayList<>(productService.getByIdCategory(idCategory));
         //Assert
         Assertions.assertTrue(productlistBycategory.isEmpty());
     }
@@ -287,18 +286,34 @@ class ProductServiceTest {
         productModel();
         long idCategory = 1;
         //Act
-        List <ProductModel> productlistBycategory = new ArrayList<ProductModel>(productService.getByIdCategory(idCategory));
+        List <ProductModel> productlistBycategory = new ArrayList<>(productService.getByIdCategory(idCategory));
         //Assert
         Assertions.assertFalse(productlistBycategory.isEmpty());
     }
 
-    /*Delete
     @Test
-    void nnnn(){
+    void ValidateTruedelete(){
         //Arrange
         productModel();
-        productMockModel.setUserId("1");
+        shoppingModel();
+        String idProduct = "1";
+        shoppingMockModel.setStateBuy("Delete");
         //Act
+        boolean validatedelete = productService.delete(idProduct);
         //Assert
-    }*/
+        Assertions.assertTrue(validatedelete);
+    }
+
+    @Test
+    void ValidateFalsedelete(){
+        //Arrange
+        productModel();
+        shoppingModel();
+        String idProduct = "2";
+        //Act
+        boolean validatedelete = productService.delete(idProduct);
+        //Assert
+        Assertions.assertFalse(validatedelete);
+    }
+
 }
