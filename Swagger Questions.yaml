@@ -1,0 +1,205 @@
+openapi: 3.0.3
+info:
+  title: Ecommerce - Questions
+  description: |-
+    This is the documentation of the services built for the integrative project of the Software Quality Assurance course in the Question (Answer) domain.
+  version: 1.0.11
+servers:
+  - url: http://localhost:8080
+tags:
+  - name: Question
+  - name: Answer
+paths:
+  /question:
+    post:
+      tags:
+        - Question
+      summary: Add a new question
+      description: Add a new question
+      operationId: addQuestion
+      requestBody:
+        description: Create a new question
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/InputQuestion'
+        required: true
+      responses:
+        '200':
+          description: Successful operation, see ResponseQuestion schema
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseQuestion'
+    get:
+      tags:
+        - Question
+      summary: Finds question by question id
+      operationId: findQuestionById
+      parameters:
+        - name: questionId
+          in: query
+          description: The question id 
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Question'
+  /question/buyer:
+    get:
+      tags:
+        - Question
+      summary: Finds question by buyer id
+      operationId: findQuestionByBuyerId
+      parameters:
+        - name: buyerId
+          in: query
+          description: The buyer id 
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Question'
+  /answer:
+    post:
+      tags:
+        - Answer
+      summary: Add a new answer to specific question
+      description: Add a new answer to specific question
+      operationId: addAnswer
+      requestBody:
+        description: Create a new answer to specific question
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/InputAnswer'
+        required: true
+      responses:
+        '200':
+          description: Successful operation, see ResponseAnswer schema
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseAnswer'
+    put:
+      tags:
+        - Answer
+      summary: Finds answer by id
+      operationId: updateAnswerByID
+      parameters:
+        - name: answerId
+          in: query
+          description: The answer id 
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Answer'
+components:
+  schemas:
+    Question:
+      type: object
+      properties:
+        id:
+          type: string
+          example: string
+        questionText:
+          type: string
+          example: string
+        creationDate:
+          type: string
+          example: string
+        buyerId:
+          type: string
+          example: string
+        productId:
+          type: string
+          example: string
+        sellerId:
+          type: string
+          example: string
+    Answer:
+      type: object
+      properties:
+        id:
+          type: string
+          example: string
+        answerText:
+          type: string
+          example: string
+        questionId:
+          type: string
+          example: string
+        creationDate:
+          type: string
+          example: string
+        updatedDate:
+          type: string
+          example: string
+        sellerId:
+          type: string
+          example: string
+    InputAnswer:
+      type: object
+      properties:
+        sellerId:
+          type: string
+          example: string
+        questionId:
+          type: string
+          example: string
+        answerText:
+          type: string
+          example: string
+    InputQuestion:
+      type: object
+      properties:
+        buyerId:
+          type: string
+          example: string
+        sellerId:
+          type: string
+          example: string
+        productId:
+          type: string
+          example: string
+        questionText:
+          type: string
+          example: string
+    ResponseQuestion:
+      type: object
+      properties:
+        response:
+          type: string
+          enum:
+              - Question created successfully
+              - Product %s doesn't exist
+              - User not authorized to create question
+              - Input text contains vulgar words which is not allowed
+              - Entered text exceeds 1000 characters
+    ResponseAnswer:
+      type: object
+      properties:
+        response:
+          type: string
+          enum:
+              - Answer created successfully with id %s
+              - Question with id %s doesn't exist
+              - User not authorized to create answer
