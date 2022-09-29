@@ -36,8 +36,8 @@ class ShoppingServiceTest {
     @Test /*Validando lo que entrea a la lista*/
     void testbuyProduct() throws InterruptedException {
 
-        String shopCreated = shoppingService.buyProduct(shoppingCart,5,"san javier","55421","TSE");
-        String shopCreated2 =shoppingService.buyProduct(shoppingCart,10,"san antonio","54647","PSE");
+        String shopCreated = shoppingService.buyProduct(3,"9",5,5,"san javier","55421","TSE");
+        String shopCreated2 =shoppingService.buyProduct(4,"10",9,10,"san antonio","54647","PSE");
 
 
         Shopping barrio = shoppingService.getShoppingId(1);
@@ -49,7 +49,7 @@ class ShoppingServiceTest {
                 () -> Assertions.assertEquals("Created", shopCreated2),
                 () -> Assertions.assertEquals(10, barrio2.getIdSeller())
           );
-        TimeUnit.MINUTES.sleep(4);
+        TimeUnit.MINUTES.sleep(1);
         this.shoppingService.cancelShopping(1);
         assertAll(
                 () -> Assertions.assertEquals("Deleted",shoppingService.getShoppingId(1).getStateBuy())

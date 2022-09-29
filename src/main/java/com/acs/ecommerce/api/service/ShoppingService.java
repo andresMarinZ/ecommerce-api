@@ -42,14 +42,14 @@ public class ShoppingService implements com.acs.ecommerce.api.service.IShoppingS
     }
 
     @Override
-    public String buyProduct(ShoppingCart shoppingCart, int idSeller, String address, String addressF, String payment ) {
+    public String buyProduct(int idShopping,String idproduct,int amountProduct, int idSeller, String address, String addressF, String payment ) {
 
         // (ShoppingCart cart)
         Shopping buy = new Shopping();
-        buy.setIdShopper(shoppingCart.getIdShopping());
-        buy.setIdProduct(shoppingCart.getIdProduct());
+        buy.setIdShopper(idShopping);
+        buy.setIdProduct(idproduct);
         buy.setIdSeller(idSeller);
-        buy.setAmountProduct(shoppingCart.getAmountToSell());
+        buy.setAmountProduct(amountProduct);
         buy.setAddressSend(address);
         buy.setAddressFact(addressF);
         buy.setPaymentGateway(payment);
