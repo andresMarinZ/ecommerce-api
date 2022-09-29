@@ -45,14 +45,18 @@ public class UserController {
 
     //- The api should allow creating a user.
     //- Only an administrator user can create a user of type buyer and seller.
-    @PostMapping("users")
-    public ResponseEntity<User> create(@RequestBody User user) {
-
-        if (user.getUserType().equals("Admin")){
+    @PostMapping("users/{ADMIN}")
+    public ResponseEntity<User> create(@RequestBody  User user) {
+        if (user.getUserType().equals("SELLER") || user.getUserType().equals("BUYER")) {
             return ResponseEntity.ok(userService.create(user));
         }
+
         return null;
+
     }
+
+
+
 
 
     //- Names, surnames, document type and document number can be edited.
