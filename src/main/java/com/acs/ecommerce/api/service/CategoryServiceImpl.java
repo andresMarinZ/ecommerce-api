@@ -1,13 +1,8 @@
 package com.acs.ecommerce.api.service;
 
 import com.acs.ecommerce.api.model.CategoryModel;
-import com.acs.ecommerce.api.model.ProductModel;
 import com.acs.ecommerce.api.service.iservice.ICategory;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.*;
 
@@ -16,7 +11,6 @@ public class CategoryServiceImpl implements ICategory {
 
     private static List<CategoryModel> categories = new ArrayList<>();
     //instanciar servicio de productos
-    private static final ProductService productService = new ProductService();
 
     public CategoryServiceImpl(List<CategoryModel> categoryMockList) {
         categories = categoryMockList;
@@ -45,13 +39,12 @@ public class CategoryServiceImpl implements ICategory {
             return null;
         }
 
-        if (user.getRole().equals("admin")) {
+
             categoryModel.setId(Long.valueOf(UUID.randomUUID().toString()));
             categoryModel.setCreationDate(new Date(System.currentTimeMillis()));
             categories.add(categoryModel);
             return categoryModel;
-        }
-        return null;
+
 
 
     }
@@ -69,10 +62,8 @@ public class CategoryServiceImpl implements ICategory {
 
         if (optionalCategory.isPresent()) {
             CategoryModel categoryModelFound = optionalCategory.get();
-            if(optionalCategory.equals(productService.getByCategory(idCategory)) ) {
-                categoryModelFound.setName(categoryModel.getName());
-                return categoryModelFound;
-            }
+            categoryModelFound.setName(categoryModel.getName());
+            return categoryModelFound;
         }
         return null;
     }
@@ -86,10 +77,8 @@ public class CategoryServiceImpl implements ICategory {
 
         if (optionalCategory.isPresent()) {
             CategoryModel categoryModelFound = optionalCategory.get();
-            if(optionalCategory.equals(productService.getByCategory(idProduct)) ) {
                 categories.remove(categoryModelFound);
                 return true;
-            }
         }
 
         return false;
