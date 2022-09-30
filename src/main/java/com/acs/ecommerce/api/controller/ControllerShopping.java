@@ -19,8 +19,8 @@ public class ControllerShopping {
     //
 
     @PostMapping("/Createbuy")
-    public String BuyProduct(@RequestBody ShoppingCart shoppingCart, int idSeller, String address, String addressF, String payment ){
-        String buy1 = iShoppingService.buyProduct(shoppingCart, idSeller, address,  addressF,  payment);
+    public String BuyProduct(@RequestBody int idShopper,String idproduct,int amountProduct, int idSeller, String address, String addressF, String payment ){
+        String buy1 = iShoppingService.buyProduct(idShopper,idproduct, amountProduct, idSeller, address,  addressF,  payment);
         return buy1;
     }
 

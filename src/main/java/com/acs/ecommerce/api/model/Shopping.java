@@ -4,6 +4,7 @@ import java.time.LocalTime;
 
 /* package com.acs.ecommerce.api.service; */ /* lo comento por que saca error y no se porque*/
 public class Shopping{
+
     private int idShopping;
     private int idShopper;
     private String idProduct;

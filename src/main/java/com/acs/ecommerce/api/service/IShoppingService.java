@@ -11,7 +11,7 @@ public interface IShoppingService {
     public List<Shopping> getShoppingDelete();
 
     Shopping getShoppingbyState(String state);
-    String buyProduct(ShoppingCart shoppingCart, int idSeller, String address, String addressF, String payment );
+    String buyProduct(int idShopping, String idproduct,int amount, int idSeller, String address, String addressF, String payment );
     public Shopping getShoppingDeleteId(int i);
     public String cancelShopping(int id);
     public Shopping getShoppingId(int id);
