@@ -6,10 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
-import java.util.Optional;
 
 @RestController
 public class UserController {
@@ -26,8 +23,9 @@ public class UserController {
         return Objects.isNull(myUsers) ? ResponseEntity.notFound().build() : ResponseEntity.ok(myUsers);
     }
 
-    //- La api deberá permitir crear un usuario.
-    //- Solamente un usuario administrador podrá crear un usuario de tipo comprador y vendedor.
+
+    //- The api should allow creating a user.
+    //- Only an administrator user can create a user of type buyer and seller.
     @PostMapping("users")
     public ResponseEntity<User> create(@RequestBody User user) {
 
@@ -37,7 +35,7 @@ public class UserController {
         return null;
     }
 
-    //- Se podrá editar los nombres, apellidos, tipo de documento y número de documento.
+    //- Names, surnames, document type and document number can be edited.
     @PutMapping("users/{firstName},{LastName},{documentType}, {documentNumber}")
     public ResponseEntity<User> update(@PathVariable String firstName, String LastName, String documentType, int documentNumber, @RequestBody User user) {
         User userUpdated = userService.update(firstName, LastName, documentType, documentNumber, user);
@@ -45,8 +43,7 @@ public class UserController {
         return Objects.isNull(userUpdated) ? ResponseEntity.notFound().build() : ResponseEntity.ok(userUpdated);
     }
 
-    //- Solo se eliminará un usuario sí y solo sí este no tiene ventas o productos en un carrito activo.
-    //idShoppingCart ->>>> variable de carrito (variable identificador)
+    //- A user will only be deleted if and only if he has no sales or products in an active cart.
     @DeleteMapping("users/{idUser}")
     public ResponseEntity delete(@PathVariable String idUser, String idShoppingCart) {
         boolean deleted = false;

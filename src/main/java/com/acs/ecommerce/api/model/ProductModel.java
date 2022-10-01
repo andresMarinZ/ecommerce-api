@@ -1,34 +1,17 @@
 package com.acs.ecommerce.api.model;
 
 import java.time.LocalDateTime;
-import java.util.Date;
 
 public class ProductModel {
     private String idProduct;
     private String productName;
     private String productDescription;
     private int amountToSell;
-    private String productCategory;
+    private long idCategory;
     private String urlProductImage;
     private LocalDateTime dateAddProduct = LocalDateTime.now();
-
-    public ProductModel(){
-
-    }
-
-    public ProductModel(String idProduct, String productName, String productDescription, int amountToSell, String productCategory, String urlProductImage, LocalDateTime dateAddProduct, int documentNumber) {
-        this.idProduct = idProduct;
-        this.productName = productName;
-        this.productDescription = productDescription;
-        this.amountToSell = amountToSell;
-        this.productCategory = productCategory;
-        this.urlProductImage = urlProductImage;
-        this.dateAddProduct = dateAddProduct;
-        this.documentNumber = documentNumber;
-    }
-
+    private String userId;
     private int documentNumber;
-
     public String getIdProduct() {
         return idProduct;
     }
@@ -61,12 +44,12 @@ public class ProductModel {
         this.amountToSell = amountToSell;
     }
 
-    public String getProductCategory() {
-        return productCategory;
+    public long getIdCategory() {
+        return idCategory;
     }
 
-    public void setProductCategory(String productCategory) {
-        this.productCategory = productCategory;
+    public void setIdCategory(long idCategory) {
+        this.idCategory = idCategory;
     }
 
     public String getUrlProductImage() {
@@ -85,6 +68,14 @@ public class ProductModel {
         this.dateAddProduct = dateAddProduct;
     }
 
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
+
     public int getDocumentNumber() {
         return documentNumber;
     }
@@ -92,20 +83,4 @@ public class ProductModel {
     public void setDocumentNumber(int documentNumber) {
         this.documentNumber = documentNumber;
     }
-
-    @Override
-    public String toString() {
-        return "ProductModel{" +
-                "idProduct='" + idProduct + '\'' +
-                ", productName='" + productName + '\'' +
-                ", productDescription='" + productDescription + '\'' +
-                ", amountToSell=" + amountToSell +
-                ", productCategory='" + productCategory + '\'' +
-                ", urlProductImage='" + urlProductImage + '\'' +
-                ", dateAddProduct=" + dateAddProduct +
-                ", documentNumber=" + documentNumber +
-                '}';
-    }
-
-
 }
