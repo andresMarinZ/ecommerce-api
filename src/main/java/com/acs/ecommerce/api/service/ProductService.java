@@ -1,5 +1,6 @@
 package com.acs.ecommerce.api.service;
 
+import com.acs.ecommerce.api.enums.UserTypeEnum;
 import com.acs.ecommerce.api.model.ProductModel;
 import com.acs.ecommerce.api.service.iservice.IProductService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,7 +42,6 @@ public class ProductService implements IProductService {
         ) return new ProductModel();
         productModel.setIdProduct(UUID.randomUUID().toString());
         productsModel.add(productModel);
-
         return productModel;
     }
 
@@ -69,12 +69,13 @@ public class ProductService implements IProductService {
 
         ProductModel product = this.getProductById(idProduct);
 
-        if (Objects.isNull(product) && this.ValidateShoppingByProductId(idProduct)) {
-                return false;
+        if (!Objects.isNull(product) && this.ValidateShoppingByProductId(idProduct)) {
+            productsModel.remove(product);
+            return true;
             }
-        productsModel.remove(product);
-        return true;
+        return false;
     }
+
     @Override
     public List<ProductModel> getByIdCategory(long idCategory) {
         return productsModel.stream()
@@ -91,16 +92,17 @@ public class ProductService implements IProductService {
 
     private boolean ValidateProductByUser(String userId){
         var user = _UserService.getByIdUser(userId);
-        return Objects.nonNull(user) && user.getUserType().equals("Buyer");
+        return Objects.nonNull(user) && user.getUserType().equals(String.valueOf(UserTypeEnum.BUYER));
     }
+
     private boolean ValidateSellByUser(String userId, int amountToSell){
         var user = _UserService.getByIdUser(userId);
-        return Objects.nonNull(user) && user.getMaxSell()>0 && user.getMaxSell()<amountToSell;
+        return Objects.nonNull(user) && amountToSell>0 && user.getMaxSell()>amountToSell;
     }
 
     private boolean ValidateShoppingByProductId(String idProduct){
         var shopping = _IShoppingService.getShoppingIdProduct(idProduct);
-        return Objects.nonNull(shopping) && shopping.getStateBuy().equals("Created");
+        return Objects.nonNull(shopping) && shopping.getStateBuy().equals("Delete");
     }
 
     private boolean UrlValida(String url) {

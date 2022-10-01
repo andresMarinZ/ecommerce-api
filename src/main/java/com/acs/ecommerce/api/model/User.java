@@ -1,9 +1,18 @@
 package com.acs.ecommerce.api.model;
 
 public class User {
-    public User(String id) {
-        this.id = id;
-    }
+    private String id;
+    private String userType;
+    private String firstName;
+    private String lastName;
+    private String documentType;
+    private int documentNumber;
+    private String storeName;
+    private String createdUserType;
+    //Pedido del equipo de Sebas
+    private int maxSell;
+    //Variable Henry
+    private String idShoppingCart;
 
     public String getId() {
         return id;
@@ -11,42 +20,6 @@ public class User {
 
     public void setId(String id) {
         this.id = id;
-    }
-
-    private String id;
-    private String userType;
-    private String firstName;
-    private String lastName;
-    private String documentType;
-    private int documentNumber;
-    private String StoreName;
-    //Pedido del equipo de Sebas
-    private int maxSell;
-    //Variable Henry
-    private String idShoppingCart;
-
-    public User(int maxSell) {
-        this.maxSell = maxSell;
-    }
-
-    public int getMaxSell() {
-        return maxSell;
-    }
-
-    public void setMaxSell(int maxSell) {
-        this.maxSell = maxSell;
-    }
-
-    public User() {
-
-    }
-
-    public String getIdShoppingCart() {
-        return idShoppingCart;
-    }
-
-    public void setIdShoppingCart(String idShoppingCart) {
-        this.idShoppingCart = idShoppingCart;
     }
 
     public String getUserType() {
@@ -90,21 +63,35 @@ public class User {
     }
 
     public String getStoreName() {
-        return StoreName;
+        return storeName;
     }
 
     public void setStoreName(String storeName) {
-        StoreName = storeName;
+        storeName = storeName;
     }
 
-    public User(String id, String userType, String firstName, String lastName, String documentType, int documentNumber, String storeName) {
-        this.id = id;
-        this.userType = userType;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.documentType = documentType;
-        this.documentNumber = documentNumber;
-        StoreName = storeName;
+    public String getCreatedUserType() {
+        return createdUserType;
+    }
+
+    public void setCreatedUserType(String createdUserType) {
+        this.createdUserType = createdUserType;
+    }
+
+    public int getMaxSell() {
+        return maxSell;
+    }
+
+    public void setMaxSell(int maxSell) {
+        this.maxSell = maxSell;
+    }
+
+    public String getIdShoppingCart() {
+        return idShoppingCart;
+    }
+
+    public void setIdShoppingCart(String idShoppingCart) {
+        this.idShoppingCart = idShoppingCart;
     }
 }
 
