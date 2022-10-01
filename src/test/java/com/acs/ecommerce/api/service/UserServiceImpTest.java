@@ -78,7 +78,7 @@ class UserServiceImpTest {
     @Test
     void deleteTest(){
         users.add(user);
-        boolean result = userService.delete("1", " ");
+        boolean result = userService.delete("1");
         assertFalse(result);
 
     }
