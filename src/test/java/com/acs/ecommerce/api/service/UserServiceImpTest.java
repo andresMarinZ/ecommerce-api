@@ -1,6 +1,7 @@
 package com.acs.ecommerce.api.service;
 
 import com.acs.ecommerce.api.model.User;
+import com.acs.ecommerce.api.model.UserUpdate;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -55,14 +56,14 @@ class UserServiceImpTest {
     @Test
     public void updateUserSuccessfullyTest() {
         User userCreated = userService.create(getNewUser());
-        User userToUpdate = getNewUser();
+        UserUpdate userToUpdate = new UserUpdate();
+        userToUpdate.setId(userCreated.getId());
         userToUpdate.setFirstName("editFirstname");
         userToUpdate.setLastName("edit");
         userToUpdate.setDocumentType("CC");
         userToUpdate.setDocumentNumber(998765432);
 
-        User userUpdated = userService.update(userCreated.getFirstName(), userCreated.getLastName(),
-                userCreated.getDocumentType(), userCreated.getDocumentNumber(), userToUpdate);
+        User userUpdated = userService.update(userCreated.getId(), userToUpdate);
 
         Assertions.assertEquals("editFirstname", userUpdated.getFirstName());
         Assertions.assertEquals("edit", userUpdated.getLastName());

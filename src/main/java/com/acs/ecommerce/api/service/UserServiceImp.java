@@ -1,6 +1,7 @@
 package com.acs.ecommerce.api.service;
 
 import com.acs.ecommerce.api.model.User;
+import com.acs.ecommerce.api.model.UserUpdate;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -56,10 +57,11 @@ public class UserServiceImp implements UserService{
         return user;
     }
 
-    public User update(String firstName, String LastName, String documentType, int documentNumber, User user) {
-        User oldUser = getByDocumentNumber(documentNumber);
+    public User update(String id, UserUpdate user) {
 
-        if(Objects.isNull(oldUser)){
+        User oldUser = getByDocumentNumber(user.getDocumentNumber());
+
+        if(Objects.isNull(oldUser) && id != oldUser.getId()){
             return null;
         }
 
@@ -72,23 +74,11 @@ public class UserServiceImp implements UserService{
 
     }
 
-
-
-    public boolean delete(String idUser, String idShoppingCart) {
-        boolean deleted = false;
-        return idShoppingCart.equals(' ');
-    }
-
-   public boolean delete(String idUser) {
+    public boolean delete(String idUser) {
         User user = getByIdUser(idUser);
 
-       if (Objects.isNull(user)) {
-            return true;
-        }
+        return Objects.isNull(user);
 
-        return users.removeIf(users -> users.getId().equals(idUser));
     }
-
-
 
 }
