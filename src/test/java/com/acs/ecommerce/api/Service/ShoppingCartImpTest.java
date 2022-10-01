@@ -45,12 +45,10 @@ class ShoppingCartImpTest {
         );
     }
 
-    @Test
+   @Test
    void deleteShoppingCart() {
         boolean shoppingcartDelete = shoppingcartService.delete("1");
-        Assertions.assertAll(
-                () -> Assertions.assertFalse(shoppingcartDelete)
-        );
+        Assertions.assertFalse(shoppingcartDelete);
     }
 
     private ShoppingCart getNewShoppingCart() {
