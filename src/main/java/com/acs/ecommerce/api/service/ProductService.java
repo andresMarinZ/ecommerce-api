@@ -1,5 +1,6 @@
 package com.acs.ecommerce.api.service;
 
+import com.acs.ecommerce.api.enums.UserTypeEnum;
 import com.acs.ecommerce.api.model.ProductModel;
 import com.acs.ecommerce.api.service.iservice.IProductService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -91,7 +92,7 @@ public class ProductService implements IProductService {
 
     private boolean ValidateProductByUser(String userId){
         var user = _UserService.getByIdUser(userId);
-        return Objects.nonNull(user) && user.getUserType().equals("Buyer");
+        return Objects.nonNull(user) && user.getUserType().equals(String.valueOf(UserTypeEnum.BUYER));
     }
 
     private boolean ValidateSellByUser(String userId, int amountToSell){

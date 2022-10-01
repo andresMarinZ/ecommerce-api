@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Objects;
 
 @RestController
@@ -17,11 +18,26 @@ public class UserController {
     @Autowired
     UserService userService;
 
+    @GetMapping("users")
+    public ResponseEntity<List<User>> get(){
+        List<User> users = userService.get();
+
+        return users.isEmpty() ? ResponseEntity.badRequest().body(users) : ResponseEntity.ok(users);
+    }
+
     //When we need an userTyper and DocumentNumber
-    @GetMapping("users/{userType},{documentNumber}" )
-    public ResponseEntity<User> getUser(@PathVariable String userType, int documentNumber, @RequestBody User user) {
+    @GetMapping("users/{userType}" )
+    public ResponseEntity<User> getUser(@PathVariable String userType) {
         //Consulto por tipo de usuario, PENDIENTE por tipo de documento
         User myUsers = userService.getByUserType(userType);
+
+        return Objects.isNull(myUsers) ? ResponseEntity.notFound().build() : ResponseEntity.ok(myUsers);
+    }
+
+    @GetMapping("users/document/{docNumber}" )
+    public ResponseEntity<User> getUserByDocument(@PathVariable int docNumber) {
+        //Consulto por tipo de usuario, PENDIENTE por tipo de documento
+        User myUsers = userService.getByDocumentNumber(docNumber);
 
         return Objects.isNull(myUsers) ? ResponseEntity.notFound().build() : ResponseEntity.ok(myUsers);
     }
@@ -39,7 +55,7 @@ public class UserController {
     }
 
     //- Names, surnames, document type and document number can be edited.
-    @PutMapping("users")
+    @PutMapping("users/{id}")
     public ResponseEntity<User> update(@PathVariable String id, @RequestBody UserUpdate user) {
 
         User userUpdated = userService.update(id, user);
@@ -49,12 +65,10 @@ public class UserController {
 
     //- A user will only be deleted if and only if he has no sales or products in an active cart.
     @DeleteMapping("users/{idUser}")
-    public ResponseEntity delete(@PathVariable String idUser, String idShoppingCart) {
-        boolean deleted = false;
-        if (idShoppingCart.equals(' ')){
-            deleted = userService.delete(idUser, idShoppingCart);
-        }
-        return deleted ? ResponseEntity.ok().build() : ResponseEntity.notFound().build();
+    public ResponseEntity<User> delete(@PathVariable String idUser) {
+
+        boolean deleted = userService.delete(idUser);
+        return deleted ? ResponseEntity.notFound().build() : ResponseEntity.ok(null);
     }
 
 }

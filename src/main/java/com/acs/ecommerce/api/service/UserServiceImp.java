@@ -74,23 +74,11 @@ public class UserServiceImp implements UserService{
 
     }
 
-
-
-    public boolean delete(String idUser, String idShoppingCart) {
-        boolean deleted = false;
-        return idShoppingCart.equals(' ');
-    }
-
-   public boolean delete(String idUser) {
+    public boolean delete(String idUser) {
         User user = getByIdUser(idUser);
 
-       if (Objects.isNull(user)) {
-            return true;
-        }
+        return Objects.isNull(user);
 
-        return users.removeIf(users -> users.getId().equals(idUser));
     }
-
-
 
 }

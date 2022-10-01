@@ -19,9 +19,8 @@ public interface UserService {
 
     User update(String id, UserUpdate user);
 
-    boolean delete(String idUser, String idShoppingCart);
+    boolean delete(String idUser);
 
-   //boolean delete1(String idUser);
 
 
 }
