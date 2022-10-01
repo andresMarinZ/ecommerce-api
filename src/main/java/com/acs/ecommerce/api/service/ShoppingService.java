@@ -1,21 +1,24 @@
 package com.acs.ecommerce.api.service;
+import java.time.*;
+import java.time.temporal.*;
+import java.time.format.*;
 
 import com.acs.ecommerce.api.model.Shopping;
 import com.acs.ecommerce.api.model.ShoppingCart;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalTime;
-import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class ShoppingService implements IShoppingService{
+public class ShoppingService implements com.acs.ecommerce.api.service.IShoppingService {
 
     public static List<Shopping> shopping = new ArrayList<>();
     public static List<Shopping> shoppingDelete = new ArrayList<>();
+    //public static  ShoppingCartImp IShoppingCart;
     public ShoppingService(List<Shopping> shoppingInjected){
         shopping=shoppingInjected;
+        //IShoppingCart= shoppingCartInjected;
     }
 
     @Override
@@ -23,32 +26,46 @@ public class ShoppingService implements IShoppingService{
         return shopping;
     } //No permite dejar el override si esta en estatico
     public  List<Shopping> getShoppingDelete() {return shoppingDelete;}
-    /*Crea compra con los datos que recibe desde el carrito*/
-
-    /*Metodo para establecer la hora de compra*/ /*necesitariamos crear una hora de compra en constructor para que no se sobreescriba*/
     public LocalTime Time(){
         LocalTime cancelTime = LocalTime.now();
         return cancelTime;
     }
+    // Method for get shopping of the seller
     @Override
-    public Shopping getShoppingDeleteId(int id){
-        for(Shopping shop : getShoppingDelete()){
-            if (shop.getIdShopping()==id){
-                return shop;
+    public List<Shopping> getShoppingSeller(int idSeller) {
+        List<Shopping> shoppingTemp=new ArrayList<>();
+        for(Shopping shop : getShopping()){
+            if (shop.getIdSeller()==idSeller){
+                shoppingTemp.add(shop);
             }
         }
-        return null;
+        if(shoppingTemp.size()<0){
+            return null;
+        }
+        return shoppingTemp;
+    }
+    // Method for get shopping of the shopper
+    @Override
+    public List<Shopping> getShoppingUser(int idShopper) {
+        List<Shopping> shoppingTemp=new ArrayList<>();
+        for(Shopping shop : getShopping()){
+            if (shop.getIdShopping()==idShopper){
+                shoppingTemp.add(shop);
+            }
+        }
+        if(shoppingTemp.size()<0){
+            return null;
+        }
+        return shoppingTemp;
     }
 
     @Override
-    public String buyProduct(ShoppingCart shoppingCart, int idSeller, String address, String addressF, String payment ) {
-
-        // (ShoppingCart cart)
+    public String buyProduct(int idShopping,String idproduct,int amountProduct, int idSeller, String address, String addressF, String payment ) {
         Shopping buy = new Shopping();
-        buy.setIdShopper(shoppingCart.getIdShopping());
-        buy.setIdProduct(shoppingCart.getIdProduct());
+        buy.setIdShopper(idShopping);
+        buy.setIdProduct(idproduct);
         buy.setIdSeller(idSeller);
-        buy.setAmountProduct(shoppingCart.getAmountToSell());
+        buy.setAmountProduct(amountProduct);
         buy.setAddressSend(address);
         buy.setAddressFact(addressF);
         buy.setPaymentGateway(payment);
@@ -59,22 +76,37 @@ public class ShoppingService implements IShoppingService{
         return buy.getStateBuy().toString();
     }
 
-    /*Elimina compra segun el Id propio de compras*/
     @Override
-    public void cancelShopping(int id ) {
+    public String cancelShopping(int id) {
         LocalTime cancelT = Time();
-         /*Comparar fecha del atributo getdate con la creada al momento de invocar a cancelShopping*/
         for(Shopping shop : getShopping()){
             int minutesBuy = (int) ChronoUnit.MINUTES.between(shop.getDateBuy(), cancelT);
             if(shop.getIdShopping() == id && minutesBuy <= 5){
-                shop.setStateBuy("Delete");
+                shop.setStateBuy("Deleted");
                 shoppingDelete.add(shop);
-                //shopping.remove(shop);
+                shopping.remove(shop);
+                return shop.getStateBuy();
             }
         }
+        return "No es posible eliminar la compra";
     }
 
+    //Consult the list shopping deleted
+    @Override
+    public List<Shopping> getShoppingDeleteId(int id){
+        List<Shopping> shoppingTemp=new ArrayList<>();
+        for(Shopping shop : getShoppingDelete()){
+            if (shop.getIdShopping()==id){
+                shoppingTemp.add(shop);
+            }
+        }
+        if(shoppingTemp.size()<0){
+            return null;
+        }
+        return shoppingTemp;
+    }
 
+    //Consult the shopping by id shopping
     public Shopping getShoppingId(int id) {
         for(Shopping shop : getShopping()){
             if (shop.getIdShopping()==id){
@@ -83,6 +115,9 @@ public class ShoppingService implements IShoppingService{
         }
         return null;
     }
+
+    //Consult the list shoppings by id product
+    @Override
     public Shopping getShoppingIdProduct(String idProduct) {
         for(Shopping shop : getShopping()){
             if (shop.getIdProduct().equals(idProduct)){
@@ -92,38 +127,18 @@ public class ShoppingService implements IShoppingService{
         return null;
     }
 
+    //Consult list shopping by seller
     @Override
-    public Shopping getShoppingUser(int idShopper) {
-        for(Shopping shop : getShopping()){
-            if (shop.getIdShopping()==idShopper){
-                return shop;
-            }
-        }
-        return null;
-    }
-
-    @Override
-    public Shopping getShoppingSeller(int idSeller) {
-        for(Shopping shop : getShopping()){
+    public List<Shopping> getCancelShoppingSeller(int idSeller) {
+        List<Shopping> shoppingTemp=new ArrayList<>();
+        for(Shopping shop : getShoppingDelete()){
             if (shop.getIdShopping()==idSeller){
-                return shop;
+                shoppingTemp.add(shop);
             }
         }
-        return null;
+        if(shoppingTemp.size()<0){
+            return null;
+        }
+        return shoppingTemp;
     }
-
-
-    @Override
-    public List getCancelShopping() {
-        return null;
-    }
-
-
-    /*
-    * Metodo para generar compra
-    */
-
-
-
-
 }

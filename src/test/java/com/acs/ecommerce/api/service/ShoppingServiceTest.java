@@ -33,8 +33,8 @@ class ShoppingServiceTest {
     @Test /*Validando lo que entrea a la lista*/
     void testbuyProduct() throws InterruptedException {
 
-        String shopCreated = shoppingService.buyProduct(shoppingCart,5,"san javier","55421","TSE");
-        String shopCreated2 =shoppingService.buyProduct(shoppingCart,10,"san antonio","54647","PSE");
+        String shopCreated = shoppingService.buyProduct(5,"2",15,5,"san javier","cristobal","PSE");
+        String shopCreated2 =shoppingService.buyProduct(5,"1",15,5,"san carlos","cristobal","PSE");
 
 
         Shopping barrio = shoppingService.getShoppingId(1);
