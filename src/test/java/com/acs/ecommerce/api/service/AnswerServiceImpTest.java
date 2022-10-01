@@ -1,9 +1,6 @@
 package com.acs.ecommerce.api.service;
 
-import com.acs.ecommerce.api.model.Answer;
-import com.acs.ecommerce.api.model.ProductModel;
-import com.acs.ecommerce.api.model.Question;
-import com.acs.ecommerce.api.model.Response;
+import com.acs.ecommerce.api.model.*;
 import com.acs.ecommerce.api.service.iservice.IProductService;
 import org.hamcrest.CoreMatchers;
 import org.junit.jupiter.api.Assertions;
@@ -29,9 +26,13 @@ class AnswerServiceImpTest {
     private final IProductService iProductService;
 
     private  final Answer answerMock = new Answer();
+    public static List<Shopping> shoppingMockList = new ArrayList<>();
+    private static final List<User> userMockList = new ArrayList<>();
 
     public AnswerServiceImpTest(){
-        this.iProductService = new ProductService(productmocklist);
+        ShoppingService shoppingService = new ShoppingService(shoppingMockList);
+        UserService IUserService = new UserServiceImp(userMockList);
+        this.iProductService = new ProductService(productmocklist, IUserService, shoppingService);
         this.questionServiceMock = new QuestionServiceImp(iProductService, questiomocklist);
         this.AnswerServiceMock = new AnswerServiceImp(answerMockList, questionServiceMock);
     }

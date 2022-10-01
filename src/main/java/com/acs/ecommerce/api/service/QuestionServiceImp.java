@@ -70,7 +70,7 @@ public class QuestionServiceImp implements QuestionService {
     }
 
     private boolean producExists(String idProduct){
-        var product = _iProductService.getByid(idProduct);
+        var product = _iProductService.getProductById(idProduct);
         return Objects.nonNull(product);
     }
 

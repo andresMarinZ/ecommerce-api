@@ -1,8 +1,6 @@
 package com.acs.ecommerce.api.service;
 
-import com.acs.ecommerce.api.model.ProductModel;
-import com.acs.ecommerce.api.model.Question;
-import com.acs.ecommerce.api.model.Response;
+import com.acs.ecommerce.api.model.*;
 import com.acs.ecommerce.api.service.iservice.IProductService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -22,11 +20,16 @@ class QuestionServiceImpTest {
     private final List<ProductModel> productmocklist = new ArrayList<>();
     private final QuestionService questionMockService;
     private final IProductService iProductService;
+    public static List<Shopping> shoppingMockList = new ArrayList<>();
     private final ProductModel productMockModel = new ProductModel();
     private final Question questionsMock = new Question();
 
+    private static final List<User> userMockList = new ArrayList<>();
+
     public QuestionServiceImpTest() {
-        this.iProductService = new ProductService(productmocklist);
+        ShoppingService shoppingService = new ShoppingService(shoppingMockList);
+        UserService IUserService = new UserServiceImp(userMockList);
+        this.iProductService = new ProductService(productmocklist, IUserService, shoppingService);
         this.questionMockService = new QuestionServiceImp(iProductService, questiomocklist);
     }
 
