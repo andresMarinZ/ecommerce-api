@@ -1,5 +1,6 @@
 package com.acs.ecommerce.api.service;
 
+import com.acs.ecommerce.api.enums.UserTypeEnum;
 import com.acs.ecommerce.api.model.ProductModel;
 import com.acs.ecommerce.api.model.Shopping;
 import com.acs.ecommerce.api.model.User;
@@ -35,7 +36,6 @@ class ProductServiceTest {
     public void initializeProductList() {
         MocklistproductsModel.clear();
         this.userModel();
-        this.shoppingModel();
     }
 
     private void shoppingModel() {
@@ -45,7 +45,7 @@ class ProductServiceTest {
     }
     private void userModel() {
         userMockModel.setId("1");
-        userMockModel.setUserType("Buyer");
+        userMockModel.setUserType(String.valueOf(UserTypeEnum.BUYER));
         userMockModel.setMaxSell(150);
         MocklistusersModel.add(userMockModel);
     }
@@ -111,7 +111,7 @@ class ProductServiceTest {
     void ValidateCreateDatesProductNameNotValidate(){
         //Arrange
         productModel();
-        productMockModel.setProductName("cordones");
+        productMockModel.setProductName(null);
         //Act
         ProductModel new_product_model = productService.create(productMockModel);
         //Assert
@@ -122,7 +122,7 @@ class ProductServiceTest {
     void ValidateCreateDatesProductDescriptionNotValidate(){
         //Arrange
         productModel();
-        productMockModel.setProductDescription("extra largos");
+        productMockModel.setProductDescription(null);
         //Act
         ProductModel new_product_model = productService.create(productMockModel);
         //Assert
@@ -180,8 +180,8 @@ class ProductServiceTest {
         productMockModel.setDocumentNumber(1);
         productMockModel.setAmountToSell(100);
         userMockModel.setId("1");
-        userMockModel.setUserType("Buyer");
-        userMockModel.setMaxSell(50);
+        userMockModel.setUserType(String.valueOf(UserTypeEnum.BUYER));
+        userMockModel.setMaxSell(500);
         //Act
         ProductModel new_product_model = productService.create(productMockModel);
         //Assert
@@ -238,7 +238,7 @@ class ProductServiceTest {
         productModel();
         shoppingModel();
         String id_product = "1";
-        shoppingMockModel.setStateBuy("Created");
+        shoppingMockModel.setStateBuy("Delete");
         ProductModel producttestZ = new ProductModel();
         producttestZ.setIdCategory(2);
         shoppingMockModel.setIdProduct("1");
@@ -290,6 +290,31 @@ class ProductServiceTest {
         List <ProductModel> productlistBycategory = new ArrayList<>(productService.getByIdCategory(idCategory));
         //Assert
         Assertions.assertFalse(productlistBycategory.isEmpty());
+    }
+
+    @Test
+    void ValidateTruedelete(){
+        //Arrange
+        productModel();
+        shoppingModel();
+        String idProduct = "1";
+        shoppingMockModel.setStateBuy("Delete");
+        //Act
+        boolean validatedelete = productService.delete(idProduct);
+        //Assert
+        Assertions.assertTrue(validatedelete);
+    }
+
+    @Test
+    void ValidateFalsedelete(){
+        //Arrange
+        productModel();
+        shoppingModel();
+        String idProduct = "2";
+        //Act
+        boolean validatedelete = productService.delete(idProduct);
+        //Assert
+        Assertions.assertFalse(validatedelete);
     }
 
 }
