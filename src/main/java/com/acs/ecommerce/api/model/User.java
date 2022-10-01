@@ -20,6 +20,17 @@ public class User {
     private String documentType;
     private int documentNumber;
     private String StoreName;
+
+    public String getCreatedUserType() {
+        return CreatedUserType;
+    }
+
+    public void setCreatedUserType(String createdUserType) {
+        CreatedUserType = createdUserType;
+    }
+
+    private String CreatedUserType;
+
     //Pedido del equipo de Sebas
     private int maxSell;
     //Variable Henry

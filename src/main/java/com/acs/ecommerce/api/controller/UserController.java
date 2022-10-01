@@ -1,8 +1,11 @@
 package com.acs.ecommerce.api.controller;
 
+import com.acs.ecommerce.api.enums.UserTypeEnum;
 import com.acs.ecommerce.api.model.User;
+import com.acs.ecommerce.api.model.UserUpdate;
 import com.acs.ecommerce.api.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -29,16 +32,17 @@ public class UserController {
     @PostMapping("users")
     public ResponseEntity<User> create(@RequestBody User user) {
 
-        if (user.getUserType().equals("Admin")){
+        if (user.getCreatedUserType().equals(String.valueOf(UserTypeEnum.ADMIN))){
             return ResponseEntity.ok(userService.create(user));
         }
-        return null;
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
 
     //- Names, surnames, document type and document number can be edited.
-    @PutMapping("users/{firstName},{LastName},{documentType}, {documentNumber}")
-    public ResponseEntity<User> update(@PathVariable String firstName, String LastName, String documentType, int documentNumber, @RequestBody User user) {
-        User userUpdated = userService.update(firstName, LastName, documentType, documentNumber, user);
+    @PutMapping("users")
+    public ResponseEntity<User> update(@PathVariable String id, @RequestBody UserUpdate user) {
+
+        User userUpdated = userService.update(id, user);
 
         return Objects.isNull(userUpdated) ? ResponseEntity.notFound().build() : ResponseEntity.ok(userUpdated);
     }

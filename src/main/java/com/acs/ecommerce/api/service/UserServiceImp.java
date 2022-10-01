@@ -1,6 +1,7 @@
 package com.acs.ecommerce.api.service;
 
 import com.acs.ecommerce.api.model.User;
+import com.acs.ecommerce.api.model.UserUpdate;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -56,10 +57,11 @@ public class UserServiceImp implements UserService{
         return user;
     }
 
-    public User update(String firstName, String LastName, String documentType, int documentNumber, User user) {
-        User oldUser = getByDocumentNumber(documentNumber);
+    public User update(String id, UserUpdate user) {
 
-        if(Objects.isNull(oldUser)){
+        User oldUser = getByDocumentNumber(user.getDocumentNumber());
+
+        if(Objects.isNull(oldUser) && id != oldUser.getId()){
             return null;
         }
 
